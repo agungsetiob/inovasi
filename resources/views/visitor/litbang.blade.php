@@ -1,4 +1,4 @@
-@extends ('layouts.header-inovasi')
+@extends ('layouts.header-litbang')
 @section ('content')
 <header class="masthead bg-carousel text-white text-center">
     <div class="d-flex">
@@ -177,7 +177,7 @@
     @foreach ($profiles as $p)
     <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">{{$p->heading}}</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white"> {{$p->heading}} </h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -186,7 +186,7 @@
         </div>
         <!-- About Section Content-->
         <div class="row">
-            <div class="col-lg-12 ms-auto"><p class="lead">{!!$p->about!!}</p></div>
+            <div class="col-lg-12 ms-auto"><p class="lead">{!!$p->about!!}}</p></div>
         </div>
     </div>
     @endforeach

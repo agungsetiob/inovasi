@@ -14,11 +14,14 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     public function posts(){
-    return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class);
     }
 
-    public function standards(){
-    return $this->hasMany(Standard::class);
+    public function proposals(){
+        return $this->hasMany(Proposal::class);
+    }
+    public function skpd(){
+        return $this->belongsTo(Skpd::class);
     }
 
     /**
@@ -34,6 +37,7 @@ class User extends Authenticatable
         'role',
         'status',
         'avatar',
+        'skpd_id',
     ];
 
     /**

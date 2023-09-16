@@ -40,12 +40,12 @@
             </div>
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto">
-                    <a href="#"><img class="img-fluid menu-logo fa-flip" src="assets/img/microscope.png" alt="..." /><p class="masthead-subheading text-white font-weight-light mb-0">LITBANG</p></a>
+                    <a href="/litbang"><img class="img-fluid menu-logo fa-flip" src="assets/img/microscope.png" alt="..." /><p class="masthead-subheading text-white font-weight-light mb-0">LITBANG</p></a>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto">
-                    <a href="#"><img class="img-fluid menu-logo-atom fa-spin-pulse" src="assets/img/atom.png"/><p class="masthead-subheading text-white font-weight-light mb-0">RISET</p>
+                    <a href="/riset"><img class="img-fluid menu-logo-atom fa-spin-pulse" src="assets/img/atom.png"/><p class="masthead-subheading text-white font-weight-light mb-0">RISET</p>
                     </a>
                 </div>
             </div>

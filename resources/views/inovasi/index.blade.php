@@ -13,7 +13,7 @@
 
 
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid overflow-auto" style="height:600px">
     <!-- DataTables Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -80,7 +80,7 @@
     <!-- /.container-fluid -->
 
 
-</div>
+<!-- </div> -->
 <!-- End of Main Content -->
 
 <!-- Footer -->

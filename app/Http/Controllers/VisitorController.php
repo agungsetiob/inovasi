@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
@@ -19,7 +20,26 @@ class VisitorController extends Controller
      */
     public function inovasi()
     {
-        return view('visitor.index');
+        $profiles = Profile::all();
+        return view('visitor.index', compact('profiles'));
+    }
+
+    /**
+     * Display a listing of the inovation resource.
+     */
+    public function litbang()
+    {
+        $profiles = Profile::all();
+        return view('visitor.litbang', compact('profiles'));
+    }
+
+    /**
+     * Display a listing of the inovation resource.
+     */
+    public function riset()
+    {
+        $profiles = Profile::all();
+        return view('visitor.riset', compact('profiles'));
     }
 
     /**

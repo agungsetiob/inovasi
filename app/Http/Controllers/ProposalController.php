@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 use App\Models\{Post, Category, Contact};
 use App\Models\User;
+use App\Models\Skpd;
+use App\Models\Bentuk;
+use App\Models\Urusan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Auth;
@@ -32,7 +35,14 @@ class ProposalController extends Controller
     public function create()
     {
         $categories = Category::where('status', 'enabled')->get();
-        return view('inovasi.create', compact('categories'));
+        $skpds = Skpd::where('status', 'active')->get();
+        $bentuks = Bentuk::all();
+        $urusans = Urusan::all();
+        return view('inovasi.create', compact(
+            'categories', 
+            'skpds', 
+            'bentuks', 
+            'urusans'));
     }
 
     /**

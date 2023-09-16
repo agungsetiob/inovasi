@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'RSUD dr. H. Andi Abdurrahman Noor'),
-    'title' => 'RSUD dr. H. Andi Abdurrahman Noor',
+    'name' => env('APP_NAME', 'Sistem Inovasi Daerah'),
+    'title' => 'Sistem Inovasi Daerah',
 
     /*
     |--------------------------------------------------------------------------

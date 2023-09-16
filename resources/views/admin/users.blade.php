@@ -11,7 +11,7 @@
 </div>
 <!-- /.container-fluid -->
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid overflow-auto" style="height:600px">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -19,12 +19,12 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Name</th>
-                            <th>Username</th>
+                            <th>SKPD</th>
                             <th>Email</th>
                             <th>Status</th>
                         </tr>
@@ -34,7 +34,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td> {{$user->name}} </td>
-                            <td> {{$user->username}} </td>
+                            <td> {{$user->skpd->nama}} </td>
                             <td> {{$user->email}} </td>
                             <td>
                                 <div class="dropdown">
@@ -221,7 +221,7 @@ aria-hidden="true">
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
     <!-- Page level plugins -->
-    <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
     <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
     <!-- Page level custom scripts -->

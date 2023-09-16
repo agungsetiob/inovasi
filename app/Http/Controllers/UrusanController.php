@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Urusan;
 use Illuminate\Http\Request;
+use Auth;
 
 class UrusanController extends Controller
 {
@@ -12,7 +13,12 @@ class UrusanController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::user()->role == 'admin') {
+            $urusans = Urusan::all();
+            return view ('admin.urusan', compact('urusans'));
+        } else {
+            return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
+        }
     }
 
     /**
@@ -28,7 +34,12 @@ class UrusanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $urusan = new Urusan();
+        $urusan->nama = $request->nama;
+        $urusan->status = 'active';
+        $urusan->save();
+
+        return redirect()->back()->with('success','Data added successfully');
     }
 
     /**

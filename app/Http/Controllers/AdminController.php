@@ -39,6 +39,18 @@ class AdminController extends Controller
         }
     }
 
+    public function user()
+    {
+        if (Auth::user()->role == 'user') {
+            $totalPosts = Post::all()->count();
+            $posts = Post::where('user_id', Auth::user()->id)->get();
+            return view('admin.index', compact('posts', 'totalPosts'));
+        }else
+      {
+        return redirect()->back();
+      }
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -1,4 +1,4 @@
-<!-- UI for skpd inovasi -->
+<!-- UI for urusan inovasi -->
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
@@ -6,8 +6,8 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">SKPD/UPTD</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah SKPD</a>
+        <h1 class="h3 mb-0 text-dark">Urusan Inovasi</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Urusan</a>
     </div>
 </div>
 <!-- /.container-fluid -->
@@ -16,7 +16,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar SKPD</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar urusan</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,28 +30,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($skpds as $skpd)
+                        @forelse ($urusans as $urusan)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td> {{$skpd->nama}} </td>
-                            <td> {{$skpd->created_at}} </td>
+                            <td> {{$urusan->nama}} </td>
+                            <td> {{$urusan->created_at}} </td>
                             <td>
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$skpd->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$urusan->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    {{$skpd->status}}
+                                    {{$urusan->status}}
                                 </button>
-                                @if ($skpd->status == 'disabled')
-                                <form method="POST" action="{{url('enable/'. $skpd->id)}}">
+                                @if ($urusan->status == 'disabled')
+                                <form method="POST" action="{{url('enable/'. $urusan->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
-                                @elseif ($skpd->status == 'enabled')
-                                <form method="POST" action="{{url('disable/'. $skpd->id)}}">
+                                @elseif ($urusan->status == 'enabled')
+                                <form method="POST" action="{{url('disable/'. $urusan->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Disable</button>
@@ -139,8 +139,8 @@ aria-hidden="true">
 </div>
 
 <!-- delete Modal-->
-@foreach ($skpds as $skpd)
-<div class="modal fade" id="deleteModal{{$skpd->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach ($urusans as $urusan)
+<div class="modal fade" id="deleteModal{{$urusan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -153,7 +153,7 @@ aria-hidden="true">
             <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('skpd.destroy', $skpd->id) }}">
+                <form method="POST" action="{{ route('urusan.destroy', $urusan->id) }}">
                     @csrf
                     @method ('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>
@@ -169,17 +169,17 @@ aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah SKPD</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah urusan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('skpd.store') }}" method="POST">
+                <form action="{{ route('urusan.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="nama">nama skpd</label>
-                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan nama skpd">   
+                        <label for="nama">nama urusan</label>
+                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan urusan inovasi">   
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>

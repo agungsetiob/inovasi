@@ -12,6 +12,10 @@ class Skpd extends Model
     {
         return $this->hasMany(Proposal::class);
     }
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
     public function getCreatedAtAttribute()
     {

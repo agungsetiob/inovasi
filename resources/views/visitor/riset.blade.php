@@ -1,4 +1,4 @@
-@extends ('layouts.header-inovasi')
+@extends ('layouts.header-riset')
 @section ('content')
 <header class="masthead bg-carousel text-white text-center">
     <div class="d-flex">
@@ -208,13 +208,13 @@
                 <form id="contactForm">
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." autocomplete="true" data-sb-validations="required" />
                         <label for="name">Full name</label>
                         <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                     </div>
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" autocomplete="true" />
                         <label for="email">Email address</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>

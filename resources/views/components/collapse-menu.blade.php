@@ -61,7 +61,7 @@
                                     <a class="collapse-item" href="{{route('skpd.index')}}"><i class="fas fa-fw fa-sitemap"></i> SKPD/UPTD</a>
                                     <a class="collapse-item" href="{{url('master/jenis')}}"><i class="fas fa-fw fa-list"></i> Jenis</a>
                                     <a class="collapse-item" href="{{url('master/bentuk')}}"><i class="fas fa-fw fa-shapes"></i> Bentuk</a>
-                                    <a class="collapse-item" href="{{url('upload-file')}}"><i class="fas fa-fw fa-info"></i> Urusan</a>
+                                    <a class="collapse-item" href="{{route('urusan.index')}}"><i class="fas fa-fw fa-info"></i> Urusan</a>
                                 </div>
                             </div>
                         </li>

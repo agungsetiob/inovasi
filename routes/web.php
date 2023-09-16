@@ -5,9 +5,10 @@ use App\Http\Controllers\{SkpdController,
                         ContactController,
                         FileController,
                         BackupController,
-                        VisitorController};
+                        VisitorController,
+                        CategoryController};
 use App\Http\Controllers\BentukController;
-use App\Http\Controllers\PostController;
+use App\Http\Controllers\UrusanController;
 
 
 use App\Http\Controllers\ProposalController;
@@ -42,6 +43,8 @@ Route::get('/v2', function () {
 
 Route::get('/', [VisitorController::class, 'index']);
 Route::get('/inovasi', [VisitorController::class, 'inovasi']);
+Route::get('/litbang', [VisitorController::class, 'litbang']);
+Route::get('/riset', [VisitorController::class, 'riset']);
 
 Route::post('send/message', [ContactController::class, 'store']);
 
@@ -53,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('proyek/inovasi', \App\Http\Controllers\ProposalController::class);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
+    Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
 
     Route::resource('master/jenis', App\Http\Controllers\CategoryController::class);
     Route::post('enable/{id}', [CategoryController::class, 'enableCategory']);
@@ -61,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('master/bentuk', BentukController::class);
 
     Route::resource('master/skpd', SkpdController::class);
+
+    Route::resource('master/urusan', UrusanController::class);
 
 
     Route::get('bukti-dukung', [FileController::class, 'index']);

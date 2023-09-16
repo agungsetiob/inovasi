@@ -7,15 +7,14 @@
         <h1 class="h3 mb-0 text-dark">Create Proposal</h1>
     </div>
 </div>
-</div>
 <!-- End of Main Content -->
 
-<div class="container-fluid">
+<div class="container-fluid overflow-auto" style="height:600px">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow rounded">
                 <div class="card-body">
-                    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('inovasi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <div class="input-group ">
@@ -26,7 +25,7 @@
                                 </label>
                                 <input id="uploadFile" type="text" class="form-control @error('logo') is-invalid @enderror" readonly placeholder="Choose an image logo">
                             </div>
-                            @error('image')
+                            @error('logo')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -40,10 +39,10 @@
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="nama">Nama inovasi:</label>
-                            <input id="nama" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan nama inovasi">
+                            <input id="nama" type="text" class="form-control @error('title') is-invalid @enderror" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama inovasi">
                             
                             <!-- error message untuk title -->
-                            @error('title')
+                            @error('nama')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -52,10 +51,12 @@
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
-                            <input id="skpd" type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan nama skpd pembuat inovasi">
+                            <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
+                                <option value="{{Auth::user()->skpd->id}}" disabled selected>{{Auth::user()->skpd->nama}}</option>
+                            </select>
                             
                             <!-- error message untuk title -->
-                            @error('title')
+                            @error('skpd')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -66,19 +67,25 @@
                             <div class="row g-3">
                                 <div class="col">
                                     <label class="font-weight-bold" for="tahapan">Tahapan inovasi:</label>
-                                    <select name="category" id="tahapan" class="form-control @error('category') is-invalid @enderror" required>
-                                        <option value="" disabled selected>Pilih jenis inovasi</option>
-                                        @foreach ($categories as $cat)
-                                        <option value="{{ $cat->id }}" {{ old('category') == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
-                                        @endforeach
+                                    <select name="tahapan_inovasi" id="tahapan" class="form-control @error('tahapan_inovasi') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih tahapan inovasi</option>
+                                        <option value="inisiatif" {{old('tahapan_inovasi') == 'inisiatif' ? "selected" : ""}}>inisiatif</option>
+                                        <option value="ujicoba" {{old('tahapan_inovasi') == 'ujicoba' ? "selected" : ""}}>uji coba</option>
+                                        <option value="penerapan" {{old('tahapan_inovasi') == 'penerapan' ? "selected" : ""}}>penerapan</option>
                                     </select>
+                                    <!-- error message untuk title -->
+                                    @error('tahapan_inovasi')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col">
-                                    <label class="font-weight-bold">Inisiator inovasi:</label>
-                                    <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan nama pembuat inovasi">
+                                    <label class="font-weight-bold" for="inisiator">Inisiator inovasi:</label>
+                                    <input id="inisiator" type="text" class="form-control @error('inisiator') is-invalid @enderror" name="inisiator" value="{{ old('inisiator') }}" placeholder="Masukkan nama pembuat inovasi">
 
                                     <!-- error message untuk title -->
-                                    @error('title')
+                                    @error('inisiator')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -96,34 +103,44 @@
                                         <option value="{{ $cat->id }}" {{ old('category') == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                                 <div class="col">
-                                    <label class="font-weight-bold">Bentuk inovasi:</label>
-                                    <select name="category" id="" class="form-control @error('category') is-invalid @enderror" required>
+                                    <label class="font-weight-bold" for="bentuk">Bentuk inovasi:</label>
+                                    <select name="bentuk" id="bentuk" class="form-control @error('bentuk') is-invalid @enderror" required>
                                         <option value="" disabled selected>Pilih bentuk inovasi</option>
-                                        @foreach ($categories as $cat)
-                                        <option value="{{ $cat->id }}" {{ old('category') == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
+                                        @foreach ($bentuks as $ben)
+                                        <option value="{{ $ben->id }}" {{ old('bentuk') == $ben->id ? 'selected' : ''}}>{{ $ben->nama }}</option>
                                         @endforeach
                                     </select>
+                                    @error('bentuk')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="font-weight-bold">Urusan inovasi daerah:</label>
-                            <select name="category" id="" class="form-control @error('category') is-invalid @enderror" required>
+                            <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
+                            <select name="urusan" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required>
                                 <option value="" disabled selected>Pilih urusan inovasi</option>
-                                @foreach ($categories as $cat)
-                                <option value="{{ $cat->id }}" {{ old('category') == $cat->id ? 'selected' : ''}}>{{ $cat->name }}</option>
+                                @foreach ($urusans as $urus)
+                                <option value="{{ $urus->id }}" {{ old('category') == $urus->id ? 'selected' : ''}}>{{ $urus->nama }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">Rancang bangun:</label>
-                            <textarea rows="7" id="" class="editor form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('content') }}</textarea>
+                            <label class="font-weight-bold" for="rancang">Rancang bangun:</label>
+                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang') is-invalid @enderror" name="rancang" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang') }}</textarea>
                             
                             <!-- error message untuk content -->
-                            @error('content')
+                            @error('rancang')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -131,11 +148,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">Tujuan inovasi:</label>
-                            <input type="text" class="editor form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan tujuan pembuatan inovasi Daerah">
+                            <label class="font-weight-bold" for="tujuan">Tujuan inovasi:</label>
+                            <input id="tujuan" type="text" class="editor form-control @error('tujuan') is-invalid @enderror" name="tujuan" value="{{ old('tujuan') }}" placeholder="Masukkan tujuan pembuatan inovasi Daerah">
                             
                             <!-- error message untuk title -->
-                            @error('title')
+                            @error('tujuan')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -143,11 +160,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">Manfaat yang diperoleh:</label>
-                            <textarea rows="7" class="editor form-control @error('content') is-invalid @enderror" name="content" placeholder="Masukkan manfaat dari inovasi yang dilakukan">{{ old('content') }}</textarea>
+                            <label class="font-weight-bold" for="manfaat">Manfaat yang diperoleh:</label>
+                            <textarea id="manfaat" rows="7" class="editor form-control @error('manfaat') is-invalid @enderror" name="manfaat" placeholder="Masukkan manfaat dari inovasi yang dilakukan">{{ old('manfaat') }}</textarea>
                             
                             <!-- error message untuk title -->
-                            @error('title')
+                            @error('manfaat')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -155,11 +172,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold">Hasil inovasi:</label>
-                            <textarea rows="7" class="editor form-control @error('content') is-invalid @enderror" name="content" placeholder="Masukkan hasil dari inovasi yang dilakukan">{{ old('content') }}</textarea>
+                            <label class="font-weight-bold" for="hasil">Hasil inovasi:</label>
+                            <textarea id="hasil" rows="7" class="editor form-control @error('hasil') is-invalid @enderror" name="hasil" placeholder="Masukkan hasil dari inovasi yang dilakukan">{{ old('hasil') }}</textarea>
                             
                             <!-- error message untuk content -->
-                            @error('content')
+                            @error('hasil')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -170,10 +187,10 @@
                             <div class="row g-3">
                                 <div class="col">
                                     <label class="font-weight-bold">Waktu ujicoba:</label>
-                                    <input type="date" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan waktu uji coba inovasi">
+                                    <input type="date" class="form-control @error('ujicoba') is-invalid @enderror" name="ujicoba" value="{{ old('ujicoba') }}" placeholder="Masukkan waktu uji coba inovasi">
 
                                     <!-- error message untuk title -->
-                                    @error('title')
+                                    @error('ujicoba')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -181,10 +198,10 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold">Waktu implementasi:</label>
-                                    <input type="date" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan waktu implementasi inovasi">
+                                    <input type="date" class="form-control @error('implementasi') is-invalid @enderror" name="implementasi" value="{{ old('implementasi') }}" placeholder="Masukkan waktu implementasi inovasi">
 
                                     <!-- error message untuk title -->
-                                    @error('title')
+                                    @error('implementasi')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -192,10 +209,10 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold">Anggaran:</label>
-                                    <input type="number" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" placeholder="Masukkan anggaran inovasi">
+                                    <input type="number" class="form-control @error('anggaran') is-invalid @enderror" name="anggaran" value="{{ old('anggaran') }}" placeholder="Masukkan anggaran inovasi">
 
                                     <!-- error message untuk title -->
-                                    @error('title')
+                                    @error('anggaran')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
