@@ -2,7 +2,7 @@
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
-<div class="container-fluid overflow-auto" style="height:650px">
+<div class="container-fluid">
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -24,7 +24,7 @@
                                 Your Proposal | Total All
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-dark">
-                                {{Auth::user()->posts()->count()}} | {{$totalPosts}}
+                                {{Auth::user()->proposals()->count()}} | {{$totalProposals}}
                             </div>
                         </div>
                         <div class="col-auto">
@@ -105,7 +105,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Your Post</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{Auth::user()->posts()->count()}}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{Auth::user()->proposals()->count()}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clipboard-list fa-2x text-dark"></i>
@@ -125,7 +125,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {{$totalPosts}} </div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"> {{$totalProposals}} </div>
                                 </div>
                             </div>
                         </div>
@@ -229,23 +229,6 @@ aria-hidden="true">
     </div>
 </div>
 </div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-<!-- Page level plugins -->
-<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->

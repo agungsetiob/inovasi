@@ -88,8 +88,8 @@
                                 <span>Backup</span></a>
                             </li>
                             @elseif (Auth::user()->role == 'user')
-                            <li class="nav-item active {{ (request()->is('user/dashboard')) ? 'active bg-active' : '' }}">
-                                <a class="nav-link" href="{{url('user/dashboard')}}">
+                            <li class="nav-item active {{ (request()->is('user/')) ? 'active bg-active' : '' }}">
+                                <a class="nav-link" href="{{url('user/')}}">
                                     <i class="fas fa-fw fa-tachometer-alt fa-xl"></i>
                                     <span>Dashboard</span></a>
                                 </li>

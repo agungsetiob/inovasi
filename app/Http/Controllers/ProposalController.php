@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 
-use App\Models\{Post, Category, Contact};
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Skpd;
 use App\Models\Bentuk;
@@ -22,8 +22,8 @@ class ProposalController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $posts = Post::all();
-            return view ('inovasi.index', compact( 'posts'));
+            $proposals = Proposal::all();
+            return view ('inovasi.index', compact( 'proposals'));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
         }
@@ -50,7 +50,70 @@ class ProposalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'logo'     => 'image|mimes:jpeg,png,jpg|max:1024',
+            'nama'     => 'required',
+            'tahapan_inovasi'   => 'required',
+            'inisiator'      => 'required',
+            'rancang_bangun' => 'required',
+            'tujuan'    => 'required',
+            'manfaat' => 'required',
+            'hasil' => 'required',
+            'ujicoba' => 'required',
+            'implementasi' => 'required',
+            'anggaran' => 'required',
+            'bentuk' => 'required',
+            'category' => 'required',
+            'urusan' => 'required',
+
+        ]);
+
+        //upload image
+        if ($request->hasFile('logo')){
+            $image = $request->file('logo');
+            $image->storeAs('public/inovasi', $image->hashName());
+            //create post
+            Proposal::create([
+                'logo'     => $image->hashName(),
+                'nama'     => $request->nama,
+                'tahapan_inovasi'   => $request->tahapan_inovasi,
+                'inisiator'      => $request->inisiator,
+                'rancang_bangun' => $request->rancang_bangun,
+                'tujuan'    => $request->tujuan,
+                'manfaat' => $request->manfaat,
+                'hasil' => $request->hasil,
+                'ujicoba' => $request->ujicoba,
+                'implementasi' => $request->implementasi,
+                'anggaran' => $request->anggaran,
+                'bentuk_id' => $request->bentuk,
+                'category_id' => $request->category,
+                'urusan_id' => $request->urusan,
+                'skpd_id' => $request->skpd,
+                'user_id' => auth()->user()->id,
+        ]);
+        } else {
+                //create post
+            Proposal::create([
+                'nama'     => $request->nama,
+                'tahapan_inovasi'   => $request->tahapan_inovasi,
+                'inisiator'      => $request->inisiator,
+                'rancang_bangun' => $request->rancang_bangun,
+                'tujuan'    => $request->tujuan,
+                'manfaat' => $request->manfaat,
+                'hasil' => $request->hasil,
+                'ujicoba' => $request->ujicoba,
+                'implementasi' => $request->implementasi,
+                'anggaran' => $request->anggaran,
+                'bentuk_id' => $request->bentuk,
+                'category_id' => $request->category,
+                'urusan_id' => $request->urusan,
+                'skpd_id' => $request->skpd,
+                'user_id' => auth()->user()->id,
+        ]);
+        }
+        //redirect to index
+        return redirect()->intended('proyek/inovasi')->with(['success' => 'Data saved succesfully']);
+        
     }
 
     /**

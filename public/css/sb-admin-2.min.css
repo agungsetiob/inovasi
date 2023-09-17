@@ -53,6 +53,16 @@
   background-color: rgba(var(--bs-indigo-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-green {
+    --bs-bg-opacity: 1;
+    background-color: #1cc88a;, var(--bs-bg-opacity)) !important;
+}
+
+.bg-orange {
+    --bs-bg-opacity: 1;
+    background-color: #fd7e14;, var(--bs-bg-opacity)) !important;
+}
+
 .bg-active {
     background-color: #3B76EF;
 }

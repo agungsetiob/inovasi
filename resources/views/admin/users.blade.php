@@ -11,7 +11,7 @@
 </div>
 <!-- /.container-fluid -->
 <!-- Begin Page Content -->
-<div class="container-fluid overflow-auto" style="height:600px">
+<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">

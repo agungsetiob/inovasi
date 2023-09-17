@@ -23,11 +23,11 @@ return new class extends Migration
             $table->text('hasil');
             $table->date('ujicoba');
             $table->date('implementasi');
-            $table->number('anggaran');
+            $table->string('anggaran');
             $table->unsignedBigInteger('bentuk_id');
             $table->foreign('bentuk_id')->references('id')->on('bentuks');
-            $table->unsignedBigInteger('jenis_id');
-            $table->foreign('jenis_id')->references('id')->on('jenis');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('skpd_id');
             $table->foreign('skpd_id')->references('id')->on('skpds');
             $table->unsignedBigInteger('urusan_id');

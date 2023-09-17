@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('file');
-            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->unsignedInteger('proposal_id');
+            $table->unsignedBigInteger('proposal_id');
             $table->foreign('proposal_id')->references('id')->on('proposals');
             $table->timestamps();
         });

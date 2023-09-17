@@ -19,20 +19,16 @@ class AdminController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $posts = Post::all()->where('user_id', Auth::user()->id)
-                            ->where('slug', '!==', 'layanan-kami')
-                            ->where('category_id', '!==', 6);
-            $totalPosts = Post::all()->count();
+            $totalProposals = Proposal::all()->count();
             $messages = Contact::all()->count();
             $activeUsers = User::where('status', '=', 'active')->count();
             $inactiveUsers = User::where('status', '=', 'inactive')->count();
             return view ('admin.index', 
                 compact(
                     'activeUsers', 
-                    'inactiveUsers', 
-                    'posts',
+                    'inactiveUsers',
                     'messages',
-                    'totalPosts'
+                    'totalProposals'
                 ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
@@ -42,9 +38,7 @@ class AdminController extends Controller
     public function user()
     {
         if (Auth::user()->role == 'user') {
-            $totalPosts = Post::all()->count();
-            $posts = Post::where('user_id', Auth::user()->id)->get();
-            return view('admin.index', compact('posts', 'totalPosts'));
+            return view('admin.index');
         }else
       {
         return redirect()->back();

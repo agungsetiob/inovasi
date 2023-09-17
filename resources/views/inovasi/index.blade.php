@@ -13,7 +13,7 @@
 
 
 <!-- Begin Page Content -->
-<div class="container-fluid overflow-auto" style="height:600px">
+<div class="container-fluid">
     <!-- DataTables Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -21,40 +21,46 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th width="49%">Nama Inovasi</th>
+                            <th width="40%">Nama Inovasi</th>
                             <th>SKPD</th>
                             <th>Tahapan</th>
-                            <th>File Bukti</th>
-                            <th></th>
+                            <th width="10%">File Bukti</th>
+                            <th width="15%"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{--@forelse ($posts as $post)--}}
+                        @forelse ($proposals as $prop)
                         <tr>
-                            <td> Rumah Sehat Amanah </td>
-                            <td> RSUD{{--$post->category->name--}} </td>
+                            <td> {{ $prop->nama }} </td>
+                            <td> {{ $prop->skpd->nama }}</td>
                             <td> 
-                                <span class="badge bg-indigo">penerapan</span>
+                                @if ($prop->tahapan_inovasi == 'ujicoba')
+                                <span class="badge bg-indigo">{{$prop->tahapan_inovasi}}</span>
+                                @elseif ($prop->tahapan_inovasi == 'penerapan')
+                                <span class="badge bg-green">{{$prop->tahapan_inovasi}}</span>
+                                @else ($prop->tahaoan_inovasi == 'inisiatif')
+                                <span class="badge bg-orange">{{$prop->tahapan_inovasi}}</span>
+                                @endif
                             </td>
                             <td> 
                                 <a href="{{url('bukti-dukung')}}" class="btn bg-info text-white btn-sm"><i class="fas fa-eye fa-bounce"></i> Evidence</a>
                             </td>
                             <td>
 
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{--$post->id--}}"><i class="fas fa-trash"></i> delete</button>
+                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$prop->id}}"><i class="fas fa-trash"></i> delete</button>
                                 
-                                <a href="{{-- route('posts.edit', $post->id) --}}" class="btn btn-success btn-sm" title="edit"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                <a href="{{route('inovasi.edit', $prop->id)}}" class="btn btn-success btn-sm" title="edit"><i class="fas fa-pencil-alt"></i> Edit</a>
 
-                                <a href="{{-- route('posts.edit', $post->id) --}}" class="btn btn-warning btn-sm" title="edit"><i class="fas fa-chart-simple"></i> Indicator</a>
+                                <!-- <a href="#" class="btn btn-warning btn-sm" title="edit"><i class="fas fa-chart-simple"></i> Indicator</a> -->
                             </tr>
-                            {{--@empty--}}
+                            @empty
                             <div class="alert alert-danger">
                                 Data is not available.
                             </div>
-                            {{--@endforelse--}}
+                            @endforelse
                             @if(Session::has('success'))
                             <div class="alert alert-success">
                                 {{ Session::get('success') }}
@@ -128,8 +134,8 @@ aria-hidden="true">
 </div>
 
 <!-- delete Modal-->
-@foreach ($posts as $post)
-<div class="modal fade" id="deleteModal{{$post->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach ($proposals as $prop)
+<div class="modal fade" id="deleteModal{{$prop->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -142,7 +148,7 @@ aria-hidden="true">
             <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('posts.destroy', $post->id) }}">
+                <form method="POST" action="{{ route('inovasi.destroy', $prop->id) }}">
                     @csrf
                     @method ('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>

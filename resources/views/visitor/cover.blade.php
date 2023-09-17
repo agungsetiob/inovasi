@@ -21,7 +21,7 @@
     <header class="masthead text-white text-center">
         <div class="container d-flex align-items-center justify-content-center">
             <!-- Masthead Avatar Image-->
-            <img class="img-fluid mb-5" src="assets/img/logo.png"/>
+            <img style="width:151px" class="img-fluid mb-5" src="assets/img/logo2.png"/>
         </div>
 
         <div class="container d-flex align-items-center flex-column"><!-- Masthead Heading-->

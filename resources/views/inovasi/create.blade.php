@@ -9,7 +9,7 @@
 </div>
 <!-- End of Main Content -->
 
-<div class="container-fluid overflow-auto" style="height:600px">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow rounded">
@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
                             <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
-                                <option value="{{Auth::user()->skpd->id}}" disabled selected>{{Auth::user()->skpd->nama}}</option>
+                                <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
                             </select>
                             
                             <!-- error message untuk title -->
@@ -137,10 +137,10 @@
 
                         <div class="form-group">
                             <label class="font-weight-bold" for="rancang">Rancang bangun:</label>
-                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang') is-invalid @enderror" name="rancang" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang') }}</textarea>
+                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang_bangun') is-invalid @enderror" name="rancang_bangun" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang_bangun') }}</textarea>
                             
                             <!-- error message untuk content -->
-                            @error('rancang')
+                            @error('rancang_bangun')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold">Anggaran:</label>
-                                    <input type="number" class="form-control @error('anggaran') is-invalid @enderror" name="anggaran" value="{{ old('anggaran') }}" placeholder="Masukkan anggaran inovasi">
+                                    <input type="text" class="form-control @error('anggaran') is-invalid @enderror" name="anggaran" value="{{ old('anggaran') }}" placeholder="Masukkan anggaran inovasi">
 
                                     <!-- error message untuk title -->
                                     @error('anggaran')
