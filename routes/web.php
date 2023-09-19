@@ -6,7 +6,8 @@ use App\Http\Controllers\{SkpdController,
                         FileController,
                         BackupController,
                         VisitorController,
-                        CategoryController};
+                        CategoryController,
+                        IndikatorController};
 use App\Http\Controllers\BentukController;
 use App\Http\Controllers\UrusanController;
 
@@ -53,20 +54,29 @@ Route::get('document', [FileController::class, 'document'])->name('docs');
 //route group on my own
 Route::middleware(['auth'])->group(function () {
 
-    Route::resource('proyek/inovasi', \App\Http\Controllers\ProposalController::class);
+    Route::resource('proyek/inovasi', ProposalController::class);
+    Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
 
     Route::resource('master/jenis', App\Http\Controllers\CategoryController::class);
-    Route::post('enable/{id}', [CategoryController::class, 'enableCategory']);
-    Route::post('disable/{id}', [CategoryController::class, 'disableCategory']);
+    Route::post('enable/jenis/{id}', [CategoryController::class, 'enableCategory']);
+    Route::post('disable/jenis/{id}', [CategoryController::class, 'disableCategory']);
 
     Route::resource('master/bentuk', BentukController::class);
+    Route::post('enable/bentuk/{id}', [BentukController::class, 'enable']);
+    Route::post('disable/bentuk/{id}', [BentukController::class, 'disable']);
 
     Route::resource('master/skpd', SkpdController::class);
+    Route::post('activate/skpd/{id}', [SkpdController::class, 'activate']);
+    Route::post('deactivate/skpd/{id}', [SkpdController::class, 'deactivate']);
 
     Route::resource('master/urusan', UrusanController::class);
+    Route::post('activate/urusan/{id}', [UrusanController::class, 'activate']);
+    Route::post('deactivate/urusan/{id}', [UrusanController::class, 'deactivate']);
+
+    Route::resource('master/indikator', IndikatorController::class);
 
 
     Route::get('bukti-dukung', [FileController::class, 'index']);

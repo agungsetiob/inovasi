@@ -79,4 +79,26 @@ class SkpdController extends Controller
             return redirect()->back()->with('error', 'Many ways to rome');
         }
     }
+
+    public function deactivate($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $cat = Skpd::findOrFail($id);
+            $cat->update([
+                'status'     => 'inactive'
+            ]);
+            return redirect()->back()->with('success', 'SKPD is inactive now');
+        }
+    }
+
+    public function activate($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $cat = Skpd::findOrFail($id);
+            $cat->update([
+                'status'     => 'active'
+            ]);
+            return redirect()->back()->with('success', 'SKPD is active now');
+        }
+    }
 }

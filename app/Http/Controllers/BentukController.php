@@ -83,22 +83,22 @@ class BentukController extends Controller
     public function disable($id, Request $request)
     {
         if (Auth::user()->role == 'admin') {
-            $cat = Category::findOrFail($id);
+            $cat = Bentuk::findOrFail($id);
             $cat->update([
                 'status'     => 'disabled'
             ]);
-            return redirect()->back()->with('success', 'Category is disabled successfully');
+            return redirect()->back()->with('success', 'Bentuk inovasi is disabled successfully');
         }
     }
 
     public function enable($id, Request $request)
     {
         if (Auth::user()->role == 'admin') {
-            $cat = Category::findOrFail($id);
+            $cat = Bentuk::findOrFail($id);
             $cat->update([
                 'status'     => 'enabled'
             ]);
-            return redirect()->back()->with('success', 'Category is enabled successfully');
+            return redirect()->back()->with('success', 'Bentuk inovasi is enabled successfully');
         }
     }
 }

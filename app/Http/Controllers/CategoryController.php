@@ -108,7 +108,7 @@ class CategoryController extends Controller
             $cat->update([
                 'status'     => 'disabled'
             ]);
-            return redirect()->back()->with('success', 'Category is disabled successfully');
+            return redirect()->back()->with('success', 'jenis is disabled successfully');
         }
     }
 
@@ -119,7 +119,7 @@ class CategoryController extends Controller
             $cat->update([
                 'status'     => 'enabled'
             ]);
-            return redirect()->back()->with('success', 'Category is enabled successfully');
+            return redirect()->back()->with('success', 'Jenis is enabled successfully');
         }
     }
 }

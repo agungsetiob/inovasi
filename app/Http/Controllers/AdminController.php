@@ -38,7 +38,8 @@ class AdminController extends Controller
     public function user()
     {
         if (Auth::user()->role == 'user') {
-            return view('admin.index');
+            $totalProposals = Proposal::all()->count();
+            return view('admin.index', compact('totalProposals'));
         }else
       {
         return redirect()->back();

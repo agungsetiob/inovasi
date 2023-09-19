@@ -9,34 +9,13 @@
 </div>
 <!-- End of Main Content -->
 
-<div class="container-fluid">
+<div class="container-fluid overflow-auto panjang">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow rounded">
                 <div class="card-body">
                     <form action="{{ route('inovasi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <div class="input-group ">
-                                <label class="input-group-btn" for="uploadBtn">
-                                    <span class="btny btn-outline-primary">
-                                        Browse<input accept="image/*" id="uploadBtn" type="file" style="display: none;" multiple name="logo">
-                                    </span>
-                                </label>
-                                <input id="uploadFile" type="text" class="form-control @error('logo') is-invalid @enderror" readonly placeholder="Choose an image logo">
-                            </div>
-                            @error('logo')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                            @enderror  
-                        </div>
-                        <script type="text/javascript">
-                            document.getElementById("uploadBtn").onchange = function (){
-                                document.getElementById("uploadFile").value = this.value;
-                            }
-                        </script>
-
                         <div class="form-group">
                             <label class="font-weight-bold" for="nama">Nama inovasi:</label>
                             <input id="nama" type="text" class="form-control @error('title') is-invalid @enderror" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama inovasi">
@@ -50,17 +29,42 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
-                            <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
-                                <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
-                            </select>
-                            
-                            <!-- error message untuk title -->
-                            @error('skpd')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
+                            <div class="row g-3">
+                                <div class="col">
+                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
+                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
+                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
+                                    </select>
+                                    
+                                    <!-- error message untuk title -->
+                                    @error('skpd')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label class="font-weight-bold" for="uploadBtn">Logo inovasi:</label>
+                                    <div class="input-group "> 
+                                        <label class="input-group-btn">
+                                            <span class="btny btn-outline-primary">
+                                                Browse<input accept="image/*" id="uploadBtn" type="file" style="display: none;" multiple name="logo">
+                                            </span>
+                                        </label>
+                                        <input id="uploadFile" type="text" class="form-control @error('logo') is-invalid @enderror" readonly placeholder="Choose an image logo">
+                                    </div>
+                                    @error('logo')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <script type="text/javascript">
+                                        document.getElementById("uploadBtn").onchange = function (){
+                                            document.getElementById("uploadFile").value = this.value;
+                                        }
+                                    </script>
+                                </div>
                             </div>
-                            @enderror
                         </div>
 
                         <div class="form-group">
@@ -242,11 +246,6 @@
     </div>
 </footer>
 <!-- End of Footer -->
-
-</div>
-<!-- End of Content Wrapper -->
-
-</div>
 <!-- End of Page Wrapper -->
 
 <!-- Scroll to Top Button-->

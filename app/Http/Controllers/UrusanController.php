@@ -73,4 +73,26 @@ class UrusanController extends Controller
     {
         //
     }
+
+    public function deactivate($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $cat = Urusan::findOrFail($id);
+            $cat->update([
+                'status'     => 'inactive'
+            ]);
+            return redirect()->back()->with('success', 'Urusan inovasi is inactive now');
+        }
+    }
+
+    public function activate($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $cat = Urusan::findOrFail($id);
+            $cat->update([
+                'status'     => 'active'
+            ]);
+            return redirect()->back()->with('success', 'Urusan inovasi is active now');
+        }
+    }
 }

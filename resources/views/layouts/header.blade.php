@@ -39,8 +39,8 @@
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-gradient-primary topbar mb-4 static-top shadow">
-          <!-- Sidebar Toggle (Topbar) -->
+        <nav class="navbar navbar-expand navbar-light bg-gradient-primary topbar mb-4  shadow">
+          <!-- Sidebar Toggle (Topbar) static-top(ini diatas td, kalu rusak balikin aja)-->
           <button id="sidebarToggleTop" class="btn btn-link rounded mr-3">
             <i class="fa fa-bars text-dark"></i>
           </button>
@@ -117,25 +117,8 @@
         </ul>
       </nav>
       @yield ('content')
-    </div>
+    <!-- </div>
   </div>
-</div>
-
-<!-- Bootstrap core JavaScript-->
-<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-<!-- Page level plugins -->
-<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+</div> -->
 </body>
 </html>

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('proposal_id');
             $table->foreign('proposal_id')->references('id')->on('proposals');
+            $table->unsignedBigInteger('indikator_id');
+            $table->foreign('indikator_id')->references('id')->on('indikators');
             $table->timestamps();
         });
     }

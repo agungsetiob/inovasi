@@ -6,7 +6,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">About us</h1>
-        <a href="{{url('setting/profile/'. $p->id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-pen fa-sm text-white-50"></i> Update about us</a>
+        <a href="{{url('setting/profile/'. $p->id)}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-pencil-alt fa-sm text-white fa-flip"></i> Update about us</a>
     </div>
 
 </div>
@@ -32,7 +32,7 @@
             <h6 class="m-0 font-weight-bold text-primary text-center">{{$p->heading}}</h6>
         </div>
         <div class="form-group">
-            <img style="width:600px" src="{{ asset('storage/posts/'.$p->image) }}" class="rounded img-fluid mx-auto d-block">
+            <img style="width:600px" src="{{ asset('storage/posts/'.$p->image) }}" class="rounded img-fluid mx-auto d-block fa-beat">
         </div>
         <div class="card-body">
             <p class="text-justify">

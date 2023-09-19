@@ -6,8 +6,8 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">Bentuk Inovasi</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Bentuk</a>
+        <h1 class="h3 mb-0 text-dark">Indikator Inovasi</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Indikator</a>
     </div>
 </div>
 <!-- /.container-fluid -->
@@ -16,7 +16,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar Bentuk Inovasi</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Daftar Indikator Inovasi</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -30,13 +30,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($bentuks as $ben)
+                        @forelse ($indikators as $in)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td> {{$ben->nama}} </td>
-                            <td> {{$ben->created_at}} </td>
+                            <td> {{$in->nama}} </td>
+                            <td> {{$in->created_at}} </td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$ben->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$in->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -44,16 +44,16 @@
                                     {{$ben->status}}
                                 </button>
                                 @if ($ben->status == 'disabled')
-                                <form method="POST" action="{{url('enable/bentuk/'. $ben->id)}}">
+                                <form method="POST" action="{{url('enable/'. $in->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
                                 @elseif ($ben->status == 'enabled')
-                                <form method="POST" action="{{url('disable/bentuk/'. $ben->id)}}">
+                                <form method="POST" action="{{url('disable/'. $in->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Disable</button>
                                     </div>
                                 </form>
@@ -139,7 +139,7 @@ aria-hidden="true">
 </div>
 
 <!-- delete Modal-->
-@foreach ($bentuks as $ben)
+@foreach ($indikators as $in)
 <div class="modal fade" id="deleteModal{{$ben->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -153,7 +153,7 @@ aria-hidden="true">
             <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('bentuk.destroy', $ben->id) }}">
+                <form method="POST" action="{{ route('indikator.destroy', $in->id) }}">
                     @csrf
                     @method ('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>
@@ -175,7 +175,7 @@ aria-hidden="true">
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('bentuk.store') }}" method="POST">
+                <form action="{{ route('indikator.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Bentuk inovasi</label>

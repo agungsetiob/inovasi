@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Contact;
-use App\Models\Complain;
 use Barryvdh\DomPDF\Facade\PDF;
 use Auth;
 use URL;
@@ -53,7 +52,7 @@ class ContactController extends Controller
             'message'   => 'required|min:25'
         ]);
 
-        //create post
+        //create 
         if ($validator->fails()) {
             return redirect($url)
             ->withErrors($validator)
@@ -139,81 +138,6 @@ class ContactController extends Controller
         ])->setPaper('A4', 'portrait');
         set_time_limit(300);
         return $pdf->stream('messages.pdf');
-    }
-
-
-
-
-    /**
-     * Pengaduan masyarakat.
-     *
-     * 
-     * 
-     */
-    public function pengaduan()
-    {
-        return view('admin.complains');
-    }
-
-    public function simpanPengaduan(Request $request)
-    {
-        $this->validate($request, [
-            'unit'      => 'required',
-            'complain'  => 'required|min:25',
-            'name'      => 'required',
-            'address'   => 'required',
-            'phone'     => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
-        ]);
-
-        Complain::create([
-            'unit'   => $request->unit,
-            'complain'  => addslashes($request->complain),
-            'name'      => addslashes($request->name),
-            'address'   => addslashes($request->address),
-            'phone'     => $request->phone,
-            'date'=> date("Y-m-d"),
-        ]);
-
-        return redirect('pengaduan-masyarakat')->with(['success' => 'Berhasil kirim pengaduan']);
-    }
-
-    public function daftarPengaduan ()
-    {
-        
-        if(Auth::user()->role == 'admin'){
-            $complains = Complain::all();
-            return view('admin.complains-list', compact('complains'));
-        } else{
-            return view('errors.403');
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function hapusPengaduan($id)
-    {
-        if (Auth::user()->role == 'admin') {
-           //do something here
-
-        //redirect to index
-            return redirect('messages')->with(['success' => 'Data deleted succesfully']);
-        } else{
-            return redirect()->back()->with('error', 'ingatlah dunia hanya sementara');
-        }
-    }
-
-    public function cetakPengaduan($startdate, $enddate)
-    {
-        $complains = Complain::whereBetween('date',[$startdate, $enddate])->get();
-        $total = Complain::all()->count();
-        $pdf = PDF::loadview('admin.cetak-pengaduan',['complains' => $complains, 'total' => $total
-        ])->setPaper('A4', 'portrait');
-        set_time_limit(300);
-        return $pdf->stream('pengaduan-masyarakat.pdf');
     }
 
 

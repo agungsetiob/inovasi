@@ -34,7 +34,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return view ('auth.register');       
+        $skpds = Skpd::all();
+        return view ('auth.register', compact('skpds'));       
     }
 
     /**
@@ -62,6 +63,7 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'status' => 'active',
+            'skpd_id' => $request->skpd_id,
             //'avatar' => 'logors.png',
         ]);
 

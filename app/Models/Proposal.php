@@ -23,5 +23,15 @@ class Proposal extends Model
     public function skpd(){
         return $this->belongsTo(Skpd::class);
     }
+    public function getUjicobaAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['ujicoba'])
+        ->isoFormat('D MMMM Y');
+    }
+    public function getImplementasiAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['implementasi'])
+        ->isoFormat('D MMMM Y');
+    }
     protected $guarded = [];
 }

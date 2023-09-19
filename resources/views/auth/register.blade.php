@@ -19,6 +19,18 @@
                 <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
             </div>
 
+            <!-- skpd -->
+            <div class="mt-4">
+                <x-label for="skpd_id" :value="__('SKPD')" />
+
+                <select name="skpd_id" id="skpd_id" class="form-control @error('skpd_id') is-invalid @enderror" required>
+                    <option value="" disabled selected>Pilih SKPD</option>
+                    @foreach ($skpds as $s)
+                    <option value="{{ $s->id }}" {{ old('category') == $s->id ? 'selected' : ''}}>{{ $s->nama }}</option>
+                    @endforeach
+                </select>
+            </div>
+
             <!-- Username -->
             <div class="mt-4">
                 <x-label for="username" :value="__('Username')" />
@@ -49,9 +61,9 @@
                 <x-label for="password" :value="__('Password')" />
 
                 <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
+                type="password"
+                name="password"
+                required autocomplete="new-password" />
             </div>
 
             <!-- Confirm Password -->
@@ -59,8 +71,8 @@
                 <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
                 <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
+                type="password"
+                name="password_confirmation" required />
             </div>
 
             <!-- Status -->
@@ -70,7 +82,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('dashboard') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('inovasi.index') }}">
                     {{ __('Back to dashboard') }}
                 </a>
 
@@ -85,9 +97,9 @@
             Area Khusus Admin pale!
         </div>
         <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('dashboard') }}">
-                    {{ __('Back to dashboard') }}
-                </a>
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('inovasi.index') }}">
+                {{ __('Back to dashboard') }}
+            </a>
         </div>
         @endif
     </x-auth-card>

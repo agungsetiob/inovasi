@@ -121,7 +121,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Post from User
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Proposal
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
@@ -137,20 +137,6 @@
             </div>
         </div>
         @endif
-
-        <div class="col-xl-12 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Rekap jumlah inovasi, riset, dan litbang</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-bar">
-                        <canvas id="myBarChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-        </div> 
 
         <!-- Donut Chart -->
         <div class="col-xl-12 col-lg-7">
@@ -168,27 +154,25 @@
             </div>
         </div>
 
-        <div class="col-xl-12 col-lg-7">
+        <!-- <div class="col-xl-12 col-lg-7">
             <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Tahapan</h6>
                 </div>
-                <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-pie pt-4">
                         <canvas id="myPieChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 
 </div>
 <!-- /.container-fluid -->
 
-
+</div>
 <!-- End of Main Content -->
 
 <!-- Footer -->
@@ -229,10 +213,25 @@ aria-hidden="true">
     </div>
 </div>
 </div>
+<!-- Bootstrap core JavaScript-->
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+
+<!-- Page level plugins -->
+<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<!-- <script src="js/demo/chart-area-demo.js"></script> -->
 <script src="js/demo/chart-pie-demo.js"></script>
 <script src="js/demo/chart-bar-demo.js"></script>
 @endsection

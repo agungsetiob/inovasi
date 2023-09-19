@@ -3,7 +3,6 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">SKPD/UPTD</h1>
@@ -20,7 +19,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover text-dark" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -36,25 +35,25 @@
                             <td> {{$skpd->nama}} </td>
                             <td> {{$skpd->created_at}} </td>
                             <td>
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$skpd->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$skpd->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                    aria-expanded="true">
                                     {{$skpd->status}}
                                 </button>
-                                @if ($skpd->status == 'disabled')
-                                <form method="POST" action="{{url('enable/'. $skpd->id)}}">
+                                @if ($skpd->status == 'inactive')
+                                <form method="POST" action="{{url('activate/skpd/'. $skpd->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Enable</button>
+                                        <button class="dropdown-item">activate</button>
                                     </div>
                                 </form>
-                                @elseif ($skpd->status == 'enabled')
-                                <form method="POST" action="{{url('disable/'. $skpd->id)}}">
+                                @elseif ($skpd->status == 'active')
+                                <form method="POST" action="{{url('deactivate/skpd/'. $skpd->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Disable</button>
+                                        <button class="dropdown-item">deactivate</button>
                                     </div>
                                 </form>
                                 @endif

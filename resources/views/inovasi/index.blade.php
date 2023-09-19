@@ -6,7 +6,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Inovasi</h1>
-        <a href="{{ route('inovasi.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add Proposal</a>
+        <a href="{{ route('inovasi.create') }}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add Proposal</a>
     </div>
 </div>
 <!-- /.container-fluid -->
@@ -24,11 +24,13 @@
                 <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th width="40%">Nama Inovasi</th>
+                            <th width="30%">Nama Inovasi</th>
                             <th>SKPD</th>
-                            <th>Tahapan</th>
-                            <th width="10%">File Bukti</th>
-                            <th width="15%"></th>
+                            <th>Uji Coba</th>
+                            <th>Implementasi</th>
+                            <th width="9%">Tahapan</th>
+                            <th width="5%">File Bukti</th>
+                            <th width="12%"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +38,8 @@
                         <tr>
                             <td> {{ $prop->nama }} </td>
                             <td> {{ $prop->skpd->nama }}</td>
+                            <td> {{ $prop->ujicoba }} </td>
+                            <td> {{ $prop->implementasi }} </td>
                             <td> 
                                 @if ($prop->tahapan_inovasi == 'ujicoba')
                                 <span class="badge bg-indigo">{{$prop->tahapan_inovasi}}</span>
@@ -46,15 +50,15 @@
                                 @endif
                             </td>
                             <td> 
-                                <a href="{{url('bukti-dukung')}}" class="btn bg-info text-white btn-sm"><i class="fas fa-eye fa-bounce"></i> Evidence</a>
+                                <a href="{{url('bukti-dukung')}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-eye fa-bounce"></i></a>
                             </td>
                             <td>
 
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$prop->id}}"><i class="fas fa-trash"></i> delete</button>
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$prop->id}}"><i class="fas fa-trash"></i></button>
                                 
-                                <a href="{{route('inovasi.edit', $prop->id)}}" class="btn btn-success btn-sm" title="edit"><i class="fas fa-pencil-alt"></i> Edit</a>
+                                <a href="{{route('inovasi.edit', $prop->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
 
-                                <!-- <a href="#" class="btn btn-warning btn-sm" title="edit"><i class="fas fa-chart-simple"></i> Indicator</a> -->
+                                <a href="{{url('print/report', $prop->id)}}" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
                             </tr>
                             @empty
                             <div class="alert alert-danger">
@@ -86,7 +90,7 @@
     <!-- /.container-fluid -->
 
 
-<!-- </div> -->
+</div>
 <!-- End of Main Content -->
 
 <!-- Footer -->

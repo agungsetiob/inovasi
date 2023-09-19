@@ -186,7 +186,7 @@
         </div>
         <!-- About Section Content-->
         <div class="row">
-            <div class="col-lg-12 ms-auto"><p class="lead">{!!$p->about!!}}</p></div>
+            <div class="col-lg-12 ms-auto"><p class="lead">{!!$p->about!!}</p></div>
         </div>
     </div>
     @endforeach

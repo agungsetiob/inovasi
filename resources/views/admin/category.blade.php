@@ -22,7 +22,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover text-dark" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -38,7 +38,7 @@
                             <td> {{$cat->name}} </td>
                             <td> {{$cat->created_at}} </td>
                             <td>
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$cat->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$cat->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
@@ -46,14 +46,14 @@
                                     {{$cat->status}}
                                 </button>
                                 @if ($cat->status == 'disabled')
-                                <form method="POST" action="{{url('enable/'. $cat->id)}}">
+                                <form method="POST" action="{{url('enable/jenis/'. $cat->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
                                 @elseif ($cat->status == 'enabled')
-                                <form method="POST" action="{{url('disable/'. $cat->id)}}">
+                                <form method="POST" action="{{url('disable/jenis/'. $cat->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Disable</button>

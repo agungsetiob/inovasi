@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Skpd;
 use App\Models\Bentuk;
 use App\Models\Urusan;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Auth;
@@ -24,7 +25,10 @@ class ProposalController extends Controller
         if (Auth::user()->role == 'admin') {
             $proposals = Proposal::all();
             return view ('inovasi.index', compact( 'proposals'));
-        } else {
+        } elseif (Auth::user()->role == 'user') {
+            $proposals = Proposal::where('user_id', Auth::user()->id)->get();
+            return view ('inovasi.index', compact( 'proposals'));
+        }else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
         }
     }
@@ -36,8 +40,8 @@ class ProposalController extends Controller
     {
         $categories = Category::where('status', 'enabled')->get();
         $skpds = Skpd::where('status', 'active')->get();
-        $bentuks = Bentuk::all();
-        $urusans = Urusan::all();
+        $bentuks = Bentuk::where('status', 'enabled')->get();
+        $urusans = Urusan::where('status', 'enabled')->get();
         return view('inovasi.create', compact(
             'categories', 
             'skpds', 
@@ -92,7 +96,7 @@ class ProposalController extends Controller
                 'user_id' => auth()->user()->id,
         ]);
         } else {
-                //create post
+                //create props
             Proposal::create([
                 'nama'     => $request->nama,
                 'tahapan_inovasi'   => $request->tahapan_inovasi,
@@ -112,7 +116,7 @@ class ProposalController extends Controller
         ]);
         }
         //redirect to index
-        return redirect()->intended('proyek/inovasi')->with(['success' => 'Data saved succesfully']);
+        return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil simpan inovasi']);
         
     }
 
@@ -146,5 +150,13 @@ class ProposalController extends Controller
     public function destroy(Proposal $proposal)
     {
         //
+    }
+
+    public function proposalReport($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+        $pdf = PDF::loadview('admin.proposal-report',compact('proposal'))->setPaper('A4', 'portrait');
+        set_time_limit(300);
+        return $pdf->stream('proposal-report.pdf');
     }
 }

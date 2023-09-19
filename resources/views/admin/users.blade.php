@@ -39,13 +39,13 @@
                             <td>
                                 <div class="dropdown">
                                     @if ($user->status == 'active')
-                                    <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                    <button class="btn btn-outline-primary btn-sm dropdown-toggle" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     {{$user->status}}
                                     </button>
                                     @elseif ($user->status == 'inactive')
-                                    <button class="btn btn-danger btn-sm dropdown-toggle" type="button"
+                                    <button class="btn btn-outline-danger btn-sm dropdown-toggle" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     {{$user->status}}
@@ -54,14 +54,14 @@
                                 @if ($user->status == 'inactive')
                                 <form method="POST" action="{{url('activate/'. $user->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Activate</button>
                                     </div>
                                 </form>
                                 @elseif ($user->status == 'active')
                                 <form method="POST" action="{{url('deactivate/'. $user->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Deactivate</button>
                                     </div>
                                 </form>
