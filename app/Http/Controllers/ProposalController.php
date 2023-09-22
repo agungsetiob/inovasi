@@ -41,7 +41,7 @@ class ProposalController extends Controller
         $categories = Category::where('status', 'enabled')->get();
         $skpds = Skpd::where('status', 'active')->get();
         $bentuks = Bentuk::where('status', 'enabled')->get();
-        $urusans = Urusan::where('status', 'enabled')->get();
+        $urusans = Urusan::where('status', 'active')->get();
         return view('inovasi.create', compact(
             'categories', 
             'skpds', 
@@ -131,9 +131,22 @@ class ProposalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Proposal $proposal)
+    public function edit(Proposal $inovasi)
     {
-        //
+        $categories = Category::where('status', 'enabled')->get();
+        $skpds = Skpd::where('status', 'active')->get();
+        $bentuks = Bentuk::where('status', 'enabled')->get();
+        $urusans = Urusan::where('status', 'active')->get();
+        if (auth()->user()->id == $inovasi->user_id) {
+            return view('inovasi.edit', compact(
+                'inovasi',
+                'categories', 
+                'skpds', 
+                'bentuks', 
+                'urusans',));
+        } else{
+            return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikans');
+        }
     }
 
     /**

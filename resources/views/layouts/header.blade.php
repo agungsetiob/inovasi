@@ -39,59 +39,20 @@
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-gradient-primary topbar mb-4  shadow">
+        <nav class="navbar sticky-top navbar-expand navbar-light bg-gradient-primary topbar mb-4 shadow">
           <!-- Sidebar Toggle (Topbar) static-top(ini diatas td, kalu rusak balikin aja)-->
           <button id="sidebarToggleTop" class="btn btn-link rounded mr-3">
             <i class="fa fa-bars text-dark"></i>
           </button>
-
-          <!-- Topbar Search -->
-          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="#{{ url('search') }}">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for something?"
-              aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> -->
-
-          <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <!-- <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-search fa-fw"></i>
-            </a> -->
-            <!-- Dropdown - Messages -->
-            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown">
-            <form class="form-inline mr-auto w-100 navbar-search" action="#{{ url('search') }}">
-              <div class="input-group" id="dataTable_filter">
-                <input type="text" class="form-control bg-light border-0 small"
-                placeholder="Search for something?" aria-label="Search"
-                aria-describedby="basic-addon2" aria-controls="dataTable">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li> -->
 
               <div class="topbar-divider d-none d-sm-block"></div>
 
               <!-- Nav Item - User Information -->
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down text-white"></i>
-                <span class="mr-2 d-none d-lg-inline text-white small">{{Auth::user()->name}}</span>
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down text-white"></i> 
+                <span class="mr-2 d-none d-lg-inline text-white small"> {{Auth::user()->name}}</span>
                 <img class="img-profile rounded-circle"
                 src="{{url('storage/ava/'.Auth::user()->avatar)}}">
               </a>
@@ -117,8 +78,5 @@
         </ul>
       </nav>
       @yield ('content')
-    <!-- </div>
-  </div>
-</div> -->
 </body>
 </html>

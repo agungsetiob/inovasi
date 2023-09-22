@@ -38,19 +38,19 @@
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$in->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
-                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
+                                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    {{$ben->status}}
+                                    {{$in->status}}
                                 </button>
-                                @if ($ben->status == 'disabled')
+                                @if ($in->status == 'disabled')
                                 <form method="POST" action="{{url('enable/'. $in->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
-                                @elseif ($ben->status == 'enabled')
+                                @elseif ($in->status == 'enabled')
                                 <form method="POST" action="{{url('disable/'. $in->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
@@ -140,7 +140,7 @@ aria-hidden="true">
 
 <!-- delete Modal-->
 @foreach ($indikators as $in)
-<div class="modal fade" id="deleteModal{{$ben->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="deleteModal{{$in->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -169,7 +169,7 @@ aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Bentuk inovasi</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Indikator inovasi</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -179,7 +179,7 @@ aria-hidden="true">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Bentuk inovasi</label>
-                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan Bentuk inovasi">   
+                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan indikator inovasi">   
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>

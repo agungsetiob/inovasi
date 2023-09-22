@@ -3,24 +3,27 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Messages</h1>
-        <div class="input-group col-4">
-            <label class="font-weight-bold col-5 mt-2 pl-4">Mulai tanggal :</label>
-            <input type="date" name="startdate" class="form-controls col-7" id="startdate">
-        </div>
-        <div class="input-group col-4">
-            <label class="font-weight-bold col-5 mt-2">Sampai tanggal :</label>
-            <input type="date" name="enddate" class="form-controls col-7" id="enddate">
-        </div>
-        <a href="" onclick="this.href='messages/laporan/'+ document.getElementById('startdate').value + '/' +document.getElementById('enddate').value" class="d-none d-sm-inline-block btn btn-warning shadow-sm" target="_blank"><i class="fas fa-print text-white"></i> Cetak</a>
     </div>
-</div>
-<!-- /.container-fluid -->
+    <div class="col-md-12">
+        <div class="form-group">
+            <div class="row g-3">
+                <div class="col">
+                    <label class="font-weight-bold">Mulai tanggal :</label>
+                    <input type="date" name="startdate" class="form-control" id="startdate">
+                </div>
+                <div class="col">
+                    <label class="font-weight-bold">Sampai tanggal :</label>
+                    <input type="date" name="enddate" class="form-control" id="enddate">
+                </div>
+                <div class="col" style="padding-top: 2rem;" >
+                    <a href="" onclick="this.href='messages/laporan/'+ document.getElementById('startdate').value + '/' +document.getElementById('enddate').value" class=" d-sm-inline-block btn btn-danger shadow-sm" target="_blank"><i class="fas fa-print text-white"></i> Cetak</a>
+                </div>
 
-<!-- Begin Page Content -->
-<div class="container-fluid">   
+            </div>
+        </div>
+    </div>   
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -47,7 +50,7 @@
                             <td> {{$mes->message}} </td>
                             <td> {{$mes->created_at}} </td>
                             <td>
-                                <button class="btn btn-danger btn-sm" title="hapus" data-toggle="modal" onclick="deleteMessage({{$mes->id}})"><i class="fas fa-trash"></i> Hapus</button>       
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" onclick="deleteMessage({{$mes->id}})"><i class="fas fa-trash"></i> Hapus</button>       
                             </tr>
                             @empty
                             <div class="alert alert-danger">

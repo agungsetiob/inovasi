@@ -34,10 +34,10 @@
                             <td> {{$file->name}} </td>
                             <td> {{$file->created_at}} </td>
                             <td>
-                                <button class="btn btn-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
                                     <i class="fas fa-trash fa-shake"></i> hapus
                                 </button>
-                                <a class="btn btn-success btn-sm" title="download" href="{{Storage::url('docs/'. $file->file )}}" target="_blank">
+                                <a class="btn btn-outline-success btn-sm" title="download" href="{{Storage::url('docs/'. $file->file )}}" target="_blank">
                                     <i class="fas fa-download"></i> download
                                 </a>
                             </td>

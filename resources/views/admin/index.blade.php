@@ -7,7 +7,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Dashboard</h1>
-        {{--<a href="{{ route('proposal.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add Proposal</a>--}}
     </div>
 
     <!-- Content Row -->
@@ -137,36 +136,69 @@
             </div>
         </div>
         @endif
+    </div>
 
+    <div class="row">
         <!-- Donut Chart -->
-        <div class="col-xl-12 col-lg-7">
+        <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Sebaran proyek</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Inovasi berdasarkan tahapan</h6>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                     <div class="chart-pie pt-4">
-                        <canvas id="myPieChart"></canvas>
+                        <canvas id="tahapan"></canvas>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- <div class="col-xl-12 col-lg-7">
+        <div class="col-xl-6 col-lg-6">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Tahapan</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Inovasi bedasarkan jenis</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-pie pt-4">
-                        <canvas id="myPieChart"></canvas>
+                        <canvas id="skpd"></canvas>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12">
+            <!-- Project tracker card example-->
+            <div class="card card-header-actions mb-4">
+                <div class="card-header text-primary font-weight-bold">
+                    Inovasi vs Litbang vs Riset
+                </div>
+                <div class="card-body">
+                    <!-- Progress item 1-->
+                    <div class="d-flex align-items-center justify-content-between small mb-1">
+                        <div class="fw-bold">Inovasi</div>
+                        <div class="small">{{$totalProposals}}</div>
+                    </div>
+                    <div class="progress mb-3"><div class="progress-bar bg-danger" role="progressbar" style="width: {{$totalProposals}}%" aria-valuenow="{{$totalProposals}}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <!-- Progress item 2-->
+                    <div class="d-flex align-items-center justify-content-between small mb-1">
+                        <div class="fw-bold">Litbang</div>
+                        <div class="small">50</div>
+                    </div>
+                    <div class="progress mb-3"><div class="progress-bar bg-warning" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div></div>
+                    <!-- Progress item 3-->
+                    <div class="d-flex align-items-center justify-content-between small mb-1">
+                        <div class="fw-bold">Riset</div>
+                        <div class="small">75</div>
+                    </div>
+                    <div class="progress mb-3"><div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div></div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
@@ -232,6 +264,88 @@ aria-hidden="true">
 <script src="vendor/chart.js/Chart.min.js"></script>
 
 <!-- Page level custom scripts -->
-<script src="js/demo/chart-pie-demo.js"></script>
-<script src="js/demo/chart-bar-demo.js"></script>
+<script type="text/javascript">
+    (Chart.defaults.global.defaultFontFamily = "Metropolis"),
+    '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor = "#858796";
+
+// Pie Chart Example
+    var ctx = document.getElementById("tahapan");
+    var myPieChart = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+            labels: <?php echo json_encode($labelTahapan); ?>,
+            datasets: [{
+                data: <?php echo json_encode($chartTahapan); ?>,
+                backgroundColor: [
+                    "rgba(0, 97, 242, 1)",
+                    "rgba(0, 172, 105, 1)",
+                    "rgba(88, 0, 232, 1)"
+                    ],
+                hoverBackgroundColor: [
+                    "rgba(0, 97, 242, 0.9)",
+                    "rgba(0, 172, 105, 0.9)",
+                    "rgba(88, 0, 232, 0.9)"
+                    ],
+                hoverBorderColor: "rgba(234, 236, 244, 1)"
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+                backgroundColor: "rgb(255,255,255)",
+                bodyFontColor: "#858796",
+                borderColor: "#dddfeb",
+                borderWidth: 1,
+                xPadding: 15,
+                yPadding: 15,
+                displayColors: false,
+                caretPadding: 10
+            },
+            legend: {
+                display: false
+            },
+            cutoutPercentage: 80
+        }
+    });
+
+    var ctx = document.getElementById("skpd");
+    var myPieChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: <?php echo json_encode($labelJenis); ?>,
+        datasets: [{
+          data:  <?php echo json_encode($chartJenis); ?>,
+          backgroundColor: [
+            "rgba(0, 97, 242, 1)",
+            "rgba(0, 172, 105, 1)",
+            "rgba(88, 0, 232, 1)"
+            ],
+          hoverBackgroundColor: [
+            "rgba(0, 97, 242, 0.9)",
+            "rgba(0, 172, 105, 0.9)",
+            "rgba(88, 0, 232, 0.9)"
+            ],
+          hoverBorderColor: "rgba(234, 236, 244, 1)"
+      }],
+    },
+    options: {
+        maintainAspectRatio: false,
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#858796",
+          borderColor: '#dddfeb',
+          borderWidth: 1,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+      },
+      legend: {
+          display: false
+      },
+      cutoutPercentage: 80,
+  },
+});
+</script>
 @endsection

@@ -28,25 +28,28 @@
                             <th>SKPD</th>
                             <th>Uji Coba</th>
                             <th>Implementasi</th>
-                            <th width="9%">Tahapan</th>
-                            <th width="5%">File Bukti</th>
+                            <th>Skor</th>
+                            <th width="7%">Tahapan</th>
+                            <th width="4%">File Bukti</th>
                             <th width="12%"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($proposals as $prop)
+                        @forelse ($proposals as $proposal)
                         <tr>
-                            <td> {{ $prop->nama }} </td>
-                            <td> {{ $prop->skpd->nama }}</td>
-                            <td> {{ $prop->ujicoba }} </td>
-                            <td> {{ $prop->implementasi }} </td>
+                            <td> {{ $proposal->nama }} </td>
+                            <td> {{ $proposal->skpd->nama }}</td>
+                            {{--<td> {{ $proposal->ujicoba_view }}</td>--}}
+                            <td> {{ date('d/m/Y', strtotime($proposal->ujicoba)) }} </td>
+                            <td> {{ date('d/m/Y', strtotime($proposal->implementasi)) }} </td>
+                            <td> {{$proposal->user_id}} </td>
                             <td> 
-                                @if ($prop->tahapan_inovasi == 'ujicoba')
-                                <span class="badge bg-indigo">{{$prop->tahapan_inovasi}}</span>
-                                @elseif ($prop->tahapan_inovasi == 'penerapan')
-                                <span class="badge bg-green">{{$prop->tahapan_inovasi}}</span>
-                                @else ($prop->tahaoan_inovasi == 'inisiatif')
-                                <span class="badge bg-orange">{{$prop->tahapan_inovasi}}</span>
+                                @if ($proposal->tahapan_inovasi == 'ujicoba')
+                                <span class="badge bg-indigo">{{$proposal->tahapan_inovasi}}</span>
+                                @elseif ($proposal->tahapan_inovasi == 'penerapan')
+                                <span class="badge bg-green">{{$proposal->tahapan_inovasi}}</span>
+                                @else ($proposal->tahaoan_inovasi == 'inisiatif')
+                                <span class="badge bg-orange">{{$proposal->tahapan_inovasi}}</span>
                                 @endif
                             </td>
                             <td> 
@@ -54,11 +57,11 @@
                             </td>
                             <td>
 
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$prop->id}}"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$proposal->id}}"><i class="fas fa-trash"></i></button>
                                 
-                                <a href="{{route('inovasi.edit', $prop->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
+                                <a href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
 
-                                <a href="{{url('print/report', $prop->id)}}" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
+                                <a href="{{url('print/report', $proposal->id)}}" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
                             </tr>
                             @empty
                             <div class="alert alert-danger">
@@ -138,8 +141,8 @@ aria-hidden="true">
 </div>
 
 <!-- delete Modal-->
-@foreach ($proposals as $prop)
-<div class="modal fade" id="deleteModal{{$prop->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+@foreach ($proposals as $proposal)
+<div class="modal fade" id="deleteModal{{$proposal->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -152,7 +155,7 @@ aria-hidden="true">
             <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
             <div class="modal-footer">
                 <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('inovasi.destroy', $prop->id) }}">
+                <form method="POST" action="{{ route('inovasi.destroy', $proposal->id) }}">
                     @csrf
                     @method ('DELETE')
                     <button class="btn btn-danger" type="submit">Delete</button>

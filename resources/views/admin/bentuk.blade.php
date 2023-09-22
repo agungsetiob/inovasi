@@ -38,7 +38,7 @@
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$ben->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
-                                    <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
+                                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button"
                                     id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                     {{$ben->status}}

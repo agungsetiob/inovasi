@@ -34,7 +34,12 @@ class IndikatorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $indikator = new Indikator();
+        $indikator->nama = $request->nama;
+        $indikator->status = 'enabled';
+        $indikator->save();
+
+        return redirect()->back()->with('success','Data added successfully');
     }
 
     /**
@@ -66,6 +71,34 @@ class IndikatorController extends Controller
      */
     public function destroy(Indikator $indikator)
     {
-        //
+        if (Auth::user()->role == 'admin') {
+            $indikator->delete();
+        
+        return redirect('master/indikator')->with('success', 'Data Deleted Successfully');
+        } else{
+            return redirect()->back()->with('error', 'Many ways to rome');
+        }
+    }
+
+    public function disable($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $indikator = Indikator::findOrFail($id);
+            $indikator->update([
+                'status'     => 'disabled'
+            ]);
+            return redirect()->back()->with('success', 'Indikator inovasi is disabled successfully');
+        }
+    }
+
+    public function enable($id, Request $request)
+    {
+        if (Auth::user()->role == 'admin') {
+            $indikator = Indikator::findOrFail($id);
+            $indikator->update([
+                'status'     => 'enabled'
+            ]);
+            return redirect()->back()->with('success', 'Indikator inovasi is enabled successfully');
+        }
     }
 }

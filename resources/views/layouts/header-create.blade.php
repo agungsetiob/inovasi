@@ -20,6 +20,7 @@
   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
   <!-- Custom styles for this page -->
   <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
 
   <link rel="shortcut icon" href="{{url ('assets/img/logo.png')}}" type="image/x-icon"/>
 

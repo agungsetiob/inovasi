@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 
-use App\Models\{Post, Category, Contact};
+use App\Models\{Category, Contact};
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Auth;
+use DB;
 
 class AdminController extends Controller
 {
@@ -20,15 +21,40 @@ class AdminController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $totalProposals = Proposal::all()->count();
+            $chartTahapan = Proposal::select(DB::raw('tahapan_inovasi, count(id) as total'))
+            ->groupBy('tahapan_inovasi')
+            ->orderBy('tahapan_inovasi','asc')
+            ->get()
+            ->pluck('total');
+
+            $chartJenis = Proposal::select(DB::raw('category_id, count(id) as total2'))
+            ->groupBy('category_id')
+            ->orderBy('category_id', 'asc')
+            ->get()
+            ->pluck('total2');
+
+            //dd($chartSkpd);
             $messages = Contact::all()->count();
             $activeUsers = User::where('status', '=', 'active')->count();
             $inactiveUsers = User::where('status', '=', 'inactive')->count();
+
+            $labelTahapan = Proposal::select(DB::raw('DISTINCT(tahapan_inovasi)'))
+            ->orderBy('tahapan_inovasi', 'asc')
+            ->get()
+            ->pluck('tahapan_inovasi');
+
+            $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
+
             return view ('admin.index', 
                 compact(
                     'activeUsers', 
                     'inactiveUsers',
+                    'totalProposals',
                     'messages',
-                    'totalProposals'
+                    'chartTahapan',
+                    'labelTahapan',
+                    'chartJenis',
+                    'labelJenis'
                 ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
@@ -39,7 +65,25 @@ class AdminController extends Controller
     {
         if (Auth::user()->role == 'user') {
             $totalProposals = Proposal::all()->count();
-            return view('admin.index', compact('totalProposals'));
+            $chartTahapan = Proposal::select(DB::raw('tahapan_inovasi, count(id) as total'))
+            ->groupBy('tahapan_inovasi')
+            ->orderBy('tahapan_inovasi','asc')
+            ->get()
+            ->pluck('total');
+
+            $chartJenis = Proposal::select(DB::raw('category_id, count(id) as total2'))
+            ->groupBy('category_id')
+            ->orderBy('category_id', 'asc')
+            ->get()
+            ->pluck('total2');
+
+            $labelTahapan = Proposal::select(DB::raw('DISTINCT(tahapan_inovasi)'))
+            ->orderBy('tahapan_inovasi', 'asc')
+            ->get()
+            ->pluck('tahapan_inovasi');
+
+            $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
+            return view('admin.index', compact('totalProposals', 'chartJenis', 'chartTahapan', 'labelJenis', 'labelTahapan'));
         }else
       {
         return redirect()->back();
