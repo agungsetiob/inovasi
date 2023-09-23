@@ -1,4 +1,4 @@
-      <ul class=" navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+      <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -55,13 +55,14 @@
                             <i class="fa fa-fw fa-filter fa-xl"></i>
                             <span>Master</span>
                         </a>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar">
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar" style="z-index: 10;">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 <a class="collapse-item" href="{{route('skpd.index')}}"><i class="fas fa-fw fa-sitemap"></i> SKPD/UPTD</a>
                                 <a class="collapse-item" href="{{url('master/jenis')}}"><i class="fas fa-fw fa-list"></i> Jenis</a>
                                 <a class="collapse-item" href="{{url('master/bentuk')}}"><i class="fas fa-fw fa-shapes"></i> Bentuk</a>
                                 <a class="collapse-item" href="{{route('urusan.index')}}"><i class="fas fa-fw fa-info"></i> Urusan</a>
                                 <a class="collapse-item" href="{{route('indikator.index')}}"><i class="fas fa-fw fa-chart-simple"></i> Indikator</a>
+                                <a class="collapse-item" href="{{route('indikator.index')}}"><i class="fas fa-fw fa-chart-simple"></i> Bukti</a>
                             </div>
                         </div>
                     </li>
@@ -72,7 +73,7 @@
                             <i class="fa fa-fw fa-gear fa-xl"></i>
                             <span>Settings</span>
                         </a>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="z-index: 10;">
                             <div class="bg-white py-2 collapse-inner rounded">
                                 <a class="collapse-item" href="#"><i class="fas fa-fw fa-wrench"></i> Web setting</a>
                                 <a class="collapse-item" href="{{url('setting/profile')}}"><i class="fas fa-fw fa-mosque"></i> About</a>

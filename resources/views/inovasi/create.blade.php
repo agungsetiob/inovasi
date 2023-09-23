@@ -133,12 +133,17 @@
                         <!-- select 2 -->
                         <div class="form-group">
                             <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
-                            <select name="urusan" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required>
+                            <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required multiple>
                                 <option value="" disabled selected>Pilih urusan inovasi</option>
                                 @foreach ($urusans as $urus)
                                 <option value="{{ $urus->id }}" {{ old('category') == $urus->id ? 'selected' : ''}}>{{ $urus->nama }}</option>
                                 @endforeach
                             </select>
+                            @error('urusans')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
 
                         <div class="form-group">

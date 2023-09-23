@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Urusan extends Model
+class Bukti extends Model
 {
     use HasFactory;
-    public function proposals()
+    public function files()
     {
-        return $this->belongsToMany(Proposal::class);
+        return $this->hasMany(File::class);
     }
 
     public function getCreatedAtAttribute()

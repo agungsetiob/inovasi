@@ -55,7 +55,9 @@
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.6. Bentuk Inovasi Daerah</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->bentuk->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.7. Urusan Inovasi Daerah</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->urusan->nama}}</span></p>
+				@foreach ($proposal->urusans()->get() as $urusan)
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$urusan->nama}}</span></p>
+				@endforeach
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.8. Rancang Bangun dan Pokok Perubahan Yang Dilakukan</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->rancang_bangun}}&nbsp;</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.9. Tujuan Inovasi Daerah</span></p>
@@ -74,26 +76,6 @@
 				<p><br></p>
 				</div>
 			</div>
-	<!-- <div class="page" title="Page 2">
-		<div class="section" style="background-color: rgb(100.000000%, 100.000000%, 100.000000%);">
-			<div class="layoutArea"><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">Memberi kemudahan&nbsp;</span></div>
-		</div>
-	</div> -->
-	<!-- <div class="page" title="Page 3">
-		<div class="section" style="background-color: rgb(100.000000%, 100.000000%, 100.000000%);">
-			<div class="layoutArea">
-				<div class="column">
-					<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.12. Waktu Uji Coba Inovasi Daerah</span></p>
-					<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">13-01-2020</span></p>
-					<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.13. Waktu Implementasi</span></p>
-					<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">17-02-2020</span></p>
-					<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.14. Anggaran</span></p>
-					<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">-</span></p>
-					<p><br></p>
-				</div>
-			</div>
-		</div>
-	</div> -->
 </div>
 <div title="Page 2">
 	<div style="color: rgb(100.000000%, 100.000000%, 100.000000%);background-color: rgb(100.000000%, 100.000000%, 100.000000%);">

@@ -64,7 +64,7 @@ class RegisteredUserController extends Controller
             'role' => $request->role,
             'status' => 'active',
             'skpd_id' => $request->skpd_id,
-            //'avatar' => 'logors.png',
+            'avatar' => 'ava.png',
         ]);
 
         event(new Registered($user));
@@ -103,7 +103,7 @@ class RegisteredUserController extends Controller
             'role' => 'user',
             'status' => 'inactive',
             'skpd_id'=> $request->skpd_id,
-            //'avatar' => $image->hashName(),
+            'avatar' => 'ava.png',
         ]);
 
         event(new Registered($user));

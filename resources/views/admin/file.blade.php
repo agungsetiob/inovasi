@@ -2,17 +2,13 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">File Bukti Dukung</h1>
         @if (Auth::user()->role == 'admin')
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#uploadFile"><i class="fas fa-upload fa-sm text-white fa-bounce"></i> Upload File</a>
+        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#uploadFile"><i class="fas fa-upload fa-sm text-white fa-bounce"></i> Upload File</a>
         @endif
     </div>
-</div>
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -20,11 +16,11 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Nama File</th>
-                            <th>Date</th>
+                            <th>Bukti Dukung</th>
+                            <th>Indikator</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -32,7 +28,7 @@
                         @forelse ($files as $file)
                         <tr>
                             <td> {{$file->name}} </td>
-                            <td> {{$file->created_at}} </td>
+                            <td> {{$file->indikator->nama}} </td>
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
                                     <i class="fas fa-trash fa-shake"></i> hapus
@@ -44,7 +40,7 @@
                         </tr>
                         @empty
                         <div class="alert alert-danger">
-                            Data file Belum tersedia.
+                            Data dukung belum tersedia.
                         </div>
                         @endforelse
                         @if(Session::has('success'))
@@ -196,7 +192,7 @@ aria-hidden="true">
 
     <!-- Page level plugins -->
     <!-- Page level plugins -->
-    <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
     <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
     <!-- Page level custom scripts -->

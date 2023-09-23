@@ -14,8 +14,8 @@ class Proposal extends Model
     public function bentuk(){
         return $this->belongsTo(Bentuk::class);
     }
-    public function urusan(){
-        return $this->belongsTo(Urusan::class);
+    public function urusans(){
+        return $this->belongsToMany(Urusan::class);
     }
     public function category(){
         return $this->belongsTo(Category::class);

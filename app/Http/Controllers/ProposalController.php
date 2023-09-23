@@ -68,7 +68,7 @@ class ProposalController extends Controller
             'anggaran' => 'required',
             'bentuk' => 'required',
             'category' => 'required',
-            'urusan' => 'required',
+            'urusans' => 'required',
 
         ]);
 
@@ -77,7 +77,7 @@ class ProposalController extends Controller
             $image = $request->file('logo');
             $image->storeAs('public/inovasi', $image->hashName());
             //create post
-            Proposal::create([
+            $proposal = Proposal::create([
                 'logo'     => $image->hashName(),
                 'nama'     => $request->nama,
                 'tahapan_inovasi'   => $request->tahapan_inovasi,
@@ -91,13 +91,15 @@ class ProposalController extends Controller
                 'anggaran' => $request->anggaran,
                 'bentuk_id' => $request->bentuk,
                 'category_id' => $request->category,
-                'urusan_id' => $request->urusan,
+                //'urusan_id' => attach($request->urusan),
                 'skpd_id' => $request->skpd,
                 'user_id' => auth()->user()->id,
-        ]);
+                urusans()->attach($request->urusans)
+                ]);
+            $proposal->urusans()->sync($request->urusans);
         } else {
                 //create props
-            Proposal::create([
+            $proposal = Proposal::create([
                 'nama'     => $request->nama,
                 'tahapan_inovasi'   => $request->tahapan_inovasi,
                 'inisiator'      => $request->inisiator,
@@ -110,10 +112,12 @@ class ProposalController extends Controller
                 'anggaran' => $request->anggaran,
                 'bentuk_id' => $request->bentuk,
                 'category_id' => $request->category,
-                'urusan_id' => $request->urusan,
+                //urusans()->attach($request->urusans),
+                //'urusan_id' => $request->urusan,
                 'skpd_id' => $request->skpd,
                 'user_id' => auth()->user()->id,
-        ]);
+                ]);
+            $proposal->urusans()->sync($request->urusans);
         }
         //redirect to index
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil simpan inovasi']);

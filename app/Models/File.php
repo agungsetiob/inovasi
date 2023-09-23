@@ -16,8 +16,13 @@ class File extends Model
     {
         return $this->belongsTo(Proposal::class);
     }
-    public function indikator    {
+    public function indikator()
+    {
         return $this->belongsTo(Indikator::class);
+    }
+    public function bukti()
+    {
+        return $this->belongsTo(Bukti::class);
     }
     public function getCreatedAtAttribute()
     {
@@ -30,6 +35,7 @@ class File extends Model
         'user_id',
         'proposal_id',
         'indikator_id',
+        'bukti_id',
 
     ];
 }

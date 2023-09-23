@@ -131,8 +131,11 @@
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
-                            <select name="urusan" id="urusan" class="form-control @error('urusan') is-invalid @enderror"required>
+                            <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror"required multiple>
                                 <option value="" disabled selected>Pilih urusan inovasi</option>
+                                @foreach ($inovasi->urusans as $urusan)
+                                <option selected value="{{ $urusan->id }}">{{ $urusan->nama }}</option>
+                                @endforeach
                                 @foreach ($urusans as $urus)
                                 <option value="{{ $urus->id }}" @selected($inovasi->urusan_id == $urus->id)>{{ $urus->nama }}</option>
                                 @endforeach
