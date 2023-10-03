@@ -23,6 +23,9 @@ class Proposal extends Model
     public function skpd(){
         return $this->belongsTo(Skpd::class);
     }
+    public function files() {
+        return $this->hasMany(File::class);
+    }
     protected $guarded = [];
     protected $casts = [
         'proposals' => 'array'

@@ -3,16 +3,11 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Indikator Inovasi</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Indikator</a>
+        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Indikator</a>
     </div>
-</div>
-<!-- /.container-fluid -->
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -178,7 +173,7 @@ aria-hidden="true">
                 <form action="{{ route('indikator.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="nama">Bentuk inovasi</label>
+                        <label for="nama">Indikator inovasi</label>
                         <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan indikator inovasi">   
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>

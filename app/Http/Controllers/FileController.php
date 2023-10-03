@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Models\File;
+use App\Models\Proposal;
+use App\Models\Bukti;
+use App\Models\Indikator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,10 +17,19 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $files = File::all();
-        return view('admin.file', compact('files'));
+        $proposalId = $id;
+        $proposal = Proposal::findOrFail($id);
+        $buktis = Bukti::where('status', 'enabled')->get();
+        $indikators = Indikator::where('status', 'enabled')->get();
+        $totalBobot = File::with('bukti')
+        ->where('proposal_id', $id)
+        ->get()
+        ->pluck('bukti.bobot')
+        ->sum();
+        $files = Indikator::all();
+        return view('admin.file', compact('files', 'proposal', 'buktis', 'indikators', 'totalBobot', 'proposalId'));
     }
 
     /**
@@ -42,20 +54,34 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'file'   => 'required|mimes:pdf',
-            'name'     => 'required',
+            'bukti_id' => 'required',
         ]);
 
         //upload file
-        $file = $request->file('file');
-        $file->storeAs('public/docs', $file->hashName());
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $file->storeAs('public/docs', $file->hashName());
+            //create post
+            File::create([
+                'file'     => $file->hashName(),
+                'informasi'     => addslashes($request->informasi),
+                'user_id'   => auth()->user()->id,
+                'proposal_id' => $request->proposal_id,
+                'bukti_id' => $request->bukti_id,
+                'indikator_id' => $request->indikator_id,
+            ]);
+        } else {
+            File::create([
+                'informasi'     => addslashes($request->informasi),
+                'user_id'   => auth()->user()->id,
+                'proposal_id' => $request->proposal_id,
+                'bukti_id' => $request->bukti_id,
+                'indikator_id' => $request->indikator_id,
+            ]);
+        }
 
-        //create post
-        File::create([
-            'file'     => $file->hashName(),
-            'name'     => addslashes($request->name),
-            'user_id'   => auth()->user()->id,
-        ]);
-        return redirect()->back()->with('success', 'File uploaded successfully');
+        
+        return redirect()->back()->with('success', 'Evidence uploaded successfully');
     }
 
     /**
@@ -75,9 +101,9 @@ class FileController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function edit(File $file)
+    public function edit($id)
     {
-        //
+        //$file = Indikator::findOrFail($id);
     }
 
     /**

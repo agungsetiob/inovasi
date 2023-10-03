@@ -2,16 +2,11 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Users</h1>
-        <a href="{{route('register')}}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add User</a>
+        <a href="{{route('register')}}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add User</a>
     </div>
-</div>
-<!-- /.container-fluid -->
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">

@@ -3,18 +3,11 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Jenis Bukti Inovasi</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Jenis Bukti</a>
+        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Jenis Bukti</a>
     </div>
-</div>
-<!-- /.container-fluid -->
-
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -26,7 +19,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>name</th>
+                            <th width="50%">Name</th>
+                            <th>Bobot</th>
                             <th>Created at</th>
                             <th>Action</th>
                         </tr>
@@ -36,6 +30,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td> {{$bukti->nama}} </td>
+                            <td> {{$bukti->bobot}} </td>
                             <td> {{$bukti->created_at}} </td>
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$bukti->id}}"><i class="fas fa-trash"></i> Hapus</button>
@@ -46,16 +41,16 @@
                                     {{$bukti->status}}
                                 </button>
                                 @if ($bukti->status == 'disabled')
-                                <form method="POST" action="{{url('enable/Bukti/'. $bukti->id)}}">
+                                <form method="POST" action="{{url('enable/bukti/'. $bukti->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
                                 @elseif ($bukti->status == 'enabled')
-                                <form method="POST" action="{{url('disable/Bukti/'. $bukti->id)}}">
+                                <form method="POST" action="{{url('disable/bukti/'. $bukti->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Disable</button>
                                     </div>
                                 </form>
@@ -182,8 +177,8 @@ aria-hidden="true">
                     <div class="form-group">
                         <label for="name">Nama bukti inovasi</label>
                         <input type="text" name="nama" class="form-control" id="name" required placeholder="Masukkan nama bukti inovasi">
-                        <label for="skor">Skor</label>
-                        <input type="number" name="skor" class="form-control" id="skor" required>   
+                        <label for="skor">Bobot</label>
+                        <input type="number" name="bobot" class="form-control" id="skor" required>   
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>

@@ -3,16 +3,11 @@
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Bentuk Inovasi</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Bentuk</a>
+        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Bentuk</a>
     </div>
-</div>
-<!-- /.container-fluid -->
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -46,14 +41,14 @@
                                 @if ($ben->status == 'disabled')
                                 <form method="POST" action="{{url('enable/bentuk/'. $ben->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Enable</button>
                                     </div>
                                 </form>
                                 @elseif ($ben->status == 'enabled')
                                 <form method="POST" action="{{url('disable/bentuk/'. $ben->id)}}">
                                     @csrf
-                                    <div class="dropdown-menu animated--fade-in bg-gray-400" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
                                         <button class="dropdown-item">Disable</button>
                                     </div>
                                 </form>

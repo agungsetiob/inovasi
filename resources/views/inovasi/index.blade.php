@@ -8,12 +8,6 @@
         <h1 class="h3 mb-0 text-dark">Inovasi</h1>
         <a href="{{ route('inovasi.create') }}" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add Proposal</a>
     </div>
-</div>
-<!-- /.container-fluid -->
-
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
     <!-- DataTables Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -30,7 +24,7 @@
                             <th>Implementasi</th>
                             <th>Skor</th>
                             <th width="7%">Tahapan</th>
-                            <th width="4%">File Bukti</th>
+                            <th width="4%">Bukti Dukung</th>
                             <th width="12%"></th>
                         </tr>
                     </thead>
@@ -42,18 +36,18 @@
                             {{--<td> {{ $proposal->ujicoba_view }}</td>--}}
                             <td> {{ date('d/m/Y', strtotime($proposal->ujicoba)) }} </td>
                             <td> {{ date('d/m/Y', strtotime($proposal->implementasi)) }} </td>
-                            <td> {{$proposal->user_id}} </td>
+                            <td>{{ $proposal->files->sum(function ($file) {return $file->bukti->bobot;}) }}</td>
                             <td> 
                                 @if ($proposal->tahapan_inovasi == 'ujicoba')
                                 <span class="badge bg-indigo">{{$proposal->tahapan_inovasi}}</span>
                                 @elseif ($proposal->tahapan_inovasi == 'penerapan')
                                 <span class="badge bg-green">{{$proposal->tahapan_inovasi}}</span>
-                                @else ($proposal->tahaoan_inovasi == 'inisiatif')
+                                @else ($proposal->tahapan_inovasi == 'inisiatif')
                                 <span class="badge bg-orange">{{$proposal->tahapan_inovasi}}</span>
                                 @endif
                             </td>
                             <td> 
-                                <a href="{{url('bukti-dukung')}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-eye fa-bounce"></i></a>
+                                <a href="{{url('bukti-dukung', $proposal->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>
                             </td>
                             <td>
 
@@ -61,7 +55,7 @@
                                 
                                 <a href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
 
-                                <a href="{{url('print/report', $proposal->id)}}" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
+                                <a href="{{url('print/report', $proposal->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
                             </tr>
                             @empty
                             <div class="alert alert-danger">

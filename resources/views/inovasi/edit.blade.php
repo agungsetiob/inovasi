@@ -1,15 +1,10 @@
 @extends('layouts.header-create')
 @section('content')
-<!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid overflow-auto panjang">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Edit Proposal</h1>
     </div>
-</div>
-<!-- End of Main Content -->
-
-<div class="container-fluid overflow-auto panjang">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow rounded">

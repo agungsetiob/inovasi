@@ -1,40 +1,54 @@
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
-<div class="container-fluid">
+<div class="container-fluid overflow-auto panjang">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">File Bukti Dukung</h1>
-        @if (Auth::user()->role == 'admin')
-        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#uploadFile"><i class="fas fa-upload fa-sm text-white fa-bounce"></i> Upload File</a>
-        @endif
+        <h1 class="h3 mb-0 text-dark">{{ $proposal->nama }}</h1>
     </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar File</h6>
+        <div class="card-header py-3 d-sm-flex justify-content-between">
+            <h6 class="m-0 font-weight-bold text-primary">Daftar File Bukti Dukung</h6>
+            <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#uploadFile"><i class="fas fa-upload fa-sm text-white fa-bounce"></i> Upload File</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
+                <!-- <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0"> -->
+                    <table class="table table-borderless table-striped" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Bukti Dukung</th>
                             <th>Indikator</th>
-                            <th>Action</th>
+                            <th width="55%">Bukti</th>
+                            <th>Bobot</th>
+                            <th width="12%">Action</th>
                         </tr>
                     </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Total</th>
+                            <th></th>
+                            <th>{{$totalBobot}}</th>
+                        </tr>
+                        <tr>
+                            <td>* wajib diisi</td>
+                        </tr>
+                    </tfoot>
                     <tbody>
                         @forelse ($files as $file)
                         <tr>
-                            <td> {{$file->name}} </td>
-                            <td> {{$file->indikator->nama}} </td>
+                            <td>{{$file->nama}}</td>
+                            <td>@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->nama}} @endforeach</td>
+                            <td>@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
-                                    <i class="fas fa-trash fa-shake"></i> hapus
-                                </button>
-                                <a class="btn btn-outline-success btn-sm" title="download" href="{{Storage::url('docs/'. $file->file )}}" target="_blank">
-                                    <i class="fas fa-download"></i> download
+                                {{--<button class="btn btn-outline-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
+                                    <i class="fas fa-trash fa-shake"></i>
+                                </button>--}}
+                                <a class="btn btn-outline-success btn-sm" title="download" href="@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{Storage::url('docs/'. $item->file )}} @endforeach" target="_blank">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a class="btn btn-outline-secondary btn-sm" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$file->id}}">
+                                    <i class="fas fa-pencil-alt"></i>
                                 </a>
                             </td>
                         </tr>
@@ -91,110 +105,70 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+@include('components.logout')
 
-<!-- Add Modal -->
-<div class="modal fade" id="uploadFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+@include('components.modal-add-indikator')
+
+<!-- delete Modal-->
+{{--@foreach ($files as $file)
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Upload File</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="{{ url('upload/file') }}" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
+            <div class="modal-footer">
+                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
+                <form action="{{url('delete/docs', $file->id)}}" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <label for="name">File name</label>
-                        <input type="text" name="name" class="form-control" id="name" required>
-                        <label for="photo">Choose file</label>
-                        <div class="form-group">
-                            <div class="input-group ">
-                                <label class="input-group-btn">
-                                    <span class="btny btn-outline-primary">
-                                        Browse<input accept="application/pdf" id="uploadBtn" type="file" style="display: none;" multiple name="file">
-                                    </span>
-                                </label>
-                                <input id="uploadFile" type="text" class="form-control @error('photo') is-invalid @enderror" readonly placeholder="Choose a .pdf file">
-                            </div>  
-                        </div>
-                        <script type="text/javascript">
-                            document.getElementById("uploadBtn").onchange = function () {
-                                document.getElementById("uploadFile").value = this.value;};
-                            </script>
-                        </div>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Upload</button>
-                    </form>
-                </div> 
+                    @method ('delete')
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+@endforeach--}}
 
-    <!-- delete Modal-->
-    @foreach ($files as $file)
-    <div class="modal fade" id="deleteModal{{$file->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                    <form action="{{url('delete/docs', $file->id)}}" method="POST">
-                        @csrf
-                        @method ('delete')
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endforeach
+@include('components.modal-edit-indikator')
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- Bootstrap core JavaScript-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+<!-- Core plugin JavaScript-->
+<script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+<!-- Custom scripts for all pages-->
+<script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 
-    <!-- Page level plugins -->
-    <!-- Page level plugins -->
-    <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<!-- Page level plugins -->
+<!-- Page level plugins -->
+<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
+<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-    @endsection
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
+<!-- Page level custom scripts -->
+<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+<script type="text/javascript">
+
+    document.getElementById('bFile').onchange = function () {
+        document.getElementById('uFile').value = this.value;};
+    document.getElementById('editFile').onchange = function () {
+        document.getElementById('newFile').value = this.value;};
+
+        $(document).ready(function () {
+          $('.select').selectize({
+              sortField: 'text'
+          });
+      });
+  </script>
+
+  @endsection

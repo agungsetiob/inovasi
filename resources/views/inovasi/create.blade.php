@@ -1,15 +1,9 @@
 @extends('layouts.header-create')
 @section('content')
-<!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
+<div class="container-fluid overflow-auto panjang">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Create Proposal</h1>
     </div>
-</div>
-<!-- End of Main Content -->
-
-<div class="container-fluid overflow-auto panjang">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-0 shadow rounded">
@@ -86,7 +80,14 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="inisiator">Inisiator inovasi:</label>
-                                    <input id="inisiator" type="text" class="form-control @error('inisiator') is-invalid @enderror" name="inisiator" value="{{ old('inisiator') }}" placeholder="Masukkan nama pembuat inovasi">
+                                    {{--<input id="inisiator" type="text" class="form-control @error('inisiator') is-invalid @enderror" name="inisiator" value="{{ old('inisiator') }}" placeholder="Masukkan nama pembuat inovasi">--}}
+                                    <select name="inisiator" id="inisiator" class="selectpicker form-control @error('inisiator') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih inisiator inovasi</option>
+                                        <option value="Kepala daerah" {{old('inisiator') == 'Kepala daerah' ? "selected" : ""}}>Kepala daerah</option>
+                                        <option value="Kepala skpd" {{old('inisiator') == 'Kepala skpd' ? "selected" : ""}}>Kepala SKPD</option>
+                                        <option value="ASN" {{old('inisiator') == 'ASN' ? "selected" : ""}}>ASN</option>
+                                        <option value="Masyarakat" {{old('inisiator') == 'Masyarakat' ? "selected" : ""}}>Masyarakat</option>
+                                    </select>
 
                                     <!-- error message untuk title -->
                                     @error('inisiator')
@@ -115,7 +116,7 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="bentuk">Bentuk inovasi:</label>
-                                    <select name="bentuk" id="bentuk" class="form-control @error('bentuk') is-invalid @enderror" required>
+                                    <select name="bentuk" id="bentuk" class="form-control @error('bentuk') is-invalid @enderror" required><i class="fas fa-angle-up"></i>
                                         <option value="" disabled selected>Pilih bentuk inovasi</option>
                                         @foreach ($bentuks as $ben)
                                         <option value="{{ $ben->id }}" {{ old('bentuk') == $ben->id ? 'selected' : ''}}>{{ $ben->nama }}</option>

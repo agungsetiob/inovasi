@@ -31,6 +31,7 @@
 
 		.text-uppercase {
             text-transform: uppercase !important;
+            font-weight: 600;
         }
 		
 	</style>
@@ -55,9 +56,7 @@
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.6. Bentuk Inovasi Daerah</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->bentuk->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.7. Urusan Inovasi Daerah</span></p>
-				@foreach ($proposal->urusans()->get() as $urusan)
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$urusan->nama}}</span></p>
-				@endforeach
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">@foreach ($proposal->urusans()->get() as $urusan) {{$urusan->nama}}, @endforeach</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.8. Rancang Bangun dan Pokok Perubahan Yang Dilakukan</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->rancang_bangun}}&nbsp;</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.9. Tujuan Inovasi Daerah</span></p>
@@ -92,13 +91,13 @@
 		<td class="text-center text-uppercase" style="width: 40%">Bukti</td>
 	</tr>
 	<tbody>
-		{{--@foreach ($messages as $item)--}}
+		@foreach ($files as $item)
 		<tr>
-			<td class="text-center align-middle"></td>
-			<td class="text-center align-middle"></td>
-			<td class="text-center align-middle"></td>
-			<td class="text-center align-middle"></td>
+			<td class="text-center align-middle"> {{$loop->iteration}} </td>
+			<td class="text-center align-middle"> {{$item->nama}} </td>
+			<td class="text-center align-middle"> @foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->informasi}} @endforeach</td>
+			<td class="text-center align-middle">@foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->bukti->nama}} @endforeach</td>
 		</tr>
-		{{--@endforeach--}}
+		@endforeach
 	</tbody>
 </table></body></html>

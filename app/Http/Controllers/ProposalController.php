@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Proposal;
 use Illuminate\Http\Request;
-
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Skpd;
 use App\Models\Bentuk;
 use App\Models\Urusan;
+use App\Models\File;
+use App\Models\Indikator;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -24,7 +25,11 @@ class ProposalController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $proposals = Proposal::all();
-            return view ('inovasi.index', compact( 'proposals'));
+            $totalBobot = File::with('bukti')
+            ->get()
+            ->pluck('bukti.bobot')
+            ->sum();
+            return view ('inovasi.index', compact( 'proposals', 'totalBobot'));
         } elseif (Auth::user()->role == 'user') {
             $proposals = Proposal::where('user_id', Auth::user()->id)->get();
             return view ('inovasi.index', compact( 'proposals'));
@@ -76,7 +81,7 @@ class ProposalController extends Controller
         if ($request->hasFile('logo')){
             $image = $request->file('logo');
             $image->storeAs('public/inovasi', $image->hashName());
-            //create post
+            //create props
             $proposal = Proposal::create([
                 'logo'     => $image->hashName(),
                 'nama'     => $request->nama,
@@ -91,11 +96,9 @@ class ProposalController extends Controller
                 'anggaran' => $request->anggaran,
                 'bentuk_id' => $request->bentuk,
                 'category_id' => $request->category,
-                //'urusan_id' => attach($request->urusan),
                 'skpd_id' => $request->skpd,
                 'user_id' => auth()->user()->id,
-                urusans()->attach($request->urusans)
-                ]);
+            ]);
             $proposal->urusans()->sync($request->urusans);
         } else {
                 //create props
@@ -116,7 +119,7 @@ class ProposalController extends Controller
                 //'urusan_id' => $request->urusan,
                 'skpd_id' => $request->skpd,
                 'user_id' => auth()->user()->id,
-                ]);
+            ]);
             $proposal->urusans()->sync($request->urusans);
         }
         //redirect to index
@@ -149,7 +152,7 @@ class ProposalController extends Controller
                 'bentuks', 
                 'urusans',));
         } else{
-            return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikans');
+            return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikan');
         }
     }
 
@@ -172,8 +175,10 @@ class ProposalController extends Controller
     public function proposalReport($id)
     {
         $proposal = Proposal::findOrFail($id);
-        $pdf = PDF::loadview('admin.proposal-report',compact('proposal'))->setPaper('A4', 'portrait');
+        $files = Indikator::all();
+        //$files = File::where('proposal_id', $id)->orderBy('indikator_id')->get();
+        $pdf = PDF::loadview('inovasi.proposal-report',compact('proposal', 'files'))->setPaper('A4', 'portrait');
         set_time_limit(300);
-        return $pdf->stream('proposal-report.pdf');
+        return $pdf->stream('proposal-'.$id.'.pdf');
     }
 }

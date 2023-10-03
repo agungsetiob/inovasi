@@ -30,8 +30,6 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories');
             $table->unsignedBigInteger('skpd_id');
             $table->foreign('skpd_id')->references('id')->on('skpds');
-            // $table->unsignedBigInteger('urusan_id');
-            // $table->foreign('urusan_id')->references('id')->on('urusans');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

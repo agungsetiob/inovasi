@@ -62,7 +62,7 @@
                                 <a class="collapse-item" href="{{url('master/bentuk')}}"><i class="fas fa-fw fa-shapes"></i> Bentuk</a>
                                 <a class="collapse-item" href="{{route('urusan.index')}}"><i class="fas fa-fw fa-info"></i> Urusan</a>
                                 <a class="collapse-item" href="{{route('indikator.index')}}"><i class="fas fa-fw fa-chart-simple"></i> Indikator</a>
-                                <a class="collapse-item" href="{{route('indikator.index')}}"><i class="fas fa-fw fa-chart-simple"></i> Bukti</a>
+                                <a class="collapse-item" href="{{route('bukti.index')}}"><i class="fas fa-fw fa-solid fa-meteor"></i> Bukti</a>
                             </div>
                         </div>
                     </li>
