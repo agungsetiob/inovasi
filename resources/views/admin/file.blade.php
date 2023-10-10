@@ -21,7 +21,7 @@
                             <th>Indikator</th>
                             <th width="55%">Bukti</th>
                             <th>Bobot</th>
-                            <th width="12%">Action</th>
+                            <th width="12%"></th>
                         </tr>
                     </thead>
                     <tfoot>
@@ -34,22 +34,22 @@
                             <td>* wajib diisi</td>
                         </tr>
                     </tfoot>
-                    <tbody>
+                    <tbody id="tabel-file">
                         @forelse ($files as $file)
-                        <tr>
+                        <tr id="@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item)index_{{$item->id}}@endforeach">
                             <td>{{$file->nama}}</td>
                             <td>@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->nama}} @endforeach</td>
                             <td>@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
                             <td>
-                                {{--<button class="btn btn-outline-danger btn-sm" title="hapus" href="#" data-toggle="modal" data-target="#deleteModal{{$file->id}}">
-                                    <i class="fas fa-trash fa-shake"></i>
-                                </button>--}}
-                                <a class="btn btn-outline-success btn-sm" title="download" href="@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{Storage::url('docs/'. $item->file )}} @endforeach" target="_blank">
-                                    <i class="fas fa-download"></i>
-                                </a>
-                                <a class="btn btn-outline-secondary btn-sm" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$file->id}}">
+                                <a class="btn btn-outline-secondary btn-sm @forelse ($file->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$file->id}}">
                                     <i class="fas fa-pencil-alt"></i>
                                 </a>
+                                <a class="btn btn-outline-success btn-sm @forelse ($file->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="download" href="@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) {{url('/storage/docs/'. $item->file )}} @endforeach" target="_blank">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <button class="btn btn-outline-primary btn-sm @foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item) @if ($item) d-none @endif @endforeach" data-id="{{$file->id}}" id="btn-add" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
                             </td>
                         </tr>
                         @empty
@@ -57,21 +57,12 @@
                             Data dukung belum tersedia.
                         </div>
                         @endforelse
-                        @if(Session::has('success'))
-                        <div class="alert alert-success">
-                            {{ Session::get('success') }}
-                            @php
-                            Session::forget('success');
-                            @endphp
+                        <div class="alert alert-success d-none">
+                            
                         </div>
-                        @elseif (Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{ Session::get('error') }}
-                            @php
-                            Session::forget('error');
-                            @endphp
+                        <div class="alert alert-danger d-none">
+                            
                         </div>
-                        @endif
                     </tbody>
                 </table>
             </div>
@@ -105,8 +96,8 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-@include('components.logout')
-
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 @include('components.modal-add-indikator')
 
 <!-- delete Modal-->
@@ -136,11 +127,11 @@
 @endforeach--}}
 
 @include('components.modal-edit-indikator')
+@include('components.logout')
 
 <!-- Bootstrap core JavaScript-->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 <!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -169,6 +160,5 @@
               sortField: 'text'
           });
       });
-  </script>
-
+</script>
   @endsection

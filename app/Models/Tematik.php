@@ -5,21 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Urusan extends Model
+class Tematik extends Model
 {
     use HasFactory;
     public function proposals()
     {
-        return $this->belongsToMany(Proposal::class);
-    }
-
-    public function tematik()
-    {
-        return $this->belongsTo(Tematik::class);
-    }
-    public function klasifikasi()
-    {
-        return $this->belongsTo(Klasifikasi::class);
+        return $this->hasMany(Proposal::class);
     }
 
     public function getCreatedAtAttribute()

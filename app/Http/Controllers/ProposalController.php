@@ -11,6 +11,8 @@ use App\Models\Bentuk;
 use App\Models\Urusan;
 use App\Models\File;
 use App\Models\Indikator;
+use App\Models\Tematik;
+use App\Models\Klasifikasi;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -43,15 +45,34 @@ class ProposalController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', 'enabled')->get();
+        $categories = Category::where('status', 'active')->get();
         $skpds = Skpd::where('status', 'active')->get();
-        $bentuks = Bentuk::where('status', 'enabled')->get();
+        $bentuks = Bentuk::where('status', 'active')->get();
         $urusans = Urusan::where('status', 'active')->get();
+        $klasifikasis = Klasifikasi::where('status', 'active')->get();
+        $tematiks = Tematik::where('status', 'active')->orderBy('id')->get();
+        $options = [];
+        foreach ($klasifikasis as $klasifikasi) {
+            $options[$klasifikasi->id] = [
+                'label' => $klasifikasi->nama,
+                'children' => [],
+            ];
+            foreach ($urusans as $urusan) {
+                if ($urusan->klasifikasi_id === $klasifikasi->id) {
+                    $options[$klasifikasi->id]['children'][$urusan->id] = $urusan->nama;
+                }
+            }
+        }
+        //dd ($urusans);
         return view('inovasi.create', compact(
             'categories', 
             'skpds', 
             'bentuks', 
-            'urusans'));
+            'urusans',
+            'tematiks',
+            'klasifikasis',
+            'options'
+        ));
     }
 
     /**
@@ -60,7 +81,7 @@ class ProposalController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'logo'     => 'image|mimes:jpeg,png,jpg|max:1024',
+            'profil'     => 'mimes:pdf|max:1536',
             'nama'     => 'required',
             'tahapan_inovasi'   => 'required',
             'inisiator'      => 'required',
@@ -70,59 +91,42 @@ class ProposalController extends Controller
             'hasil' => 'required',
             'ujicoba' => 'required',
             'implementasi' => 'required',
-            'anggaran' => 'required',
+            'anggaran' => 'mimes:pdf|max:1024',
             'bentuk' => 'required',
             'category' => 'required',
             'urusans' => 'required',
+            'tematik' => 'required'
 
         ]);
 
-        //upload image
-        if ($request->hasFile('logo')){
-            $image = $request->file('logo');
-            $image->storeAs('public/inovasi', $image->hashName());
-            //create props
-            $proposal = Proposal::create([
-                'logo'     => $image->hashName(),
-                'nama'     => $request->nama,
-                'tahapan_inovasi'   => $request->tahapan_inovasi,
-                'inisiator'      => $request->inisiator,
-                'rancang_bangun' => $request->rancang_bangun,
-                'tujuan'    => $request->tujuan,
-                'manfaat' => $request->manfaat,
-                'hasil' => $request->hasil,
-                'ujicoba' => $request->ujicoba,
-                'implementasi' => $request->implementasi,
-                'anggaran' => $request->anggaran,
-                'bentuk_id' => $request->bentuk,
-                'category_id' => $request->category,
-                'skpd_id' => $request->skpd,
-                'user_id' => auth()->user()->id,
-            ]);
-            $proposal->urusans()->sync($request->urusans);
-        } else {
-                //create props
-            $proposal = Proposal::create([
-                'nama'     => $request->nama,
-                'tahapan_inovasi'   => $request->tahapan_inovasi,
-                'inisiator'      => $request->inisiator,
-                'rancang_bangun' => $request->rancang_bangun,
-                'tujuan'    => $request->tujuan,
-                'manfaat' => $request->manfaat,
-                'hasil' => $request->hasil,
-                'ujicoba' => $request->ujicoba,
-                'implementasi' => $request->implementasi,
-                'anggaran' => $request->anggaran,
-                'bentuk_id' => $request->bentuk,
-                'category_id' => $request->category,
-                //urusans()->attach($request->urusans),
-                //'urusan_id' => $request->urusan,
-                'skpd_id' => $request->skpd,
-                'user_id' => auth()->user()->id,
-            ]);
-            $proposal->urusans()->sync($request->urusans);
+        $data = [
+            'nama' => $request->nama,
+            'tahapan_inovasi'   => $request->tahapan_inovasi,
+            'inisiator'      => $request->inisiator,
+            'rancang_bangun' => addslashes($request->rancang_bangun),
+            'tujuan'    => $request->tujuan,
+            'manfaat' => $request->manfaat,
+            'hasil' => $request->hasil,
+            'ujicoba' => $request->ujicoba,
+            'implementasi' => $request->implementasi,
+            'bentuk_id' => $request->bentuk,
+            'category_id' => $request->category,
+            'skpd_id' => $request->skpd,
+            'tematik_id' => $request->tematik,
+            'user_id' => auth()->user()->id,
+        ];
+        if ($request->hasFile('profil')) {
+            $profil = $request->file('profil');
+            $profil->storeAs('public/profil', $profil->hashName());
+            $data['profil'] = $profil->hashName();
         }
-        //redirect to index
+        if ($request->hasFile('anggaran')) {
+            $anggaran = $request->file('anggaran');
+            $anggaran->storeAs('public/anggaran', $anggaran->hashName());
+            $data['anggaran'] = $anggaran->hashName();
+        }
+        $proposal = Proposal::create($data);
+        $proposal->urusans()->sync($request->urusans);
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil simpan inovasi']);
         
     }
@@ -176,7 +180,6 @@ class ProposalController extends Controller
     {
         $proposal = Proposal::findOrFail($id);
         $files = Indikator::all();
-        //$files = File::where('proposal_id', $id)->orderBy('indikator_id')->get();
         $pdf = PDF::loadview('inovasi.proposal-report',compact('proposal', 'files'))->setPaper('A4', 'portrait');
         set_time_limit(300);
         return $pdf->stream('proposal-'.$id.'.pdf');

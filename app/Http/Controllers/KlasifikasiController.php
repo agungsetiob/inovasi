@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Urusan;
 use App\Models\Klasifikasi;
+use App\Models\Urusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
 
-class UrusanController extends Controller
+class KlasifikasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,21 +16,11 @@ class UrusanController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $klasifikasis = Klasifikasi::where('status', 'active')->get();
-            $urusans = Urusan::with('klasifikasi')->get();
-            return view ('admin.urusan', compact('urusans', 'klasifikasis'));
+            $klasifikasis = Klasifikasi::all();
+            return view ('admin.klasifikasi-urusan', compact('klasifikasis'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
-    }
-
-    public function klasifikasi()
-    {
-        $klasifikasis = Urusan::with('klasifikasi')->get();
-        return response()->json([
-            'success' => true,
-            'data'    => $klasifikasis
-        ]);
     }
 
     /**
@@ -48,16 +38,14 @@ class UrusanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama'     => 'required',
-            'klasifikasi_id' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $urusan = Urusan::create([
+        $klasifikasi = Klasifikasi::create([
             'nama'     => $request->nama,
-            'klasifikasi_id' => $request->klasifikasi_id,
             'status'   => 'active',
         ]);
 
@@ -65,20 +53,20 @@ class UrusanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data Berhasil Disimpan!',
-            'data'    => $urusan 
+            'data'    => $klasifikasi 
         ]);
     }
 
     /**
      * change status of klasifikasi
      */
-    public function toggleStatus(Urusan $urusan)
+    public function toggleStatus(Klasifikasi $klasifikasi)
     {
         $currentStatus = request('currentStatus');
 
     // Toggle the status
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
-        $urusan->update(['status' => $newStatus]);
+        $klasifikasi->update(['status' => $newStatus]);
 
         return response()->json(['newStatus' => $newStatus]);
     }
@@ -86,7 +74,7 @@ class UrusanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Urusan $urusan)
+    public function show(Klasifikasi $klasifikasi)
     {
         //
     }
@@ -94,7 +82,7 @@ class UrusanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Urusan $urusan)
+    public function edit(Klasifikasi $klasifikasi)
     {
         //
     }
@@ -102,7 +90,7 @@ class UrusanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Urusan $urusan)
+    public function update(Request $request, Klasifikasi $klasifikasi)
     {
         //
     }
@@ -110,7 +98,7 @@ class UrusanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Urusan $urusan)
+    public function destroy(Klasifikasi $klasifikasi)
     {
         //
     }

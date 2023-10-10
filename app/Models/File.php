@@ -30,7 +30,7 @@ class File extends Model
         ->isoFormat('D MMMM Y');
     }
     protected $fillable = [
-        'name',
+        'informasi',
         'file',
         'user_id',
         'proposal_id',

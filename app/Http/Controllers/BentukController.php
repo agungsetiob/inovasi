@@ -36,7 +36,7 @@ class BentukController extends Controller
     {
         $bentuk = new Bentuk();
         $bentuk->nama = $request->nama;
-        $bentuk->status = 'enabled';
+        $bentuk->status = 'active';
         $bentuk->save();
 
         return redirect()->back()->with('success','Data added successfully');
@@ -85,7 +85,7 @@ class BentukController extends Controller
         if (Auth::user()->role == 'admin') {
             $cat = Bentuk::findOrFail($id);
             $cat->update([
-                'status'     => 'disabled'
+                'status'     => 'inactive'
             ]);
             return redirect()->back()->with('success', 'Bentuk inovasi is disabled successfully');
         }
@@ -96,7 +96,7 @@ class BentukController extends Controller
         if (Auth::user()->role == 'admin') {
             $cat = Bentuk::findOrFail($id);
             $cat->update([
-                'status'     => 'enabled'
+                'status'     => 'active'
             ]);
             return redirect()->back()->with('success', 'Bentuk inovasi is enabled successfully');
         }

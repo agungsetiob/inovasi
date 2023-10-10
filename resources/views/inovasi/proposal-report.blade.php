@@ -56,7 +56,8 @@
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.6. Bentuk Inovasi Daerah</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->bentuk->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.7. Urusan Inovasi Daerah</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">@foreach ($proposal->urusans()->get() as $urusan) {{$urusan->nama}}, @endforeach</span></p>
+				{{--<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">@foreach ($proposal->urusans()->get() as $urusan) {{$urusan->nama}}, @endforeach</span></p>--}}
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{ $proposal->urusans->pluck('nama')->implode(', ') }}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.8. Rancang Bangun dan Pokok Perubahan Yang Dilakukan</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->rancang_bangun}}&nbsp;</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.9. Tujuan Inovasi Daerah</span></p>
@@ -71,7 +72,9 @@
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.13. Waktu Implementasi</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->implementasi}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.14. Anggaran</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->anggaran}}</span></p>
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';"><a href="{{URL::to('anggaran/'. $proposal->anggaran )}}" target="_blank">{{$proposal->anggaran}}</a></span></p>
+				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.15. Profil</span></p>
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';"><a href="{{URL::to('/profil/'. $proposal->profil )}}" target="_blank">{{$proposal->profil}}</a></span></p>
 				<p><br></p>
 				</div>
 			</div>
@@ -95,8 +98,8 @@
 		<tr>
 			<td class="text-center align-middle"> {{$loop->iteration}} </td>
 			<td class="text-center align-middle"> {{$item->nama}} </td>
-			<td class="text-center align-middle"> @foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->informasi}} @endforeach</td>
-			<td class="text-center align-middle">@foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->bukti->nama}} @endforeach</td>
+			<td class="text-center align-middle"> @foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->bukti->nama}} @endforeach</td>
+			<td class="text-center align-middle">@foreach ($item->files()->where('proposal_id', $proposal->id)->get() as $file){{$file->informasi}} @endforeach</td>
 		</tr>
 		@endforeach
 	</tbody>

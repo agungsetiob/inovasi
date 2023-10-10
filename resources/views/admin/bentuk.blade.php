@@ -38,18 +38,18 @@
                                     aria-expanded="false">
                                     {{$ben->status}}
                                 </button>
-                                @if ($ben->status == 'disabled')
+                                @if ($ben->status == 'inactive')
                                 <form method="POST" action="{{url('enable/bentuk/'. $ben->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Enable</button>
+                                        <button class="dropdown-item">activate</button>
                                     </div>
                                 </form>
-                                @elseif ($ben->status == 'enabled')
+                                @elseif ($ben->status == 'active')
                                 <form method="POST" action="{{url('disable/bentuk/'. $ben->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Disable</button>
+                                        <button class="dropdown-item">deactivate</button>
                                     </div>
                                 </form>
                                 @endif
@@ -62,11 +62,14 @@
                     </div>
                     @endforelse
                     @if(Session::has('success'))
-                    <div class="alert alert-success data-dismiss">
+                    <div class="alert alert-success data-dismiss alert-dismissible">
                         {{ Session::get('success') }}
                         @php
                         Session::forget('success');
                         @endphp
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     @elseif (Session::has('error'))
                     <div class="alert alert-danger">

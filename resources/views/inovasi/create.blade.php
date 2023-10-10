@@ -25,45 +25,6 @@
                         <div class="form-group">
                             <div class="row g-3">
                                 <div class="col">
-                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
-                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
-                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
-                                    </select>
-                                    
-                                    <!-- error message untuk title -->
-                                    @error('skpd')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col">
-                                    <label class="font-weight-bold" for="uploadBtn">Logo inovasi:</label>
-                                    <div class="input-group "> 
-                                        <label class="input-group-btn">
-                                            <span class="btny btn-outline-primary">
-                                                Browse<input accept="image/*" id="uploadBtn" type="file" style="display: none;" multiple name="logo">
-                                            </span>
-                                        </label>
-                                        <input id="uploadFile" type="text" class="form-control @error('logo') is-invalid @enderror" readonly placeholder="Choose an image logo">
-                                    </div>
-                                    @error('logo')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                    <script type="text/javascript">
-                                        document.getElementById("uploadBtn").onchange = function (){
-                                            document.getElementById("uploadFile").value = this.value;
-                                        }
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row g-3">
-                                <div class="col">
                                     <label class="font-weight-bold" for="tahapan">Tahapan inovasi:</label>
                                     <select name="tahapan_inovasi" id="tahapan" class="selectpicker form-control @error('tahapan_inovasi') is-invalid @enderror" required>
                                         <option value="" disabled selected>Pilih tahapan inovasi</option>
@@ -80,7 +41,6 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="inisiator">Inisiator inovasi:</label>
-                                    {{--<input id="inisiator" type="text" class="form-control @error('inisiator') is-invalid @enderror" name="inisiator" value="{{ old('inisiator') }}" placeholder="Masukkan nama pembuat inovasi">--}}
                                     <select name="inisiator" id="inisiator" class="selectpicker form-control @error('inisiator') is-invalid @enderror" required>
                                         <option value="" disabled selected>Pilih inisiator inovasi</option>
                                         <option value="Kepala daerah" {{old('inisiator') == 'Kepala daerah' ? "selected" : ""}}>Kepala daerah</option>
@@ -91,6 +51,20 @@
 
                                     <!-- error message untuk title -->
                                     @error('inisiator')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label class="font-weight-bold" for="tematik">Tematik:</label>
+                                    <select name="tematik" id="tematik" class="form-control @error('tematik') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih tematik</option>
+                                        @foreach ($tematiks as $tema)
+                                        <option value="{{ $tema->id }}" {{ old('tematik') == $tema->id ? 'selected' : ''}}>{{ $tema->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('tematik')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -133,11 +107,24 @@
 
                         <!-- select 2 -->
                         <div class="form-group">
-                            <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
+                            {{--<label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
                             <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required multiple>
                                 <option value="" disabled selected>Pilih urusan inovasi</option>
                                 @foreach ($urusans as $urus)
                                 <option value="{{ $urus->id }}" {{ old('category') == $urus->id ? 'selected' : ''}}>{{ $urus->nama }}</option>
+                                @endforeach
+                            </select>--}}
+                            <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
+                            <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required multiple>
+                                <option value="" disabled selected>Pilih urusan inovasi</option>
+                                @foreach ($options as $klasifikasiId => $klasifikasiData)
+                                    <optgroup class="font-weight-bold" label="{{ $klasifikasiData['label'] }}">
+                                        @foreach ($klasifikasiData['children'] as $urusanId => $urusanName)
+                                            <option value="{{ $urusanId }}" {{ in_array($urusanId, old('urusans', [])) ? 'selected' : '' }}>
+                                                {{ $urusanName }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
                                 @endforeach
                             </select>
                             @error('urusans')
@@ -219,9 +206,65 @@
                                     </div>
                                     @enderror
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row g-3">
+                                <div class="col d-none">
+                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
+                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
+                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
+                                    </select>
+                                    
+                                    <!-- error message untuk title -->
+                                    @error('skpd')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label class="font-weight-bold" for="uploadBtn">Profil:</label>
+                                    <div class="input-group "> 
+                                        <label class="input-group-btn">
+                                            <span class="btny btn-outline-primary">
+                                                Browse<input accept="application/pdf" id="uploadBtn" type="file" style="display: none;" name="profil">
+                                            </span>
+                                        </label>
+                                        <input id="uploadFile" type="text" class="form-control @error('profil') is-invalid @enderror" readonly placeholder="Choose a file">
+                                    </div>
+                                    @error('profil')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <script type="text/javascript">
+                                        document.getElementById("uploadBtn").onchange = function (){
+                                            document.getElementById("uploadFile").value = this.value;
+                                        }
+                                    </script>
+                                </div>
                                 <div class="col">
                                     <label class="font-weight-bold">Anggaran:</label>
-                                    <input type="text" class="form-control @error('anggaran') is-invalid @enderror" name="anggaran" value="{{ old('anggaran') }}" placeholder="Masukkan anggaran inovasi">
+                                    <div class="input-group "> 
+                                        <label class="input-group-btn">
+                                            <span class="btny btn-outline-primary">
+                                                Browse<input accept="application/pdf" id="uploadAnggaran" type="file" style="display: none;" name="anggaran">
+                                            </span>
+                                        </label>
+                                        <input id="fileAnggaran" type="text" class="form-control @error('anggaran') is-invalid @enderror" readonly placeholder="Choose a file">
+                                    </div>
+                                    @error('profil')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <script type="text/javascript">
+                                        document.getElementById("uploadAnggaran").onchange = function (){
+                                            document.getElementById("fileAnggaran").value = this.value;
+                                        }
+                                    </script>
 
                                     <!-- error message untuk title -->
                                     @error('anggaran')
@@ -231,9 +274,6 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-
                         </div>
 
                         <button type="submit" class="btn btn-md btn-primary">Publish</button>

@@ -60,7 +60,9 @@
                                 <a class="collapse-item" href="{{route('skpd.index')}}"><i class="fas fa-fw fa-sitemap"></i> SKPD/UPTD</a>
                                 <a class="collapse-item" href="{{url('master/jenis')}}"><i class="fas fa-fw fa-list"></i> Jenis</a>
                                 <a class="collapse-item" href="{{url('master/bentuk')}}"><i class="fas fa-fw fa-shapes"></i> Bentuk</a>
+                                <a class="collapse-item" href="{{route('klasifikasi.index')}}"><i class="fas fa-fw fa-solid fa-hurricane"></i>Klasifikasi Urusan</a>
                                 <a class="collapse-item" href="{{route('urusan.index')}}"><i class="fas fa-fw fa-info"></i> Urusan</a>
+                                <a class="collapse-item" href="{{route('tematik.index')}}"><i class="fas fa-fw fa-solid fa-dragon"></i> Tematik</a>
                                 <a class="collapse-item" href="{{route('indikator.index')}}"><i class="fas fa-fw fa-chart-simple"></i> Indikator</a>
                                 <a class="collapse-item" href="{{route('bukti.index')}}"><i class="fas fa-fw fa-solid fa-meteor"></i> Bukti</a>
                             </div>

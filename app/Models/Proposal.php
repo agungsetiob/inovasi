@@ -26,14 +26,11 @@ class Proposal extends Model
     public function files() {
         return $this->hasMany(File::class);
     }
+    public function tematik(){
+        return $this->belongsTo(Tematik::class);
+    }
     protected $guarded = [];
     protected $casts = [
         'proposals' => 'array'
     ];
-    // protected $appends = ['ujicoba_view'];
-    // public function getUjicobaViewAttribute()
-    // {
-    //     return \Carbon\Carbon::parse($this->attributes['ujicoba'])
-    //         ->isoFormat('D MMMM Y');
-    // }
 }

@@ -87,15 +87,8 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.btn-lapor {
-  color: #fff;
-  background-color:#d0021b;
-  border-color: #f8f9fc;
-}
-
-.btn-lapor:hover {
-  color: #fff;
-  background-color: #e02d1b;
-  border-color: #d52a1a;
+.optgroup-header {
+    font-weight: 600;
+    font-size: 24px;
 }
 

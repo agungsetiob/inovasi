@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 
-use App\Models\{Category, Contact};
+use App\Models\{Category, Contact, Bentuk, Skpd};
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -21,9 +21,10 @@ class AdminController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $totalProposals = Proposal::all()->count();
-            $chartTahapan = Proposal::select(DB::raw('tahapan_inovasi, count(id) as total'))
-            ->groupBy('tahapan_inovasi')
-            ->orderBy('tahapan_inovasi','asc')
+            $totalSkpds = Skpd::all()->count();
+            $chartBentuk = Proposal::select(DB::raw('bentuk_id, count(id) as total'))
+            ->groupBy('bentuk_id')
+            ->orderBy('bentuk_id','asc')
             ->get()
             ->pluck('total');
 
@@ -33,16 +34,13 @@ class AdminController extends Controller
             ->get()
             ->pluck('total2');
 
-            //dd($chartSkpd);
             $messages = Contact::all()->count();
             $activeUsers = User::where('status', '=', 'active')->count();
             $inactiveUsers = User::where('status', '=', 'inactive')->count();
 
-            $labelTahapan = Proposal::select(DB::raw('DISTINCT(tahapan_inovasi)'))
-            ->orderBy('tahapan_inovasi', 'asc')
-            ->get()
-            ->pluck('tahapan_inovasi');
+            //$inovasi == 0 ? 0 : (($totalProposals/$totalSkpds)*100);
 
+            $labelBentuk = Bentuk::whereHas('proposals')->pluck('nama')->unique();
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
 
             return view ('admin.index', 
@@ -51,10 +49,11 @@ class AdminController extends Controller
                     'inactiveUsers',
                     'totalProposals',
                     'messages',
-                    'chartTahapan',
-                    'labelTahapan',
+                    'chartBentuk',
+                    'labelBentuk',
                     'chartJenis',
-                    'labelJenis'
+                    'labelJenis',
+                    'totalSkpds',
                 ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);

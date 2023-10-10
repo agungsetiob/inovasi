@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->id();
-            $table->string('logo')->nullable();
             $table->string('nama')->unique();
-            $table->text('tahapan_inovasi');
-            $table->string('inisiator');
+            $table->string('tahapan_inovasi');//pengembangan kedepan jadikan foreign key
+            $table->string('inisiator');//pengembangan kedepan jadikan foreign key
             $table->text('rancang_bangun');
             $table->text('tujuan');
             $table->text('manfaat');
             $table->text('hasil');
             $table->date('ujicoba');
             $table->date('implementasi');
-            $table->string('anggaran');
+            $table->string('profil')->nullable();
+            $table->string('anggaran')->nullable();
             $table->unsignedBigInteger('bentuk_id');
             $table->foreign('bentuk_id')->references('id')->on('bentuks');
             $table->unsignedBigInteger('category_id');
@@ -32,6 +32,7 @@ return new class extends Migration
             $table->foreign('skpd_id')->references('id')->on('skpds');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignId('tematik_id')->constrained();
             $table->timestamps();
         });
     }

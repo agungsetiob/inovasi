@@ -29,19 +29,23 @@ class FileController extends Controller
         ->pluck('bukti.bobot')
         ->sum();
         $files = Indikator::all();
-        return view('admin.file', compact('files', 'proposal', 'buktis', 'indikators', 'totalBobot', 'proposalId'));
+        return view('admin.file', compact(
+            'files', 
+            'proposal', 
+            'buktis', 
+            'indikators', 
+            'totalBobot', 
+            'proposalId',
+        ));
     }
 
-    /**
-     * Show the page of uploade documents.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function document()
+    public function bukti($id)
     {
-        $title = 'Dokumen Publik';
-        $files = File::all();
-        return view('main.document', compact('title', 'files'));
+        $files = File::with('bukti')->where('proposal_id', $id)->get();
+        return response()->json([
+            'success' => true,
+            'datax'    => $files
+        ]);
     }
 
     /**
@@ -57,12 +61,14 @@ class FileController extends Controller
             'bukti_id' => 'required',
         ]);
 
+        //dd($request->all());
+
         //upload file
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $file->storeAs('public/docs', $file->hashName());
             //create post
-            File::create([
+            $file = File::create([
                 'file'     => $file->hashName(),
                 'informasi'     => addslashes($request->informasi),
                 'user_id'   => auth()->user()->id,
@@ -71,7 +77,7 @@ class FileController extends Controller
                 'indikator_id' => $request->indikator_id,
             ]);
         } else {
-            File::create([
+            $file = File::create([
                 'informasi'     => addslashes($request->informasi),
                 'user_id'   => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
@@ -79,6 +85,13 @@ class FileController extends Controller
                 'indikator_id' => $request->indikator_id,
             ]);
         }
+
+
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => 'Data Berhasil Disimpan!',
+        //     'data'    => $file 
+        // ]);
 
         
         return redirect()->back()->with('success', 'Evidence uploaded successfully');
@@ -90,9 +103,14 @@ class FileController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function show(File $file)
+    public function show(Indikator $indikator)
     {
-        //
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Indikator',
+            'data'    => $indikator,
+        ]); 
     }
 
     /**

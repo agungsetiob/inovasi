@@ -1,20 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{SkpdController, 
-                        ContactController,
-                        FileController,
-                        BackupController,
-                        VisitorController,
-                        CategoryController,
-                        IndikatorController,
-                        BuktiController};
+use App\Http\Controllers\{
+    SkpdController, 
+    ContactController,
+    FileController,
+    BackupController,
+    VisitorController,
+    CategoryController,
+    IndikatorController,
+    BuktiController,
+    KlasifikasiController,
+    TematikController
+};
 use App\Http\Controllers\BentukController;
 use App\Http\Controllers\UrusanController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Models\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +29,6 @@ use App\Models\Profile;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/profil', function () {
-    $title = 'Profil';
-    $profiles = Profile::all();
-    return view('main.about', compact('title', 'profiles'));
-});
 
 Route::get('/', [VisitorController::class, 'index']);
 Route::get('/inovasi', [VisitorController::class, 'inovasi']);
@@ -64,8 +61,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('deactivate/skpd/{id}', [SkpdController::class, 'deactivate']);
 
     Route::resource('master/urusan', UrusanController::class);
-    Route::post('activate/urusan/{id}', [UrusanController::class, 'activate']);
-    Route::post('deactivate/urusan/{id}', [UrusanController::class, 'deactivate']);
+    Route::post('/toggle-status/urusan/{urusan}', [UrusanController::Class, 'toggleStatus']);
+    Route::get('master/klasifikasi/detail', [UrusanController::Class, 'klasifikasi']);
 
     Route::resource('master/indikator', IndikatorController::class);
     Route::post('enable/indikator/{id}', [IndikatorController::class, 'enable']);
@@ -75,10 +72,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('enable/bukti/{id}', [BuktiController::class, 'enable']);
     Route::post('disable/bukti/{id}', [BuktiController::class, 'disable']);
 
+    Route::resource('master/klasifikasi', KlasifikasiController::class);
+    Route::post('/toggle-status/klasifikasi/{klasifikasi}', [KlasifikasiController::Class, 'toggleStatus']);
+
+    Route::resource('master/tematik', TematikController::class);
+    Route::post('/toggle-status/tematik/{tematik}', [TematikController::Class, 'toggleStatus']);
+
     Route::get('bukti-dukung/{id}', [FileController::class, 'index']);
     Route::post('upload/file', [FileController::class, 'store']);
     Route::get('bukti-dukung/edit/{id}', [FileController::class, 'edit']);
+    Route::get('bukti-dukung/add/{indikator}', [FileController::class, 'show']);
     Route::delete('delete/docs/{id}', [FileController::class, 'destroy']);
+    Route::get('bukti/inovasi/{id}', [FileController::class, 'bukti']);
     
     Route::get('/backup', [BackupController::class, 'index']);
     Route::get('/backup/only-db', [BackupController::class, 'create']);

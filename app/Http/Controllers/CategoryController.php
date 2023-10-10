@@ -43,7 +43,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->name = $request->name;
-        $category->status = 'enabled';
+        $category->status = 'active';
         $category->save();
 
         return redirect()->back()->with('success','Data added successfully');
@@ -106,7 +106,7 @@ class CategoryController extends Controller
         if (Auth::user()->role == 'admin') {
             $cat = Category::findOrFail($id);
             $cat->update([
-                'status'     => 'disabled'
+                'status'     => 'inactive'
             ]);
             return redirect()->back()->with('success', 'jenis is disabled successfully');
         }
@@ -117,7 +117,7 @@ class CategoryController extends Controller
         if (Auth::user()->role == 'admin') {
             $cat = Category::findOrFail($id);
             $cat->update([
-                'status'     => 'enabled'
+                'status'     => 'active'
             ]);
             return redirect()->back()->with('success', 'Jenis is enabled successfully');
         }

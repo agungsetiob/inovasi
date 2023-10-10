@@ -2,35 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Urusan;
-use App\Models\Klasifikasi;
-use Illuminate\Http\Request;
+use App\Models\Tematik;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use Illuminate\Http\Request;
 
-class UrusanController extends Controller
+class TematikController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        if (Auth::user()->role == 'admin') {
-            $klasifikasis = Klasifikasi::where('status', 'active')->get();
-            $urusans = Urusan::with('klasifikasi')->get();
-            return view ('admin.urusan', compact('urusans', 'klasifikasis'));
-        } else {
-            return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
-        }
-    }
-
-    public function klasifikasi()
-    {
-        $klasifikasis = Urusan::with('klasifikasi')->get();
-        return response()->json([
-            'success' => true,
-            'data'    => $klasifikasis
-        ]);
+        $tematiks = Tematik::all();
+        return view('admin.tematik', compact('tematiks'));
     }
 
     /**
@@ -48,16 +32,14 @@ class UrusanController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama'     => 'required',
-            'klasifikasi_id' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
 
-        $urusan = Urusan::create([
+        $tematik = Tematik::create([
             'nama'     => $request->nama,
-            'klasifikasi_id' => $request->klasifikasi_id,
             'status'   => 'active',
         ]);
 
@@ -65,20 +47,20 @@ class UrusanController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Data Berhasil Disimpan!',
-            'data'    => $urusan 
+            'data'    => $tematik
         ]);
     }
 
     /**
      * change status of klasifikasi
      */
-    public function toggleStatus(Urusan $urusan)
+    public function toggleStatus(Tematik $tematik)
     {
         $currentStatus = request('currentStatus');
 
     // Toggle the status
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
-        $urusan->update(['status' => $newStatus]);
+        $tematik->update(['status' => $newStatus]);
 
         return response()->json(['newStatus' => $newStatus]);
     }
@@ -86,7 +68,7 @@ class UrusanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Urusan $urusan)
+    public function show(Tematik $tematik)
     {
         //
     }
@@ -94,7 +76,7 @@ class UrusanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Urusan $urusan)
+    public function edit(Tematik $tematik)
     {
         //
     }
@@ -102,7 +84,7 @@ class UrusanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Urusan $urusan)
+    public function update(Request $request, Tematik $tematik)
     {
         //
     }
@@ -110,7 +92,7 @@ class UrusanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Urusan $urusan)
+    public function destroy(Tematik $tematik)
     {
         //
     }
