@@ -37,9 +37,6 @@ class AdminController extends Controller
             $messages = Contact::all()->count();
             $activeUsers = User::where('status', '=', 'active')->count();
             $inactiveUsers = User::where('status', '=', 'inactive')->count();
-
-            //$inovasi == 0 ? 0 : (($totalProposals/$totalSkpds)*100);
-
             $labelBentuk = Bentuk::whereHas('proposals')->pluck('nama')->unique();
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
 
@@ -64,9 +61,10 @@ class AdminController extends Controller
     {
         if (Auth::user()->role == 'user') {
             $totalProposals = Proposal::all()->count();
-            $chartTahapan = Proposal::select(DB::raw('tahapan_inovasi, count(id) as total'))
-            ->groupBy('tahapan_inovasi')
-            ->orderBy('tahapan_inovasi','asc')
+            $totalSkpds = Skpd::all()->count();
+            $chartBentuk = Proposal::select(DB::raw('bentuk_id, count(id) as total'))
+            ->groupBy('bentuk_id')
+            ->orderBy('bentuk_id','asc')
             ->get()
             ->pluck('total');
 
@@ -75,14 +73,9 @@ class AdminController extends Controller
             ->orderBy('category_id', 'asc')
             ->get()
             ->pluck('total2');
-
-            $labelTahapan = Proposal::select(DB::raw('DISTINCT(tahapan_inovasi)'))
-            ->orderBy('tahapan_inovasi', 'asc')
-            ->get()
-            ->pluck('tahapan_inovasi');
-
+            $labelBentuk = Bentuk::whereHas('proposals')->pluck('nama')->unique();
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
-            return view('admin.index', compact('totalProposals', 'chartJenis', 'chartTahapan', 'labelJenis', 'labelTahapan'));
+            return view('admin.index', compact('totalProposals', 'chartJenis', 'chartBentuk', 'labelJenis', 'labelBentuk', 'totalSkpds'));
         }else
       {
         return redirect()->back();

@@ -29,6 +29,15 @@ class Proposal extends Model
     public function tematik(){
         return $this->belongsTo(Tematik::class);
     }
+    public function tahapan(){
+        return $this->belongsTo(Tahapan::class);
+    }
+    public function inisiator(){
+        return $this->belongsTo(Inisiator::class);
+    }
+    public function indikators(){
+        return $this->belongsToMany(Indikator::class);
+    }
     protected $guarded = [];
     protected $casts = [
         'proposals' => 'array'

@@ -21,8 +21,8 @@ class FileController extends Controller
     {
         $proposalId = $id;
         $proposal = Proposal::findOrFail($id);
-        $buktis = Bukti::where('status', 'enabled')->get();
-        $indikators = Indikator::where('status', 'enabled')->get();
+        $buktis = Bukti::where('status', 'active')->get();
+        $indikators = Indikator::where('status', 'active')->get();
         $totalBobot = File::with('bukti')
         ->where('proposal_id', $id)
         ->get()
@@ -57,11 +57,10 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'file'   => 'required|mimes:pdf',
-            'bukti_id' => 'required',
+            'informasi' => 'required',
+            'bukti' => 'required',
+            'file'   => 'nullable|mimes:pdf,mp4,avi|max:71680',
         ]);
-
-        //dd($request->all());
 
         //upload file
         if ($request->hasFile('file')) {
@@ -73,7 +72,7 @@ class FileController extends Controller
                 'informasi'     => addslashes($request->informasi),
                 'user_id'   => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
-                'bukti_id' => $request->bukti_id,
+                'bukti_id' => $request->bukti,
                 'indikator_id' => $request->indikator_id,
             ]);
         } else {
@@ -81,20 +80,18 @@ class FileController extends Controller
                 'informasi'     => addslashes($request->informasi),
                 'user_id'   => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
-                'bukti_id' => $request->bukti_id,
+                'bukti_id' => $request->bukti,
                 'indikator_id' => $request->indikator_id,
             ]);
         }
 
 
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Data Berhasil Disimpan!',
-        //     'data'    => $file 
-        // ]);
-
-        
-        return redirect()->back()->with('success', 'Evidence uploaded successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhasil Disimpan!',
+            'data'    => $file 
+        ]);
+        //return redirect()->back()->with('success', 'Evidence uploaded successfully');
     }
 
     /**

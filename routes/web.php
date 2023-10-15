@@ -11,9 +11,11 @@ use App\Http\Controllers\{
     IndikatorController,
     BuktiController,
     KlasifikasiController,
-    TematikController
+    TematikController,
+    TahapanController
 };
 use App\Http\Controllers\BentukController;
+use App\Http\Controllers\InisiatorController;
 use App\Http\Controllers\UrusanController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ProfileController;
@@ -44,9 +46,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('proyek/inovasi', ProposalController::class);
     Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
+    Route::get('data/inovasi', [ProposalController::class, 'database'])->name('database');
+    Route::put('send/inovasi/{proposal}', [ProposalController::class, 'sendProposal']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
+
+     Route::resource('master/inisiator', InisiatorController::class);
+    Route::post('enable/inisiator/{id}', [InisiatorController::class, 'enable']);
+    Route::post('disable/inisiator/{id}', [InisiatorController::class, 'disable']);
+
+    Route::resource('master/tahapan', TahapanController::class);
+    Route::post('enable/tahapan/{id}', [TahapanController::class, 'enable']);
+    Route::post('disable/tahapan/{id}', [TahapanController::class, 'disable']);
 
     Route::resource('master/jenis', CategoryController::class);
     Route::post('enable/jenis/{id}', [CategoryController::class, 'enableCategory']);
@@ -93,7 +105,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('delete/message/{id}', [ContactController::class, 'destroy']);
     Route::get('messages/laporan/{startdate}/{enddate}', [ContactController::class, 'messagesReport']);
 
-    Route::get('setting/profile', [ProfileController::class, 'index']);
+    Route::get('setting/profile/{id}', [ProfileController::class, 'index']);
     Route::get('setting/profile/create', [ProfileController::class, 'create']);
     Route::get('setting/profile/{id}', [ProfileController::class, 'edit']);
     Route::post('profile/create', [ProfileController::class, 'store']);

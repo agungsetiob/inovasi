@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Sistem Inovasi Daerah'),
-    'title' => 'Sistem Inovasi Daerah',
+    'name' => env('APP_NAME', 'Sistem Informasi Riset dan Inovasi'),
+    'title' => 'Sistem Informasi Riset dan Inovasi',
 
     /*
     |--------------------------------------------------------------------------

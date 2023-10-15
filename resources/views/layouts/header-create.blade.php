@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sistem Inovasi Daerah</title>
+  <title>{{ config('app.title') }}</title>
 
   <!-- Custom fonts for this template-->
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -21,45 +21,9 @@
   <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
   <!-- Custom styles for this page -->
   <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
-
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="shortcut icon" href="{{url ('assets/img/logo.png')}}" type="image/x-icon"/>
-
-  <!-- <script src="https://cdn.tiny.cloud/1/9s1s817h0tyv1a4jhlghnqoofc647ifzh5zh6z1in2bqpjb9/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-  <script>
-   tinymce.init({
-     selector: '.editor',
-     plugins: 'code table lists autosave fullscreen media link',
-     toolbar: 'undo redo | formatselect| bold italic underline| alignleft aligncenter alignright alignjustify | fontsize fontfamily | indent outdent | bullist numlist | code link | table | media image | fullscreen | text color',
-     paste_as_text: true,
-     image_title: true,
-     automatic_uploads: true,
-     file_picker_types: 'image',
-     file_picker_callback: function (cb, value, meta) {
-      var input = document.createElement('input');
-      input.setAttribute('type', 'file');
-      input.setAttribute('accept', 'image/*');
-      input.onchange = function () {
-        var file = this.files[0];
-
-        var reader = new FileReader();
-        reader.onload = function () {
-          var id = 'blobid' + (new Date()).getTime();
-          var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
-          var base64 = reader.result.split(',')[1];
-          var blobInfo = blobCache.create(id, file, base64);
-          blobCache.add(blobInfo);
-
-          cb(blobInfo.blobUri(), { title: file.name });
-        };
-        reader.readAsDataURL(file);
-      };
-
-      input.click();
-    },
-  });
-</script> -->
-
 </head>
 
 <body id="page-top">
@@ -83,45 +47,8 @@
             <i class="fa fa-bars text-dark"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <!-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" action="#{{ url('search') }}">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for something?"
-              aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> -->
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <!-- <li class="nav-item dropdown no-arrow d-sm-none">
-              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-search fa-fw"></i>
-            </a> -->
-            <!-- Dropdown - Messages -->
-            <!-- <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown">
-            <form class="form-inline mr-auto w-100 navbar-search" action="#{{ url('search') }}">
-              <div class="input-group" id="dataTable_filter">
-                <input type="text" class="form-control bg-light border-0 small"
-                placeholder="Search for something?" aria-label="Search"
-                aria-describedby="basic-addon2" aria-controls="dataTable">
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li> -->
 
         <div class="topbar-divider d-none d-sm-block"></div>
 

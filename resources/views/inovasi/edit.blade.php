@@ -22,58 +22,17 @@
                             </div>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <div class="row g-3">
-                                <div class="col">
-                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
-                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
-                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
-                                    </select>
-                                    
-                                    <!-- error message untuk title -->
-                                    @error('skpd')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="col">
-                                    <label class="font-weight-bold" for="uploadBtn">Logo inovasi:</label>
-                                    <div class="input-group "> 
-                                        <label class="input-group-btn">
-                                            <span class="btny btn-outline-primary">
-                                                Browse<input accept="image/*" id="uploadBtn" type="file" style="display: none;" multiple name="logo">
-                                            </span>
-                                        </label>
-                                        <input id="uploadFile" type="text" class="form-control @error('logo') is-invalid @enderror" readonly placeholder="Choose an image logo">
-                                    </div>
-                                    @error('logo')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                    <script type="text/javascript">
-                                        document.getElementById("uploadBtn").onchange = function (){
-                                            document.getElementById("uploadFile").value = this.value;
-                                        }
-                                    </script>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="row g-3">
                                 <div class="col">
                                     <label class="font-weight-bold" for="tahapan">Tahapan inovasi:</label>
-                                    <select name="tahapan_inovasi" id="tahapan" class="form-control @error('tahapan_inovasi') is-invalid @enderror" required>
-                                        <option value="" disabled selected>Pilih tahapan inovasi</option>
-                                        <option value="inisiatif" @selected($inovasi->tahapan_inovasi == 'inisiatif')>inisiatif</option>
-                                        <option value="ujicoba" @selected($inovasi->tahapan_inovasi == 'ujicoba')>ujicoba</option>
-                                        <option value="penerapan" @selected($inovasi->tahapan_inovasi == 'penerapan')>penerapan</option>
+                                    <select name="tahapan" id="tahapan" class="form-control @error('tahapan') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih tahapan</option>
+                                        @foreach ($tahapans as $tahap)
+                                        <option value="{{ $tahap->id }}" @selected($inovasi->tahapan_id == $tahap->id)>{{ $tahap->nama }}</option>
+                                        @endforeach
                                     </select>
-                                    <!-- error message untuk title -->
-                                    @error('tahapan_inovasi')
+                                    @error('tahapan')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -81,10 +40,27 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="inisiator">Inisiator inovasi:</label>
-                                    <input id="inisiator" type="text" class="form-control @error('inisiator') is-invalid @enderror" name="inisiator" value="{{ old('inisiator', $inovasi->inisiator) }}" placeholder="Masukkan nama pembuat inovasi">
-
-                                    <!-- error message untuk title -->
+                                    <select name="inisiator" id="inisiator" class="form-control @error('inisiator') is-invalid @enderror" required>
+                                        <option value="">Pilih inisiator</option>
+                                        @foreach ($inisiators as $inisiator)
+                                        <option value="{{ $inisiator->id }}" @selected($inovasi->inisiator_id == $inisiator->id)>{{ $inisiator->nama }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('inisiator')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                                <div class="col">
+                                    <label class="font-weight-bold" for="tematik">Tematik:</label>
+                                    <select name="tematik" id="tematik" class="form-control @error('tematik') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih tematik</option>
+                                        @foreach ($tematiks as $tema)
+                                        <option value="{{ $tema->id }}" @selected($inovasi->tematik_id == $tema->id)>{{ $tema->nama }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('tematik')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -127,12 +103,18 @@
                         <div class="form-group">
                             <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
                             <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror"required multiple>
-                                <option value="" disabled selected>Pilih urusan inovasi</option>
-                                @foreach ($inovasi->urusans as $urusan)
-                                <option selected value="{{ $urusan->id }}">{{ $urusan->nama }}</option>
-                                @endforeach
-                                @foreach ($urusans as $urus)
-                                <option value="{{ $urus->id }}" @selected($inovasi->urusan_id == $urus->id)>{{ $urus->nama }}</option>
+                                <option value="">Pilih urusan inovasi</option>
+                                @foreach ($options as $klasifikasiId => $klasifikasiData)
+                                <optgroup class="font-weight-bold" label="{{ $klasifikasiData['label'] }}">
+                                    @foreach ($klasifikasiData['children'] as $urusanId => $urusanName)
+                                    @php
+                                        $selectedUrusansArray = $selectedUrusans->pluck('id')->toArray();
+                                    @endphp
+                                    <option value="{{ $urusanId }}" {{ in_array($urusanId, old('urusans', $selectedUrusansArray)) ? 'selected' : '' }}>
+                                        {{ $urusanName }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
                                 @endforeach
                             </select>
                         </div>
@@ -208,8 +190,46 @@
                                     @enderror
                                 </div>
                                 <div class="col">
+                                    <label class="font-weight-bold" for="uploadBtn">Profil:</label>
+                                    <div class="input-group "> 
+                                        <label class="input-group-btn">
+                                            <span class="btny btn-outline-primary">
+                                                Browse<input accept="application/pdf" id="uploadBtn" type="file" style="display: none;" name="profil">
+                                            </span>
+                                        </label>
+                                        <input id="uploadFile" type="text" class="form-control @error('profil') is-invalid @enderror" readonly placeholder="Choose a file">
+                                    </div>
+                                    @error('profil')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <script type="text/javascript">
+                                        document.getElementById("uploadBtn").onchange = function (){
+                                            document.getElementById("uploadFile").value = this.value;
+                                        }
+                                    </script>
+                                </div>
+                                <div class="col">
                                     <label class="font-weight-bold">Anggaran:</label>
-                                    <input type="text" class="form-control @error('anggaran') is-invalid @enderror" name="anggaran" value="{{ old('anggaran', $inovasi->anggaran) }}" placeholder="Masukkan anggaran inovasi">
+                                    <div class="input-group "> 
+                                        <label class="input-group-btn">
+                                            <span class="btny btn-outline-primary">
+                                                Browse<input accept="application/pdf" id="uploadAnggaran" type="file" style="display: none;" name="anggaran">
+                                            </span>
+                                        </label>
+                                        <input id="fileAnggaran" type="text" class="form-control @error('anggaran') is-invalid @enderror" readonly placeholder="Choose a file">
+                                    </div>
+                                    @error('profil')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                    <script type="text/javascript">
+                                        document.getElementById("uploadAnggaran").onchange = function (){
+                                            document.getElementById("fileAnggaran").value = this.value;
+                                        }
+                                    </script>
 
                                     <!-- error message untuk title -->
                                     @error('anggaran')
@@ -221,9 +241,22 @@
                             </div>
                         </div>
                         <div class="form-group">
-
+                            <div class="row g-3">
+                                <div class="col d-none">
+                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
+                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
+                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
+                                    </select>
+                                    
+                                    <!-- error message untuk title -->
+                                    @error('skpd')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
-
                         <button type="submit" class="btn btn-md btn-primary">Publish</button>
                         <button type="reset" class="btn btn-md btn-warning" disabled>Draft</button>
 
@@ -272,12 +305,10 @@ aria-hidden="true">
 </div>
 </div>
 
-<!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-
-<!-- Core plugin JavaScript-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript">
@@ -286,5 +317,17 @@ aria-hidden="true">
           sortField: 'text'
       });
   });
+  ClassicEditor
+  .create( document.querySelector( '#rancang' ) )
+  ClassicEditor
+  .create( document.querySelector( '#manfaat' ) )
+  ClassicEditor
+  .create( document.querySelector( '#hasil' ) )
+  .then( editor => {
+    console.log( editor );
+    } )
+      .catch( error => {
+        console.error( error );
+    } );
 </script>
 @endsection

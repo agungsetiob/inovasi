@@ -96,8 +96,7 @@
         <!-- Masthead Avatar Image-->
             <div class="owl-carousel owl-theme" id="slider">
                 <div class="item"> <img src="assets/img/1.jpg" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/2.jpg" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/3.png" class="d-block img-fluid rounded"> </div>
+                <div class="item"> <img src="assets/img/1.png" class="d-block img-fluid rounded"> </div>
                 <div class="item"> <img src="assets/img/4.jpg" class="d-block img-fluid rounded"> </div>
             </div>
     </div>
@@ -208,13 +207,13 @@
                 <form id="contactForm">
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
+                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" autocomplete="on"/>
                         <label for="name">Full name</label>
                         <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
                     </div>
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" autocomplete="on"/>
                         <label for="email">Email address</label>
                         <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                         <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>

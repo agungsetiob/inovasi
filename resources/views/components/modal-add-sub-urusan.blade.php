@@ -14,9 +14,9 @@
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>  
                     </div>
                     <div class="form-group">
-                    <label for="klasifikasi">Klasifikasi</label>
-                        <select name="klasifikasi_id" id="klasifikasi_id" class="form-control @error('klasifikasi') is-invalid @enderror" required>
-                            <option value="" disabled selected>Pilih klasifikasi</option>
+                    <label for="klasifikasi_id">Klasifikasi</label>
+                        <select name="klasifikasi_id" id="klasifikasi_id" class="form-control @error('klasifikasi_id') is-invalid @enderror" required>
+                            <option value="">Pilih klasifikasi</option>
                             @foreach ($klasifikasis as $k)
                             <option value="{{ $k->id }}" {{ old('klasifikasi_id') == $k->id ? 'selected' : ''}}>{{ $k->nama }}</option>
                             @endforeach
@@ -89,7 +89,7 @@
                     </tr>
                     `;                
                     //append to table
-                    $('#tabel-urusan').append(urusan);
+                    $('#tabel-urusan').prepend(urusan);
                     },
                 error: function(error) {
                     if(error.responseJSON && error.responseJSON.klasifikasi_id && error.responseJSON.klasifikasi_id[0]) {

@@ -19,9 +19,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="50%">name</th>
-                            <th>Created at</th>
-                            <th>Action</th>
+                            <th width="50%">nama</th>
+                            <th>Jenis</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -29,7 +29,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td> {{$in->nama}} </td>
-                            <td> {{$in->created_at}} </td>
+                            <td> {{$in->jenis}} </td>
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$in->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
@@ -38,18 +38,18 @@
                                     aria-expanded="false">
                                     {{$in->status}}
                                 </button>
-                                @if ($in->status == 'disabled')
+                                @if ($in->status == 'inactive')
                                 <form method="POST" action="{{url('enable/'. $in->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Enable</button>
+                                        <button class="dropdown-item">activate</button>
                                     </div>
                                 </form>
-                                @elseif ($in->status == 'enabled')
+                                @elseif ($in->status == 'active')
                                 <form method="POST" action="{{url('disable/'. $in->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Disable</button>
+                                        <button class="dropdown-item">deactivate</button>
                                     </div>
                                 </form>
                                 @endif
@@ -111,27 +111,7 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+@include ('components.logout')
 
 <!-- delete Modal-->
 @foreach ($indikators as $in)
@@ -174,7 +154,13 @@ aria-hidden="true">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Indikator inovasi</label>
-                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan indikator inovasi">   
+                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" required placeholder="Masukkan indikator inovasi" value="{{old('nama')}}">
+                        <label class="font-weight-bold" for="tahapan">Satuan indikator:</label>
+                        <select name="jenis" id="jenis" class="form-control @error('jenis') is-invalid @enderror" required>
+                            <option value="">Pilih satuan indikator</option>
+                            <option value="sid" @selected(old('jenis') == 'sid')>Satuan Inovasi Daerah</option>
+                            <option value="spd" @selected(old('jenis') == 'spd')>Satuan Pemerintah Daerah</option>
+                        </select> 
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>

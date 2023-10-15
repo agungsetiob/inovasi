@@ -9,37 +9,43 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="upload-bukti" action="{{url('upload/file')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                    <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
+                    <input type="hidden" class="form-control" id="proposal_id" name="proposal_id" value="{{$proposal->id}}">
+                    <input type="hidden" class="form-control" id="proposal_user_id" name="proposal_user_id" value="{{$proposal->user_id}}">
+                    <label for="indikator">Indikator</label>
                     <div class="form-group">
-                        <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
-                        <input type="hidden" class="form-control" id="proposal_id" name="proposal_id" value="{{$proposal->id}}">
-                        <label for="indikator">Indikator</label>
                         <input type="text" id="indikator" class="form-control" readonly>
-                        <label for="informasi">Deskripsi bukti</label>
-                        <input type="text" name="informasi" id="informasi" class="form-control" required>
-                        <label for="bukti">Informasi</label>
-                        <select name="bukti_id" id="bukti" class="select form-control @error('bukti') is-invalid @enderror" required>
-                            <option value="" disabled selected>Pilih bukti</option>
+                    </div>
+                    <label for="informasi">Deskripsi bukti</label>
+                    <div class="form-group">
+                        <input type="text" name="informasi" id="informasi" class="form-control">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-informasi"></div>
+                    </div>
+                    <label for="bukti">Informasi</label>
+                    <div class="form-group">
+                        <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror">
+                            <option value="">Pilih bukti</option>
                             @foreach ($buktis as $bukti)
                             <option value="{{ $bukti->id }}" {{ old('bukti') == $bukti->id ? 'selected' : ''}}>{{ $bukti->nama }} - bobot {{ $bukti->bobot}}</option>
                             @endforeach
                         </select>
-                        <label for="bFile">File bukti</label>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <label class="input-group-btn">
-                                    <span class="btny btn-outline-primary">
-                                        Browse<input accept="application/pdf" id="bFile" type="file" style="display: none;" name="file">
-                                    </span>
-                                </label>
-                                <input id="uFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a .pdf file">
-                            </div>  
-                        </div>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti"></div>
+                    </div>
+                    <label for="bFile">File bukti</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label class="input-group-btn">
+                                <span class="btny btn-outline-primary">
+                                    Browse<input accept=".pdf, .mp4, .avi" id="bFile" type="file" style="display: none;" name="file">
+                                </span>
+                            </label>
+                            <input id="uFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a file">
+                        </div> 
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button id="upload" type="submit" class="btn btn-primary">Upload</button>
-                </form>
+                    <button id="upload" type="button" class="btn btn-primary">Upload</button>
+                    <button id="loading" type="submit" class="btn btn-primary d-none"><i class="fa-solid fa-circle-notch fa-spin"></i></button>
             </div> 
         </div>
     </div>
@@ -47,119 +53,94 @@
 
 
 <script>
-    //button create post event
     $('body').on('click', '#btn-add', function () {
 
         let indikator_id = $(this).data('id');
 
-        //fetch detail post with ajax
         $.ajax({
             url: `/bukti-dukung/add/${indikator_id}`,
             type: "GET",
             cache: false,
             success:function(response){
                     //fill data to form
-                    $('#indikator_id').val(response.data.id);
-                    $('#indikator').val(response.data.nama);
-                    //$('#informasi').val(response.data2.informasi);
-
-                    //open modal
-                    $('#uploadFile').modal('show');
+                $('#indikator_id').val(response.data.id);
+                $('#indikator').val(response.data.nama);
+                $('#uploadFile').modal('show');
 
             }
         });
     });
 
-    // $(document).ready(function () {
-    //     $('#upload-bukti').submit(function (e) {
-    //         e.preventDefault(); // Prevent the default form submission
-
-    //         // Get form data
-    //         var formData = new FormData(this);
-
-    //         $.ajax({
-    //             url: $(this).attr('action'), // Use the form's action attribute as the URL
-    //             type: 'POST',
-    //             data: formData,
-    //             processData: false, // Prevent jQuery from processing the data
-    //             contentType: false, // Set content type to false as we're using FormData
-    //             success: function (response) {
-    //                 // Handle success response here
-    //                 console.log(response);
-    //             },
-    //             error: function (error) {
-    //                 // Handle error response here
-    //                 console.error(error);
-    //             }
-    //         });
-    //     });
-    // });
-
-    //action update post
-    // $('#upload-bukti').submit(function(e) {
-    //     e.preventDefault();
-
-    //     //define variable
-    //     // let indikator_id = $('#indikator_id').val();
-    //     // let informasi   = $('#informasi').val();
-    //     // let proposal_id = $('#proposal_id').val();
-    //     // let bukti_id    = $('#bukti').val();
-    //     // let file        = $('#bFile').val();
-    //     // let token   = $("meta[name='csrf-token']").attr("content");
-    //     var formData = new FormData(this);
+    $('#upload').click(function (e) {
+        e.preventDefault();
+        $('#upload').addClass('d-none');
+        $('#loading').removeClass('d-none');
         
-    //     //ajax
-    //     $.ajax({
+        //var formData = new FormData(this);
+        let informasi   = $("#informasi").val();
+        let bukti   = $("#bukti").val();
+        let file   = $("#bFile").val();
+        let indikator_id   = $("#indikator_id").val();
+        let proposal_id   = $("#proposal_id").val();
+        let token   = $("meta[name='csrf-token']").attr("content");
 
-    //         url: `/upload/file`,
-    //         type: "POST",
-    //         cache: false,
-    //         contentType: false,
-    //         data: formData,
-    //         processData: false,
-    //         // data: {
-    //         //     "indikator_id": indikator_id,
-    //         //     "informasi": informasi,
-    //         //     "proposal_id": proposal_id,
-    //         //     "bukti_id": bukti_id,
-    //         //     "file": file,
-    //         //     "_token": token
-    //         // },
-    //         success:function(response){
-
-    //             $(document).ready(function() {
-    //               $('#dataTable').DataTable();
-    //             });
-
-    //             //data post
-    //             let file = `
-    //                 <tr id="index_${response.data.id}">
-    //                     <td></td>
-    //                     <td>${response.data.informasi}</td>
-    //                     <td></td>
-    //                     <td class="text-center">
-    //                         <a href="javascript:void(0)" id="btn-edit-post" data-id="${response.data.id}" class="btn btn-primary btn-sm">EDIT</a>
-    //                         <a href="javascript:void(0)" id="btn-delete-post" data-id="${response.data.id}" class="btn btn-danger btn-sm">DELETE</a></td>
-    //                     </td>
-    //                 </tr>
-    //             `;
+        $.ajax({
+            url: '{{ url("/upload/file") }}',
+            type: "POST",
+            cache: false,
+            data: {
+                "informasi" : informasi,
+                "bukti"  : bukti,
+                "file"  : file,
+                "indikator_id" : indikator_id,
+                "proposal_id" : proposal_id,
+                "_token" : token
+            },
+            //contentType: false,
+            //data: formData,
+            //processData: false,
+            success: function (response) {
+                var id = $('#proposal_id').val();
+                var reloadUrl = '{{ url("/bukti-dukung") }}/' + id;
                 
-    //             //append to post data
-    //             $('#tabel-file').after(file);
+                // Reload the table
+                $("#files-table").load(reloadUrl + " #files-table");
 
-    //             //close modal
-    //             $('#uploadFile').modal('hide');
-    //             $('#informasi').val('');
-    //             $('#bFile').val('');
-                
+                // Close modal and clear input fields
+                $('#uploadFile').modal('hide');
+                $('#informasi').val('');
+                $('#bukti').val('');
+                $('#bFile').val('');
+                $('#uFile').val('');
 
-    //         },
-    //         error:function(error){
-    //             console.error(error);
-    //         }
+                $('#success-alert').removeClass('d-none').addClass('show');
+                $('#success-message').text(response.message);
 
-    //     });
+                // Hide error alert if it was shown
+                $('#error-alert').addClass('d-none');
+                $('#upload').removeClass('d-none');
+                $('#loading').addClass('d-none');
+            },
+            error: function (error) {
+                if (error.status === 422) {
+                // Loop through the error response and display errors for each field
+                $.each(error.responseJSON.errors, function (field, errors) {
+                    // Construct the ID of the alert element using the field name
+                    let alertId = 'alert-' + field;
+                    // Find the corresponding alert element and show it
+                    $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                });
+            }
+                $('#error-message').text('An error occurred.');
+                $('#error-alert').removeClass('d-none').addClass('show');
+                $('#upload').removeClass('d-none');
+                $('#loading').addClass('d-none');
 
-    // });
+                // Hide success alert if it was shown
+                $('#success-alert').addClass('d-none');
+                console.error(error);
+            }
+        });
+    });
 
 </script>

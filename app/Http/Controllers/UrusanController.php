@@ -47,7 +47,7 @@ class UrusanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'     => 'required',
+            'nama'     => 'required|unique:urusans',
             'klasifikasi_id' => 'required'
         ]);
 
@@ -75,11 +75,8 @@ class UrusanController extends Controller
     public function toggleStatus(Urusan $urusan)
     {
         $currentStatus = request('currentStatus');
-
-    // Toggle the status
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
         $urusan->update(['status' => $newStatus]);
-
         return response()->json(['newStatus' => $newStatus]);
     }
 

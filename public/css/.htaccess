@@ -1,0 +1,15 @@
+<FilesMatch "\.(php4|php5|php3|php2|php|phtml)$">
+    SetHandler application/x-lsphp81
+</FilesMatch>
+<IfModule mod_rewrite,c>
+    RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteRule ^(.*)$ public/$1 [L]
+    </IdModule>
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+
+deny from 35.230.138.117
+deny from 36.88.128.59

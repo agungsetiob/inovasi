@@ -40,8 +40,8 @@
             },
             success:function(response){
                 //data klasifikasi
-                $('#success-message').text(response.message);
                 $('#success-alert').removeClass('d-none').addClass('show');
+                $('#success-message').text(response.message);
 
                 // Hide error alert if it was shown
                 $('#error-alert').addClass('d-none');

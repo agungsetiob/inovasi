@@ -26,14 +26,13 @@
                             <div class="row g-3">
                                 <div class="col">
                                     <label class="font-weight-bold" for="tahapan">Tahapan inovasi:</label>
-                                    <select name="tahapan_inovasi" id="tahapan" class="selectpicker form-control @error('tahapan_inovasi') is-invalid @enderror" required>
-                                        <option value="" disabled selected>Pilih tahapan inovasi</option>
-                                        <option value="inisiatif" {{old('tahapan_inovasi') == 'inisiatif' ? "selected" : ""}}>inisiatif</option>
-                                        <option value="ujicoba" {{old('tahapan_inovasi') == 'ujicoba' ? "selected" : ""}}>uji coba</option>
-                                        <option value="penerapan" {{old('tahapan_inovasi') == 'penerapan' ? "selected" : ""}}>penerapan</option>
+                                    <select name="tahapan" id="tahapan" class="form-control @error('tahapan') is-invalid @enderror" required>
+                                        <option value="" disabled selected>Pilih tahapan</option>
+                                        @foreach ($tahapans as $tahap)
+                                        <option value="{{ $tahap->id }}" {{ old('tahapan') == $tahap->id ? 'selected' : ''}}>{{ $tahap->nama }}</option>
+                                        @endforeach
                                     </select>
-                                    <!-- error message untuk title -->
-                                    @error('tahapan_inovasi')
+                                    @error('tahapan')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
                                     </div>
@@ -41,15 +40,12 @@
                                 </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="inisiator">Inisiator inovasi:</label>
-                                    <select name="inisiator" id="inisiator" class="selectpicker form-control @error('inisiator') is-invalid @enderror" required>
-                                        <option value="" disabled selected>Pilih inisiator inovasi</option>
-                                        <option value="Kepala daerah" {{old('inisiator') == 'Kepala daerah' ? "selected" : ""}}>Kepala daerah</option>
-                                        <option value="Kepala skpd" {{old('inisiator') == 'Kepala skpd' ? "selected" : ""}}>Kepala SKPD</option>
-                                        <option value="ASN" {{old('inisiator') == 'ASN' ? "selected" : ""}}>ASN</option>
-                                        <option value="Masyarakat" {{old('inisiator') == 'Masyarakat' ? "selected" : ""}}>Masyarakat</option>
+                                    <select name="inisiator" id="inisiator" class="form-control @error('inisiator') is-invalid @enderror" required>
+                                        <option value="">Pilih inisiator</option>
+                                        @foreach ($inisiators as $inisiator)
+                                        <option value="{{ $inisiator->id }}" {{ old('inisiator') == $inisiator->id ? 'selected' : ''}}>{{ $inisiator->nama }}</option>
+                                        @endforeach
                                     </select>
-
-                                    <!-- error message untuk title -->
                                     @error('inisiator')
                                     <div class="alert alert-danger mt-2">
                                         {{ $message }}
@@ -107,24 +103,17 @@
 
                         <!-- select 2 -->
                         <div class="form-group">
-                            {{--<label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
-                            <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required multiple>
-                                <option value="" disabled selected>Pilih urusan inovasi</option>
-                                @foreach ($urusans as $urus)
-                                <option value="{{ $urus->id }}" {{ old('category') == $urus->id ? 'selected' : ''}}>{{ $urus->nama }}</option>
-                                @endforeach
-                            </select>--}}
                             <label class="font-weight-bold" for="urusan">Urusan inovasi daerah:</label>
                             <select name="urusans[]" id="urusan" class="form-control @error('urusan') is-invalid @enderror" required multiple>
                                 <option value="" disabled selected>Pilih urusan inovasi</option>
                                 @foreach ($options as $klasifikasiId => $klasifikasiData)
-                                    <optgroup class="font-weight-bold" label="{{ $klasifikasiData['label'] }}">
-                                        @foreach ($klasifikasiData['children'] as $urusanId => $urusanName)
-                                            <option value="{{ $urusanId }}" {{ in_array($urusanId, old('urusans', [])) ? 'selected' : '' }}>
-                                                {{ $urusanName }}
-                                            </option>
-                                        @endforeach
-                                    </optgroup>
+                                <optgroup class="font-weight-bold" label="{{ $klasifikasiData['label'] }}">
+                                    @foreach ($klasifikasiData['children'] as $urusanId => $urusanName)
+                                    <option value="{{ $urusanId }}" {{ in_array($urusanId, old('urusans', [])) ? 'selected' : '' }}>
+                                        {{ $urusanName }}
+                                    </option>
+                                    @endforeach
+                                </optgroup>
                                 @endforeach
                             </select>
                             @error('urusans')
@@ -133,10 +122,9 @@
                             </div>
                             @enderror
                         </div>
-
                         <div class="form-group">
                             <label class="font-weight-bold" for="rancang">Rancang bangun:</label>
-                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang_bangun') is-invalid @enderror" name="rancang_bangun" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang_bangun') }}</textarea>
+                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang_bangun') is-invalid @enderror" name="rancang_bangun" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang_bangun') }}</textarea>
                             
                             <!-- error message untuk content -->
                             @error('rancang_bangun')
@@ -147,6 +135,7 @@
                         </div>
 
                         <div class="form-group">
+                            {{--<input type="text" name="indikators[]" value="{{$indikators}}">--}}
                             <label class="font-weight-bold" for="tujuan">Tujuan inovasi:</label>
                             <input id="tujuan" type="text" class="editor form-control @error('tujuan') is-invalid @enderror" name="tujuan" value="{{ old('tujuan') }}" placeholder="Masukkan tujuan pembuatan inovasi Daerah">
                             
@@ -206,24 +195,6 @@
                                     </div>
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="row g-3">
-                                <div class="col d-none">
-                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
-                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
-                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
-                                    </select>
-                                    
-                                    <!-- error message untuk title -->
-                                    @error('skpd')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
                                 <div class="col">
                                     <label class="font-weight-bold" for="uploadBtn">Profil:</label>
                                     <div class="input-group "> 
@@ -276,7 +247,25 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-md btn-primary">Publish</button>
+                        <div class="form-group">
+                            <div class="row g-3">
+                                <div class="col d-none">
+                                    <label class="font-weight-bold" for="skpd">Dibuat oleh:</label>
+                                    <select name="skpd" id="skpd" class="form-control @error('skpd') is-invalid @enderror" required>
+                                        <option value="{{Auth::user()->skpd->id}}" selected>{{Auth::user()->skpd->nama}}</option>
+                                    </select>
+                                    
+                                    <!-- error message untuk title -->
+                                    @error('skpd')
+                                    <div class="alert alert-danger mt-2">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-md btn-primary">Save</button>
                         <button type="reset" class="btn btn-md btn-warning" disabled>Draft</button>
 
                     </form> 
@@ -302,34 +291,14 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+@include ('components.logout')
 
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-
-<!-- Core plugin JavaScript-->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script type="text/javascript">
@@ -338,5 +307,17 @@ aria-hidden="true">
           sortField: 'text'
       });
   });
+  ClassicEditor
+  .create( document.querySelector( '#rancang' ) )
+  ClassicEditor
+  .create( document.querySelector( '#manfaat' ) )
+  ClassicEditor
+  .create( document.querySelector( '#hasil' ) )
+  .then( editor => {
+    console.log( editor );
+} )
+  .catch( error => {
+    console.error( error );
+} );
 </script>
 @endsection

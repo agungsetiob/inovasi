@@ -19,9 +19,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="50%">Name</th>
+                            <th width="38%">Name</th>
                             <th>Bobot</th>
-                            <th>Created at</th>
+                            <th width="35%">Indikator</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -31,7 +31,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td> {{$bukti->nama}} </td>
                             <td> {{$bukti->bobot}} </td>
-                            <td> {{$bukti->created_at}} </td>
+                            <td> {{$bukti->indikator->nama}} </td>
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$bukti->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
@@ -40,18 +40,18 @@
                                     aria-expanded="false">
                                     {{$bukti->status}}
                                 </button>
-                                @if ($bukti->status == 'disabled')
+                                @if ($bukti->status == 'inactive')
                                 <form method="POST" action="{{url('enable/bukti/'. $bukti->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Enable</button>
+                                        <button class="dropdown-item">activate</button>
                                     </div>
                                 </form>
-                                @elseif ($bukti->status == 'enabled')
+                                @elseif ($bukti->status == 'active')
                                 <form method="POST" action="{{url('disable/bukti/'. $bukti->id)}}">
                                     @csrf
                                     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">Disable</button>
+                                        <button class="dropdown-item">deactivate</button>
                                     </div>
                                 </form>
                                 @endif
@@ -176,9 +176,24 @@ aria-hidden="true">
                     @csrf
                     <div class="form-group">
                         <label for="name">Nama bukti inovasi</label>
-                        <input type="text" name="nama" class="form-control" id="name" required placeholder="Masukkan nama bukti inovasi">
+                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="name" required placeholder="Masukkan nama bukti inovasi" value="{{old('nama')}}">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>  
+                    </div>
+                    <div class="form-group">
                         <label for="skor">Bobot</label>
-                        <input type="number" name="bobot" class="form-control" id="skor" required>   
+                        <input type="number" name="bobot" class="form-control @error('bobot') is-invalid @enderror" id="skor" value="{{old('bobot')}}" required>   
+                    </div>
+                    <div class="form-group">
+                        <label for="indikator">Indikator</label>
+                        <select name="indikator" id="indikator" class="form-control @error('indikator') is-invalid @enderror" required>
+                            <option value="">Pilih satuan indikator</option>
+                            @foreach($indikators as $indikator)
+                            <optgroup label="{{ $indikator->jenis }}">
+                                <option value="{{ $indikator->id }}">{{ $indikator->nama }}</option>
+                            </optgroup>
+                            @endforeach
+                        </select>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-klasifikasi"></div>
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -191,17 +206,18 @@ aria-hidden="true">
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-<!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+      $('select').selectize({
+          sortField: 'text'
+      });
+  });
+</script>
 @endsection

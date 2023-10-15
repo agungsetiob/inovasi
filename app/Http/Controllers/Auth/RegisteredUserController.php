@@ -89,11 +89,7 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            //'avatar'     => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        // $image = $request->file('avatar');
-        // $image->storeAs('public/ava', $image->hashName());
 
         $user = User::create([
             'name' => $request->name,
@@ -107,7 +103,6 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
-
         //Auth::login($user);
 
         return redirect('user-register')->with('success', 'Registrasi selesai, hubungi admin untuk aktivasi akun');

@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\File;
+use App\Models\Proposal;
+use App\Models\Bukti;
+use App\Models\Indikator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Auth;
@@ -13,7 +17,13 @@ class ProfileController extends Controller
     {
         if (Auth::user()->role == 'admin') {
         $profiles = Profile::all();
-        return view('profile.index', compact('profiles'));
+        $buktis = Bukti::where('status', 'active')->get();
+        $indikators = Indikator::where('status', 'active')->get();
+        return view('profile.index', compact(
+            'buktis', 
+            'indikators', 
+            'profiles'
+        ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
         }

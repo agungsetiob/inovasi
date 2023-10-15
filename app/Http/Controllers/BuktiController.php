@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bukti;
+use App\Models\Indikator;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -15,7 +16,8 @@ class BuktiController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $buktis = Bukti::all();
-            return view ('admin.bukti', compact('buktis'));
+            $indikators = Indikator::where('status', 'active')->orderBy('jenis')->get();
+            return view ('admin.bukti', compact('buktis', 'indikators'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
@@ -34,11 +36,19 @@ class BuktiController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'indikator'     => 'required',
+            'nama'     => 'required|unique:buktis',
+            'bobot'   => 'required',
+
+        ]);
         $bukti = new Bukti();
         $bukti->nama = $request->nama;
         $bukti->bobot = $request->bobot;
-        $bukti->status = 'enabled';
+        $bukti->indikator_id = $request->indikator;
+        $bukti->status = 'active';
         $bukti->save();
+        //dd($bukti);
 
         return redirect()->back()->with('success','Data added successfully');
     }
@@ -74,8 +84,8 @@ class BuktiController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $bukti->delete();
-        
-        return redirect('master/bukti')->with('success', 'Data Deleted Successfully');
+
+            return redirect('master/bukti')->with('success', 'Data Deleted Successfully');
         } else{
             return redirect()->back()->with('error', 'Many ways to rome');
         }
@@ -86,7 +96,7 @@ class BuktiController extends Controller
         if (Auth::user()->role == 'admin') {
             $bukti = Bukti::findOrFail($id);
             $bukti->update([
-                'status'     => 'disabled'
+                'status'     => 'active'
             ]);
             return redirect()->back()->with('success', 'Bukti inovasi is disabled successfully');
         }
@@ -97,7 +107,7 @@ class BuktiController extends Controller
         if (Auth::user()->role == 'admin') {
             $bukti = Bukti::findOrFail($id);
             $bukti->update([
-                'status'     => 'enabled'
+                'status'     => 'active'
             ]);
             return redirect()->back()->with('success', 'Bukti inovasi is enabled successfully');
         }

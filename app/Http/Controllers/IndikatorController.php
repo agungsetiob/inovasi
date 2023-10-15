@@ -34,9 +34,14 @@ class IndikatorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nama' => 'required|unique:indikators',
+            'jenis' => 'required'
+        ]);
         $indikator = new Indikator();
         $indikator->nama = $request->nama;
-        $indikator->status = 'enabled';
+        $indikator->status = 'active';
+        $indikator->jenis = $request->jenis;
         $indikator->save();
 
         return redirect()->back()->with('success','Data added successfully');
@@ -85,7 +90,7 @@ class IndikatorController extends Controller
         if (Auth::user()->role == 'admin') {
             $indikator = Indikator::findOrFail($id);
             $indikator->update([
-                'status'     => 'disabled'
+                'status'     => 'inactive'
             ]);
             return redirect()->back()->with('success', 'Indikator inovasi is disabled successfully');
         }
@@ -96,7 +101,7 @@ class IndikatorController extends Controller
         if (Auth::user()->role == 'admin') {
             $indikator = Indikator::findOrFail($id);
             $indikator->update([
-                'status'     => 'enabled'
+                'status'     => 'active'
             ]);
             return redirect()->back()->with('success', 'Indikator inovasi is enabled successfully');
         }

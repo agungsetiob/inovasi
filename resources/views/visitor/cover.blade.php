@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sistem Inovasi Daerah</title>
+    <title>Sistem Informasi Riset dan Inovasi</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/img/logo.png" />
     <!-- Font Awesome icons (free version)-->
@@ -21,11 +21,11 @@
     <header class="masthead text-white text-center">
         <div class="container d-flex align-items-center justify-content-center">
             <!-- Masthead Avatar Image-->
-            <img style="width:151px" class="img-fluid mb-5" src="assets/img/logo2.png"/>
+            <img style="width:193px" class="img-fluid mb-5" src="assets/cover-logo.png"/>
         </div>
 
         <div class="container d-flex align-items-center flex-column"><!-- Masthead Heading-->
-            <h3 class="masthead-heading text-uppercase mb-0">Sistem Inovasi Daerah</h3>
+            <h3 class="masthead-heading text-uppercase mb-0">Kabupaten Tanah Bumbu</h3>
             <!-- Icon Divider-->
         </div>
 

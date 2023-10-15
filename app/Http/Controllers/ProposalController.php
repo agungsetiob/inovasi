@@ -13,6 +13,8 @@ use App\Models\File;
 use App\Models\Indikator;
 use App\Models\Tematik;
 use App\Models\Klasifikasi;
+use App\Models\Tahapan;
+use App\Models\Inisiator;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -25,20 +27,34 @@ class ProposalController extends Controller
      */
     public function index()
     {
+        // if (Auth::user()->role == 'admin') {
+        //     $proposals = Proposal::all();
+        //     return view ('inovasi.index', compact( 'proposals'));
+        // } elseif (Auth::user()->role == 'user') {
+        //     $proposals = Proposal::where('user_id', Auth::user()->id)->get();
+        //     return view ('inovasi.index', compact( 'proposals'));
+        // }else {
+        //     return redirect()->back()->with(['error' => 'ojo dibandingke!']);
+        // }
+        $proposals = Proposal::where('user_id', Auth::user()->id)->get();
+        return view ('inovasi.index', compact( 'proposals'));
+    }
+
+    /**
+    * Display proposal with status 'sent'
+    *
+    */
+    public function database()
+    {
         if (Auth::user()->role == 'admin') {
-            $proposals = Proposal::all();
-            $totalBobot = File::with('bukti')
-            ->get()
-            ->pluck('bukti.bobot')
-            ->sum();
-            return view ('inovasi.index', compact( 'proposals', 'totalBobot'));
-        } elseif (Auth::user()->role == 'user') {
-            $proposals = Proposal::where('user_id', Auth::user()->id)->get();
+            $proposals = Proposal::where('status', 'sent')->get();
             return view ('inovasi.index', compact( 'proposals'));
-        }else {
-            return redirect()->back()->with(['error' => 'ojo dibandingke!']);
+        } else {
+            return redirect()->back()->with(['error' => 'wong kongene kok dibandingke']);
         }
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -50,7 +66,10 @@ class ProposalController extends Controller
         $bentuks = Bentuk::where('status', 'active')->get();
         $urusans = Urusan::where('status', 'active')->get();
         $klasifikasis = Klasifikasi::where('status', 'active')->get();
+        $indikators = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id');
         $tematiks = Tematik::where('status', 'active')->orderBy('id')->get();
+        $tahapans = Tahapan::where('status', 'active')->get();
+        $inisiators = Inisiator::where('status', 'active')->get();
         $options = [];
         foreach ($klasifikasis as $klasifikasi) {
             $options[$klasifikasi->id] = [
@@ -63,7 +82,6 @@ class ProposalController extends Controller
                 }
             }
         }
-        //dd ($urusans);
         return view('inovasi.create', compact(
             'categories', 
             'skpds', 
@@ -71,7 +89,10 @@ class ProposalController extends Controller
             'urusans',
             'tematiks',
             'klasifikasis',
-            'options'
+            'options',
+            'indikators',
+            'tahapans',
+            'inisiators'
         ));
     }
 
@@ -83,7 +104,7 @@ class ProposalController extends Controller
         $this->validate($request, [
             'profil'     => 'mimes:pdf|max:1536',
             'nama'     => 'required',
-            'tahapan_inovasi'   => 'required',
+            'tahapan'   => 'required',
             'inisiator'      => 'required',
             'rancang_bangun' => 'required',
             'tujuan'    => 'required',
@@ -101,8 +122,8 @@ class ProposalController extends Controller
 
         $data = [
             'nama' => $request->nama,
-            'tahapan_inovasi'   => $request->tahapan_inovasi,
-            'inisiator'      => $request->inisiator,
+            'tahapan_id'   => $request->tahapan,
+            'inisiator_id'      => $request->inisiator,
             'rancang_bangun' => addslashes($request->rancang_bangun),
             'tujuan'    => $request->tujuan,
             'manfaat' => $request->manfaat,
@@ -114,6 +135,7 @@ class ProposalController extends Controller
             'skpd_id' => $request->skpd,
             'tematik_id' => $request->tematik,
             'user_id' => auth()->user()->id,
+            'status' => 'draft'
         ];
         if ($request->hasFile('profil')) {
             $profil = $request->file('profil');
@@ -126,7 +148,9 @@ class ProposalController extends Controller
             $data['anggaran'] = $anggaran->hashName();
         }
         $proposal = Proposal::create($data);
+        $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
         $proposal->urusans()->sync($request->urusans);
+        $proposal->indikators()->sync($indikatorIds);
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil simpan inovasi']);
         
     }
@@ -144,17 +168,40 @@ class ProposalController extends Controller
      */
     public function edit(Proposal $inovasi)
     {
-        $categories = Category::where('status', 'enabled')->get();
+        $categories = Category::where('status', 'active')->get();
         $skpds = Skpd::where('status', 'active')->get();
-        $bentuks = Bentuk::where('status', 'enabled')->get();
+        $bentuks = Bentuk::where('status', 'active')->get();
         $urusans = Urusan::where('status', 'active')->get();
+        $tematiks = Tematik::where('status', 'active')->orderBy('id')->get();
+        $klasifikasis = Klasifikasi::where('status', 'active')->get();
+        $tahapans = Tahapan::where('status', 'active')->get();
+        $inisiators = Inisiator::where('status', 'active')->get();
+        $selectedUrusans = $inovasi->urusans;
+        $options = [];
+        foreach ($klasifikasis as $klasifikasi) {
+            $options[$klasifikasi->id] = [
+                'label' => $klasifikasi->nama,
+                'children' => [],
+            ];
+            foreach ($urusans as $urusan) {
+                if ($urusan->klasifikasi_id === $klasifikasi->id) {
+                    $options[$klasifikasi->id]['children'][$urusan->id] = $urusan->nama;
+                }
+            }
+        }
         if (auth()->user()->id == $inovasi->user_id) {
             return view('inovasi.edit', compact(
                 'inovasi',
                 'categories', 
                 'skpds', 
                 'bentuks', 
-                'urusans',));
+                'urusans',
+                'tematiks',
+                'options',
+                'selectedUrusans',
+                'tahapans',
+                'inisiators'
+            ));
         } else{
             return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikan');
         }
@@ -163,18 +210,102 @@ class ProposalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Proposal $proposal)
+    public function update(Request $request, Proposal $inovasi)
     {
-        //
+        $this->validate($request, [
+            'profil'     => 'mimes:pdf|max:1536',
+            'nama'     => 'required',
+            'tahapan'   => 'required',
+            'inisiator'      => 'required',
+            'rancang_bangun' => 'required',
+            'tujuan'    => 'required',
+            'manfaat' => 'required',
+            'hasil' => 'required',
+            'ujicoba' => 'required',
+            'implementasi' => 'required',
+            'anggaran' => 'mimes:pdf|max:1024',
+            'bentuk' => 'required',
+            'category' => 'required',
+            'urusans' => 'required',
+            'tematik' => 'required'
+        ]);
+
+        $data = [
+            'nama' => $request->nama,
+            'tahapan_id'   => $request->tahapan,
+            'inisiator_id'      => $request->inisiator,
+            'rancang_bangun' => addslashes($request->rancang_bangun),
+            'tujuan'    => $request->tujuan,
+            'manfaat' => $request->manfaat,
+            'hasil' => $request->hasil,
+            'ujicoba' => $request->ujicoba,
+            'implementasi' => $request->implementasi,
+            'bentuk_id' => $request->bentuk,
+            'category_id' => $request->category,
+            'skpd_id' => $request->skpd,
+            'tematik_id' => $request->tematik,
+            'user_id' => auth()->user()->id,
+            'status' => 'draft'
+        ];
+
+        if ($request->hasFile('profil')) {
+            $profil = $request->file('profil');
+            $profil->storeAs('public/profil', $profil->hashName());
+            $data['profil'] = $profil->hashName();
+        }
+
+        if ($request->hasFile('anggaran')) {
+            $anggaran = $request->file('anggaran');
+            $anggaran->storeAs('public/anggaran', $anggaran->hashName());
+            $data['anggaran'] = $anggaran->hashName();
+        }
+
+        $proposal->update($data);
+        $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
+        $proposal->urusans()->sync($request->urusans);
+        $proposal->indikators()->sync($indikatorIds);
+
+        return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil update inovasi']);
+    }
+
+
+    /**
+     * Send proposal to admin
+     * 
+     */
+    public function sendProposal(Proposal $proposal)
+    {
+        if ($proposal->user_id === Auth::user()->id) {
+            $proposal->update(['status' => 'sent']);
+            return response()->json(['success' => 'Berhasil mengirim proposal']);
+        } else {
+            return response()->json(['error' => 'Gagal mengirim proposal']);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Proposal $proposal)
+    public function destroy(Proposal $inovasi)
     {
-        //
+    // Detach 'urusans' dan 'indikators'
+        $proposal->urusans()->detach();
+        $proposal->indikators()->detach();
+
+    // Hapus file profil dan anggaran terkait (jika ada)
+        if (!empty($proposal->profil)) {
+            Storage::delete('public/profil/' . $proposal->profil);
+        }
+        if (!empty($proposal->anggaran)) {
+            Storage::delete('public/anggaran/' . $proposal->anggaran);
+        }
+
+    // Hapus proposal dari database
+        $proposal->delete();
+
+        return redirect()->intended('proyek/inovasi')->with(['success' => 'Proposal berhasil dihapus']);
     }
+
 
     public function proposalReport($id)
     {

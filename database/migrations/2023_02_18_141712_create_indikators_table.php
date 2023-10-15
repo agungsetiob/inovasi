@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('status');
+            $table->string('jenis')->default('sid');
             $table->timestamps();
         });
     }

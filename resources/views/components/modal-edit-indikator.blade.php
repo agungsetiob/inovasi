@@ -19,7 +19,7 @@
                         <label for="informasi">Informasi</label>
                         <input type="text" id="informasi" class="form-control" name="informasi" value="@foreach ($file->files()->where('proposal_id', $proposalId)->get() as $item){{old('informasi', $item->informasi)}} @endforeach" placeholder="Masukkan informasi bukti dukung" required>
                         <label for="bukti">Bukti dukung</label>
-                        <select name="bukti_id" id="bukti" class="select form-control @error('bukti') is-invalid @enderror" required>
+                        <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror" required>
                             <option value="" disabled selected>Pilih bukti</option>
                             @foreach ($buktis as $bukti)
                             <option value="{{ $bukti->id }}" {{ old('bukti') == $bukti->id ? 'selected' : ''}}>{{ $bukti->nama }} - bobot {{ $bukti->bobot}}</option>

@@ -46,11 +46,11 @@
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.1. Nama Inovasi</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{ $proposal->nama }}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.2. Dibuat Oleh</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{Auth::user()->skpd->nama}}</span></p>
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->skpd->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.3. Tahapan Inovasi</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->tahapan_inovasi}}</span></p>
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->tahapan->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.4. Inisiator Inovasi Daerah</span></p>
-				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->inisiator}}</span></p>
+				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->inisiator->nama}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.5. Jenis Inovasi</span></p>
 				<p><span style="font-size: 10.000000pt; font-family: 'LiberationSerif';">{{$proposal->category->name}}</span></p>
 				<p><span style="font-size: 12.000000pt; font-family: 'LiberationSerif'; font-weight: 700;">1.6. Bentuk Inovasi Daerah</span></p>

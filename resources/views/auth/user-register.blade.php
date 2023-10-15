@@ -19,7 +19,7 @@
         </div>
         @endif
 
-        <form method="POST" action="{{ route('user-register') }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('register-user') }}" enctype="multipart/form-data">
             @csrf
 
             <div class="text-center">

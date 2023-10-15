@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Sistem Inovasi Daerah</title>
+    <title>{{ config('app.title') }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/img/logo.png" />
     <!-- Font Awesome icons (free version)-->
@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-lg bg-light text-uppercase fixed-top border-bottom" id="mainNav">
         <div class="container">
             <a class="navbar-brand" href="#page-top"><img class="rotate-full" width="200" src="assets/logo.png" alt="logo pemkab" /></a>
-            <a class="navbar-brand" href="#page-top"><img class="rotate-full" width="200" src="assets/gojek.png" alt="logo pemkab" /></a>
+            <a class="navbar-brand" href="#page-top"><img class="rotate-full" width="200" src="assets/gojek.png" alt="logo serasi" /></a>
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
@@ -37,7 +37,7 @@
                     @if (Auth::guest())
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('login') }}">Login</a></li>
                     @elseif (auth()->user())
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('inovasi.index') }}">{{Auth::user()->username}}</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('admin.index') }}">{{Auth::user()->username}}</a></li>
                     @endif
                 </ul>
             </div>

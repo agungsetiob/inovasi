@@ -1,4 +1,3 @@
-<!-- UI for Bentuk inovasi -->
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
@@ -177,7 +176,7 @@ aria-hidden="true">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Bentuk inovasi</label>
-                        <input type="text" name="nama" class="form-control" id="nama" required placeholder="Masukkan Bentuk inovasi">   
+                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" required placeholder="Masukkan Bentuk inovasi">   
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary">Save</button>

@@ -19,9 +19,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="51%">name</th>
-                            <th>Created at</th>
-                            <th>Action</th>
+                            <th width="40%">nama</th>
+                            <th width="40%">Klasifikasi</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="tabel-urusan">

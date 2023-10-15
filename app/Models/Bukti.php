@@ -12,6 +12,9 @@ class Bukti extends Model
     {
         return $this->hasMany(File::class);
     }
+    public function indikator(){
+        return $this->belongsTo(Indikator::class);
+    }
 
     public function getCreatedAtAttribute()
     {
