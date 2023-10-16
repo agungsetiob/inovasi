@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Proposal;
 use App\Models\Bukti;
 use App\Models\Indikator;
+use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,6 +37,27 @@ class FileController extends Controller
             'indikators', 
             'totalBobot', 
             'proposalId',
+        ));
+    }
+
+    public function spd($id)
+    {
+        $profileId = $id;
+        $profile = Profile::findOrFail($id);
+        $buktis = Bukti::where('status', 'active')->get();
+        $indikators = Indikator::where('status', 'active')->get();
+        // $totalBobot = File::with('bukti')
+        // ->where('proposal_id', $id)
+        // ->get()
+        // ->pluck('bukti.bobot')
+        // ->sum();
+        $files = Indikator::all();
+        return view('profile.detail-profil', compact(
+            'files', 
+            'profile', 
+            'buktis', 
+            'indikators', 
+            'profileId',
         ));
     }
 

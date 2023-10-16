@@ -11,7 +11,7 @@ aria-hidden="true">
         <div class="modal-body">Inovasi <span id="proposal-name-modal"></span> akan dikirmi kepada admin. <br>Tekan tombol kirim apabila anda sudah yakin.</div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
-            <button id="send-proposal" data-proposal-id="{{ $proposal->id }}" class="btn btn-outline-primary" title="kirim"><i class="fa-solid fa-paper-plane"></i> Kirim</button>
+            <button id="send-proposal" class="btn btn-outline-primary" title="kirim"><i class="fa-solid fa-paper-plane"></i> Kirim</button>
         </div>
     </div>
 </div>

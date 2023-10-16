@@ -21,7 +21,7 @@
         </a>
         <div id="collapseData" class="collapse" aria-labelledby="headingData" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ url('data/profil') }}"><i class="fas fa-fw fa-rocket"></i> Profil Pemda</a>
+                <a class="collapse-item" href="{{url('data/profile')}}"><i class="fas fa-fw fa-mosque"></i> Profil Pemda</a>
                 <a class="collapse-item" href="{{ route('database') }}"><i class="fas fa-fw fa-microscope"></i> Inovasi Daerah</a>
             </div>
         </div>
@@ -82,7 +82,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="z-index: 10;">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="#"><i class="fas fa-fw fa-wrench"></i> Web setting</a>
-                <a class="collapse-item" href="{{url('setting/profile')}}"><i class="fas fa-fw fa-mosque"></i> About</a>
+                {{--<a class="collapse-item" href="{{url('setting/profile')}}"><i class="fas fa-fw fa-mosque"></i> About</a>--}}
                 <a class="collapse-item" href="{{url('upload-file')}}"><i class="fas fa-fw fa-image"></i> Carousel</a>
             </div>
         </div>

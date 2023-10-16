@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Profile extends Model
 {
     use HasFactory;
+    public function indikators()
+    {
+        return $this->belongsToMany(Indikator::class);
+    }
 
     protected $guarded = [];
     

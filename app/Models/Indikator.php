@@ -18,6 +18,13 @@ class Indikator extends Model
     {
         return $this->hasMany(File::class);
     }
+    public function proposals(){
+        return $this->belongsToMany(Proposal::class);
+    }
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
 
     protected $guarded = [];
 }

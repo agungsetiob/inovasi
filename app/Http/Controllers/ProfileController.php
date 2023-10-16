@@ -17,16 +17,23 @@ class ProfileController extends Controller
     {
         if (Auth::user()->role == 'admin') {
         $profiles = Profile::all();
-        $buktis = Bukti::where('status', 'active')->get();
-        $indikators = Indikator::where('status', 'active')->get();
+        // $buktis = Bukti::where('status', 'active')->get();
+        // $indikators = Indikator::where('status', 'active')->get();
+        $dataExist = $profiles->count() > 0;
         return view('profile.index', compact(
-            'buktis', 
-            'indikators', 
-            'profiles'
+            //'buktis', 
+            //'indikators', 
+            'profiles',
+            'dataExist',
         ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);
         }
+    }
+
+    public function show(Profile $profile)
+    {
+        return view('profile.detail-profile', compact('profile'));
     }
 
     /**
@@ -50,23 +57,20 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'heading'   => 'required',
-            'about'     => 'required'
+            'nama'   => 'required',
+            'alamat'     => 'required',
+            'skpd'  => 'required',
+            'email' => 'required|email',
+            'telp' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'
         ]);
-
-        //upload image
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
 
         //create
-        Profile::create([
-            'image'     => $image->hashName(),
-            'heading'   => $request->heading,
-            'about'     => $request->about,
-        ]);
+        $profile = Profile::create($request->all());
+        $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'spd')->get()->pluck('id')->toArray();
+        $profile->indikators()->sync($indikatorIds);
 
         //redirect to index
-        return redirect()->intended('setting/profile')->with(['success' => 'Profile saved succesfully']);
+        return redirect()->back()->with(['success' => 'Profil berhasil disimpan']);
     }
 
     /**
