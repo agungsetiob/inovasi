@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
 
-     Route::resource('master/inisiator', InisiatorController::class);
+    Route::resource('master/inisiator', InisiatorController::class);
     Route::post('enable/inisiator/{id}', [InisiatorController::class, 'enable']);
     Route::post('disable/inisiator/{id}', [InisiatorController::class, 'disable']);
 
@@ -96,7 +96,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('bukti-dukung/add/{indikator}', [FileController::class, 'show']);
     Route::delete('delete/docs/{id}', [FileController::class, 'destroy']);
     Route::get('bukti/inovasi/{id}', [FileController::class, 'bukti']);
-    Route::get('indikator/spd/{id}', [FileController::class, 'spd']);
     
     Route::get('/backup', [BackupController::class, 'index']);
     Route::get('/backup/only-db', [BackupController::class, 'create']);
@@ -107,8 +106,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('messages/laporan/{startdate}/{enddate}', [ContactController::class, 'messagesReport']);
 
     Route::get('data/profile/', [ProfileController::class, 'index']);
-    Route::get('setting/profile/create', [ProfileController::class, 'create']);
-    Route::get('setting/profile/{id}', [ProfileController::class, 'edit']);
+    Route::get('indikator/spd/{profile}', [ProfileController::class, 'show']);
+    //Route::get('setting/profile/create', [ProfileController::class, 'create']);
+    //Route::get('setting/profile/{id}', [ProfileController::class, 'edit']);
     Route::post('profile/create', [ProfileController::class, 'store']);
     Route::put('profile/update/{id}', [ProfileController::class, 'update']);
 

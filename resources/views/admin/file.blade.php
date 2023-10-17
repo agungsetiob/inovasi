@@ -129,31 +129,23 @@ aria-hidden="true">
 @include('components.modal-edit-indikator')
 @include('components.logout')
 
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" /> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-<!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-<!-- Page level plugins -->
-<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
+<!-- <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script> -->
+<!-- <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+<!-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> -->
 <script type="text/javascript">
-
     document.getElementById('bFile').onchange = function () {
         document.getElementById('uFile').value = this.value;};
-        document.getElementById('editFile').onchange = function () {
-            document.getElementById('newFile').value = this.value;};
+    document.getElementById('editFile').onchange = function () {
+        document.getElementById('newFile').value = this.value;};
 
-            $(document).ready(function () {
-              $('.select').selectize({
-                  sortField: 'text'
-              });
-          });
-      </script>
+    $(document).ready(function () {
+        $('.select').selectize({
+            sortField: 'text'
+        });
+    });
+</script>
       @endsection

@@ -226,11 +226,6 @@
                                         </label>
                                         <input id="fileAnggaran" type="text" class="form-control @error('anggaran') is-invalid @enderror" readonly placeholder="Choose a file">
                                     </div>
-                                    @error('profil')
-                                    <div class="alert alert-danger mt-2">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
                                     <script type="text/javascript">
                                         document.getElementById("uploadAnggaran").onchange = function (){
                                             document.getElementById("fileAnggaran").value = this.value;

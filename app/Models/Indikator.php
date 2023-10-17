@@ -25,6 +25,9 @@ class Indikator extends Model
     {
         return $this->belongsToMany(Profile::class);
     }
+    public function buktis(){
+        return $this->hasMany(Bukti::class);
+    }
 
     protected $guarded = [];
 }

@@ -40,27 +40,6 @@ class FileController extends Controller
         ));
     }
 
-    public function spd($id)
-    {
-        $profileId = $id;
-        $profile = Profile::findOrFail($id);
-        $buktis = Bukti::where('status', 'active')->get();
-        $indikators = Indikator::where('status', 'active')->get();
-        // $totalBobot = File::with('bukti')
-        // ->where('proposal_id', $id)
-        // ->get()
-        // ->pluck('bukti.bobot')
-        // ->sum();
-        $files = Indikator::all();
-        return view('profile.detail-profil', compact(
-            'files', 
-            'profile', 
-            'buktis', 
-            'indikators', 
-            'profileId',
-        ));
-    }
-
     public function bukti($id)
     {
         $files = File::with('bukti')->where('proposal_id', $id)->get();
@@ -125,10 +104,12 @@ class FileController extends Controller
     public function show(Indikator $indikator)
     {
         
+        $bukti = $indikator->buktis()->pluck('nama', 'id');
         return response()->json([
             'success' => true,
             'message' => 'Detail Data Indikator',
             'data'    => $indikator,
+            'bukti'   => $bukti,
         ]); 
     }
 

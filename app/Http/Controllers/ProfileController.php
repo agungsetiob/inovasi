@@ -33,7 +33,22 @@ class ProfileController extends Controller
 
     public function show(Profile $profile)
     {
-        return view('profile.detail-profile', compact('profile'));
+        $profileId = $profile;
+        $buktis = Bukti::where('status', 'active')->get();
+        $indikators = Indikator::where('status', 'active')->get();
+        // $totalBobot = File::with('bukti')
+        // ->where('proposal_id', $id)
+        // ->get()
+        // ->pluck('bukti.bobot')
+        // ->sum();
+        $files = Indikator::all();
+        return view('profile.detail-profil', compact(
+            'files', 
+            'profile', 
+            'buktis', 
+            'indikators', 
+            'profileId',
+        ));
     }
 
     /**
