@@ -39,16 +39,24 @@
                         {{$profile->nama}}
                     </li>
                     <li class="list-group-item">
+                        <strong>SKPD yang menangani:</strong><br>
+                        {{$profile->skpd}}
+                    </li>
+                    <li class="list-group-item">
                         <strong>Alamat:</strong><br>
                         {{$profile->alamat}}
                     </li>
                     <li class="list-group-item">
                         <strong>Email:</strong><br>
-                        
+                        {{$profile->email}}
                     </li>
                     <li class="list-group-item">
                         <strong>Nomor Telepon:</strong><br>
-                        
+                        {{$profile->telp}}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Nama Admin:</strong><br>
+                        {{$profile->admin}}
                     </li>
                 </ul>
             </div>
@@ -78,20 +86,21 @@
                             </thead>
                             <tbody>
                                 @foreach ($profile->indikators()->get() as $indikator)
-                                <tr id="{{--@foreach ($proposal->files()->get() as $item)index_{{$item->id}}@endforeach--}}">
-                                    <td>{{--$indikator->nama--}}</td>
-                                    <td>{{--@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach--}}</td>
-                                    <td>{{--@foreach ($indikator->files()->get() as $item) {{$item->bukti->bobot}} @endforeach--}}</td>
+                                <tr id="@foreach ($indikator->files()->get() as $item)index_{{$item->id}}@endforeach">
+                                    <td>{{$loop->iteration}}.</td>
+                                    <td>{{$indikator->nama}}</td>
+                                    <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach</td>
+                                    <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
                                     <td>
-                                        {{--<a class="btn btn-outline-secondary btn-sm @forelse ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$indikator->id}}">
+                                        <a class="btn btn-outline-secondary btn-sm @forelse ($indikator->files()->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$indikator->id}}">
                                             <i class="fas fa-pencil-alt"></i>
                                         </a>
-                                        <a class="btn btn-outline-success btn-sm @forelse ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="download" href="@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{url('/storage/docs/'. $item->file )}} @endforeach" target="_blank">
+                                        <a class="btn btn-outline-success btn-sm @forelse ($indikator->files()->get() as $item) @empty d-none @endforelse" title="download" href="@foreach ($indikator->files()->get() as $item) {{url('/storage/docs/'. $item->file )}} @endforeach" target="_blank">
                                             <i class="fas fa-download"></i>
                                         </a>
-                                        <button class="btn btn-outline-primary btn-sm @foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @if ($item) d-none @endif @endforeach" data-id="{{$indikator->id}}" id="btn-add" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
+                                        <button class="btn btn-outline-primary btn-sm @foreach ($indikator->files()->get() as $item) @if ($item) d-none @endif @endforeach" data-id="{{$indikator->id}}" id="btn-add" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
                                             <i class="fas fa-pencil-alt"></i>
-                                        </button>--}}
+                                        </button>
                                     </td>
                                 </tr>
                                 @endforeach

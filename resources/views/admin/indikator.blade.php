@@ -1,4 +1,3 @@
-<!-- UI for Bentuk inovasi -->
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->

@@ -11,7 +11,7 @@
                 <form action="{{ url('profile/create') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="nama">nama</label>
+                        <label for="nama">Nama Pemda</label>
                         <input type="text" class="form-control" name="nama" id="nama" required>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
                         <label for="skpd">SKPD Pengampu</label>

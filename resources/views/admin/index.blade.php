@@ -182,10 +182,11 @@
                         @php 
                             $inovasi = ($totalProposals/$totalSkpds)*100; 
                         @endphp
-                    @endif
+                    
                     <div class="progress mb-3" style="height: 25px;">
-                        <div class="progress-bar bg-danger custom-progress-bar" role="progressbar" style="width: {{$inovasi}}%;" aria-valuenow="{{$totalProposals}}" aria-valuemin="0" aria-valuemax="{{$totalSkpds}}">{{$inovasi}}%</div>
+                        <div class="progress-bar bg-danger custom-progress-bar" role="progressbar" style="width: {{--$inovasi--}}%;" aria-valuenow="{{$totalProposals}}" aria-valuemin="0" aria-valuemax="{{$totalSkpds}}">{{--$inovasi--}}%</div>
                     </div>
+                    @endif
                     {{-- Progress item 2
                     <div class="d-flex align-items-center justify-content-between small mb-1">
                         <div class="fw-bold">Litbang</div>

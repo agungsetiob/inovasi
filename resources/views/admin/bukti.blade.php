@@ -1,4 +1,3 @@
-<!-- UI for Bukti inovasi -->
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
@@ -113,27 +112,7 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+@include ('components.logout')
 
 <!-- delete Modal-->
 @foreach ($buktis as $bukti)
@@ -175,13 +154,13 @@ aria-hidden="true">
                 <form action="{{ route('bukti.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Nama bukti inovasi</label>
+                        <label for="name">Bukti inovasi (parameter)</label>
                         <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="name" required placeholder="Masukkan nama bukti inovasi" value="{{old('nama')}}">
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>  
                     </div>
                     <div class="form-group">
                         <label for="skor">Bobot</label>
-                        <input type="number" name="bobot" class="form-control @error('bobot') is-invalid @enderror" id="skor" value="{{old('bobot')}}" required>   
+                        <input type="number" step="any" name="bobot" class="form-control @error('bobot') is-invalid @enderror" id="skor" value="{{old('bobot')}}" required>   
                     </div>
                     <div class="form-group">
                         <label for="indikator">Indikator</label>

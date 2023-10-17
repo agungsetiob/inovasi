@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('buktis', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->integer('bobot');
+            $table->float('bobot');
             $table->string('status');
             $table->foreignId('indikator_id')->constrained('indikators');
             $table->timestamps();

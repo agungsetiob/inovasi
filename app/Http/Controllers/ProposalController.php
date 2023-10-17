@@ -310,7 +310,7 @@ class ProposalController extends Controller
     public function proposalReport($id)
     {
         $proposal = Proposal::findOrFail($id);
-        $files = Indikator::all();
+        $files = Indikator::where('status', 'active')->get();
         $pdf = PDF::loadview('inovasi.proposal-report',compact('proposal', 'files'))->setPaper('A4', 'portrait');
         set_time_limit(300);
         return $pdf->stream('proposal-'.$id.'.pdf');
