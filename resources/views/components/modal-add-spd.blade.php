@@ -70,9 +70,8 @@
                 $('#indikator').val(response.data.nama);
                 $('#bukti').empty();
                 $('#bukti').append('<option value="">Pilih bukti</option>');
-
-                $.each(response.bukti, function (key, value) {
-                    $('#bukti').append('<option value="' + key + '">' + value + '</option>');
+                $.each(response.bukti, function (index, bukti) {
+                    $('#bukti').append('<option value="' + bukti.id + '">' + bukti.nama + ' (bobot: ' + bukti.bobot + ')</option>');
                 });
                 $('#uploadFile').modal('show');
 

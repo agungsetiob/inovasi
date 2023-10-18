@@ -11,6 +11,7 @@
                 <div class="card-body">
                     <form action="{{ route('inovasi.update', $inovasi->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label class="font-weight-bold" for="nama">Nama inovasi:</label>
                             <input id="nama" type="text" class="form-control @error('title') is-invalid @enderror" name="nama" value="{{ old('nama', $inovasi->nama) }}" placeholder="Masukkan nama inovasi">
@@ -170,8 +171,8 @@
                         <div class="form-group">
                             <div class="row g-3">
                                 <div class="col">
-                                    <label class="font-weight-bold">Waktu ujicoba:</label>
-                                    <input type="date" class="form-control @error('ujicoba') is-invalid @enderror" name="ujicoba" value="{{ old('ujicoba', $inovasi->ujicoba) }}" placeholder="Masukkan waktu uji coba inovasi">
+                                    <label class="font-weight-bold" for="ujicoba">Waktu ujicoba:</label>
+                                    <input id="ujicoba" type="date" class="form-control @error('ujicoba') is-invalid @enderror" name="ujicoba" value="{{ old('ujicoba', $inovasi->ujicoba) }}" placeholder="Masukkan waktu uji coba inovasi">
                                     <!-- error message untuk title -->
                                     @error('ujicoba')
                                     <div class="alert alert-danger mt-2">
@@ -180,8 +181,8 @@
                                     @enderror
                                 </div>
                                 <div class="col">
-                                    <label class="font-weight-bold">Waktu implementasi:</label>
-                                    <input type="date" class="form-control @error('implementasi') is-invalid @enderror" name="implementasi" value="{{ old('implementasi', $inovasi->implementasi) }}" placeholder="Masukkan waktu implementasi inovasi">
+                                    <label class="font-weight-bold" for="implementasi">Waktu implementasi:</label>
+                                    <input id="implementasi" type="date" class="form-control @error('implementasi') is-invalid @enderror" name="implementasi" value="{{ old('implementasi', $inovasi->implementasi) }}" placeholder="Masukkan waktu implementasi inovasi">
                                     <!-- error message untuk title -->
                                     @error('implementasi')
                                     <div class="alert alert-danger mt-2">
@@ -211,7 +212,7 @@
                                     </script>
                                 </div>
                                 <div class="col">
-                                    <label class="font-weight-bold">Anggaran:</label>
+                                    <label class="font-weight-bold" for="uploadAnggaran">Anggaran:</label>
                                     <div class="input-group "> 
                                         <label class="input-group-btn">
                                             <span class="btny btn-outline-primary">
@@ -283,27 +284,7 @@
 </a>
 
 <!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
+@include ('components.logout')
 
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

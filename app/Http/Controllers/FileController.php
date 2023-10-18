@@ -104,7 +104,13 @@ class FileController extends Controller
     public function show(Indikator $indikator)
     {
         
-        $bukti = $indikator->buktis()->pluck('nama', 'id');
+        $bukti = $indikator->buktis->map(function ($bukti) {
+            return [
+                'id' => $bukti->id,
+                'nama' => $bukti->nama,
+                'bobot' => $bukti->bobot,
+            ];
+        });
         return response()->json([
             'success' => true,
             'message' => 'Detail Data Indikator',

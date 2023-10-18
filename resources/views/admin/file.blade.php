@@ -6,7 +6,6 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">{{ $proposal->nama }}</h1>
     </div>
-    <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Daftar File Bukti Dukung</h6>
@@ -132,20 +131,11 @@ aria-hidden="true">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-<!-- <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script> -->
-<!-- <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-<!-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> -->
 <script type="text/javascript">
     document.getElementById('bFile').onchange = function () {
         document.getElementById('uFile').value = this.value;};
     document.getElementById('editFile').onchange = function () {
         document.getElementById('newFile').value = this.value;};
-
-    $(document).ready(function () {
-        $('.select').selectize({
-            sortField: 'text'
-        });
-    });
 </script>
-      @endsection
+@endsection

@@ -32,19 +32,19 @@
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto text-center">
                     <img class="img-fluid menu-logo fa-bounce bounce-no-animation" src="assets/img/rocket.png" alt="..." />
-                    <a href="/inovasi" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white font-weight-light mb-0" style="display: flex; justify-content: center; align-items: center;">INOVASI</a>
+                    <a href="/inovasi" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white fw-semibold mb-0" style="display: flex; justify-content: center; align-items: center;">INOVASI</a>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto">
                     <img class="img-fluid menu-logo fa-flip" src="assets/img/microscope.png" alt="..." />
-                    <a href="/litbang" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white font-weight-light mb-0" style="display: flex; justify-content: center; align-items: center;">LITBANG</a>
+                    <a href="/litbang" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white fw-semibold mb-0" style="display: flex; justify-content: center; align-items: center;">LITBANG</a>
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto">
                     <img class="img-fluid menu-logo-atom fa-spin-pulse" src="assets/img/atom.png" alt="..." />
-                    <a href="/inovasi" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white font-weight-light mb-0" style="display: flex; justify-content: center; align-items: center;">RISET</a>
+                    <a href="/inovasi" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white fw-semibold mb-0" style="display: flex; justify-content: center; align-items: center;">RISET</a>
                 </div>
             </div>
         </div>

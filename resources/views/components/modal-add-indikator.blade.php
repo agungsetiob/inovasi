@@ -9,6 +9,8 @@
                 </button>
             </div>
             <div class="modal-body">
+                <form action="{{ url('upload/file') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                    @csrf
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
                     <input type="hidden" class="form-control" id="proposal_id" name="proposal_id" value="{{$proposal->id}}">
                     <input type="hidden" class="form-control" id="proposal_user_id" name="proposal_user_id" value="{{$proposal->user_id}}">
@@ -25,9 +27,9 @@
                     <div class="form-group">
                         <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror">
                             <option value="">Pilih bukti</option>
-                            @foreach ($buktis as $bukti)
+                            {{--@foreach ($buktis as $bukti)
                             <option value="{{ $bukti->id }}" {{ old('bukti') == $bukti->id ? 'selected' : ''}}>{{ $bukti->nama }} - bobot {{ $bukti->bobot}}</option>
-                            @endforeach
+                            @endforeach--}}
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti"></div>
                     </div>
@@ -44,8 +46,9 @@
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button id="upload" type="button" class="btn btn-primary">Upload</button>
+                    <button id="upload" type="submit" class="btn btn-primary">Upload</button>
                     <button id="loading" type="submit" class="btn btn-primary d-none"><i class="fa-solid fa-circle-notch fa-spin"></i></button>
+                </form>
             </div> 
         </div>
     </div>
@@ -65,40 +68,34 @@
                     //fill data to form
                 $('#indikator_id').val(response.data.id);
                 $('#indikator').val(response.data.nama);
+                $('#bukti').empty();
+                $('#bukti').append('<option value="">Pilih bukti</option>');
+                $.each(response.bukti, function (index, bukti) {
+                    $('#bukti').append('<option value="' + bukti.id + '">' + bukti.nama + ' (bobot: ' + bukti.bobot + ')</option>');
+                });
+                $('#bukti').selectize({
+                    sortField: 'text'
+                });
                 $('#uploadFile').modal('show');
 
             }
         });
     });
 
-    $('#upload').click(function (e) {
+    $('#uploadForm').submit(function (e) {
         e.preventDefault();
         $('#upload').addClass('d-none');
         $('#loading').removeClass('d-none');
         
-        //var formData = new FormData(this);
-        let informasi   = $("#informasi").val();
-        let bukti   = $("#bukti").val();
-        let file   = $("#bFile").val();
-        let indikator_id   = $("#indikator_id").val();
-        let proposal_id   = $("#proposal_id").val();
-        let token   = $("meta[name='csrf-token']").attr("content");
+        var formData = new FormData(this);
 
         $.ajax({
             url: '{{ url("/upload/file") }}',
             type: "POST",
             cache: false,
-            data: {
-                "informasi" : informasi,
-                "bukti"  : bukti,
-                "file"  : file,
-                "indikator_id" : indikator_id,
-                "proposal_id" : proposal_id,
-                "_token" : token
-            },
-            //contentType: false,
-            //data: formData,
-            //processData: false,
+            contentType: false,
+            data: formData,
+            processData: false,
             success: function (response) {
                 var id = $('#proposal_id').val();
                 var reloadUrl = '{{ url("/bukti-dukung") }}/' + id;

@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
     Route::get('data/inovasi', [ProposalController::class, 'database'])->name('database');
     Route::put('send/inovasi/{proposal}', [ProposalController::class, 'sendProposal']);
+    Route::delete('/delete/inovasi/{inovasi}', [ProposalController::class, 'destroy']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);

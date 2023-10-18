@@ -75,20 +75,18 @@
                     <table class="table table-borderless table-striped" width="100%" cellspacing="0" id="files-table">
                         <thead>
                             <tr>
-                                <th>No</th>
                                 <th>Indikator</th>
-                                <th width="55%">Informasi</th>
-                                <th>Dokumen</th>
+                                <th width="57%">Informasi</th>
+                                <!-- <th>Dokumen</th> -->
                                 <th width="12%"></th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($profile->indikators()->get() as $indikator)
                             <tr id="@foreach ($indikator->files()->get() as $item)index_{{$item->id}}@endforeach">
-                                <td>{{$loop->iteration}}.</td>
                                 <td>{{$indikator->nama}}</td>
                                 <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach</td>
-                                <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
+                                {{--<td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->bobot}} @endforeach</td>--}}
                                 <td>
                                     <a class="btn btn-outline-secondary btn-sm @forelse ($indikator->files()->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$indikator->id}}">
                                         <i class="fas fa-pencil-alt"></i>

@@ -180,11 +180,12 @@
                     </div>
                     @if ($totalSkpds != 0)
                         @php 
-                            $inovasi = ($totalProposals/$totalSkpds)*100; 
+                            $inovasi = ($totalProposals/$totalSkpds)*100;
+                            $inovasi = number_format($inovasi, 2);
                         @endphp
                     
                     <div class="progress mb-3" style="height: 25px;">
-                        <div class="progress-bar bg-danger custom-progress-bar" role="progressbar" style="width: {{--$inovasi--}}%;" aria-valuenow="{{$totalProposals}}" aria-valuemin="0" aria-valuemax="{{$totalSkpds}}">{{--$inovasi--}}%</div>
+                        <div class="progress-bar bg-danger custom-progress-bar" role="progressbar" style="width: {{$inovasi}}%;" aria-valuenow="{{$totalProposals}}" aria-valuemin="0" aria-valuemax="{{$totalSkpds}}">{{$inovasi}}%</div>
                     </div>
                     @endif
                     {{-- Progress item 2

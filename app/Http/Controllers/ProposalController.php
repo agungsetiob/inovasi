@@ -260,10 +260,10 @@ class ProposalController extends Controller
             $data['anggaran'] = $anggaran->hashName();
         }
 
-        $proposal->update($data);
-        $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
-        $proposal->urusans()->sync($request->urusans);
-        $proposal->indikators()->sync($indikatorIds);
+        $inovasi->update($data);
+        //$indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
+        $inovasi->urusans()->sync($request->urusans);
+        //$proposal->indikators()->sync($indikatorIds);
 
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil update inovasi']);
     }
@@ -288,22 +288,14 @@ class ProposalController extends Controller
      */
     public function destroy(Proposal $inovasi)
     {
-    // Detach 'urusans' dan 'indikators'
-        $proposal->urusans()->detach();
-        $proposal->indikators()->detach();
+        $inovasi->urusans()->detach();
+        $inovasi->indikators()->detach();
+        Storage::delete('public/profil/' . $inovasi->profil);
+        Storage::delete('public/anggaran/' . $inovasi->anggaran);
+        $inovasi->delete();
 
-    // Hapus file profil dan anggaran terkait (jika ada)
-        if (!empty($proposal->profil)) {
-            Storage::delete('public/profil/' . $proposal->profil);
-        }
-        if (!empty($proposal->anggaran)) {
-            Storage::delete('public/anggaran/' . $proposal->anggaran);
-        }
-
-    // Hapus proposal dari database
-        $proposal->delete();
-
-        return redirect()->intended('proyek/inovasi')->with(['success' => 'Proposal berhasil dihapus']);
+        return response()->json(['success' => 'Berhasil menghapus proposal']);
+        //return redirect()->intended('proyek/inovasi')->with(['success' => 'Proposal berhasil dihapus']);
     }
 
 
