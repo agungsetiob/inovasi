@@ -176,7 +176,7 @@
     @foreach ($profiles as $p)
     <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">{{$p->heading}}</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white">{{$p->nama}}</h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>

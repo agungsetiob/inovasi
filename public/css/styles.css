@@ -8184,6 +8184,13 @@ textarea.form-control-lg {
   --bs-text-opacity: 1;
 }
 
+.bg-pattern-doubs {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url("../img/doubs.svg");
+  background-position: center;
+}
+
 .bg-primary {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-primary-rgb), var(--bs-bg-opacity)) !important;
