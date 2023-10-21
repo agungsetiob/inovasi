@@ -118,6 +118,7 @@
 }
 
 body {
+  height: 100%;
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -131,7 +132,7 @@ body {
 }
 
 .background {
-  background: url(../assets/img/slide-2.jpg);
+  background: url(../img/doubs.svg);
   height: 100%;
 
   /* Center and scale the image nicely */
@@ -8189,6 +8190,7 @@ textarea.form-control-lg {
   background-repeat: no-repeat;
   background-image: url("../img/doubs.svg");
   background-position: center;
+  background-attachment: fixed;
 }
 
 .bg-primary {

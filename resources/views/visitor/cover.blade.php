@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Sistem Informasi Riset dan Inovasi</title>
@@ -44,7 +44,7 @@
             <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                 <div class="portfolio-item mx-auto">
                     <img class="img-fluid menu-logo-atom fa-spin-pulse" src="assets/img/atom.png" alt="..." />
-                    <a href="/inovasi" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white fw-semibold mb-0" style="display: flex; justify-content: center; align-items: center;">RISET</a>
+                    <a href="/riset" class="btn btn-lg btn-outline-primary btn-block masthead-subheading text-white fw-semibold mb-0" style="display: flex; justify-content: center; align-items: center;">RISET</a>
                 </div>
             </div>
         </div>

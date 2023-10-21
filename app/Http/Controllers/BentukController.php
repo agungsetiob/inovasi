@@ -73,32 +73,51 @@ class BentukController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $bentuk->delete();
-        
-        return redirect('master/bentuk')->with('success', 'Data Deleted Successfully');
+            return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menghapus data',
+        ]); 
         } else{
             return redirect()->back()->with('error', 'Many ways to rome');
         }
     }
 
-    public function disable($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $cat = Bentuk::findOrFail($id);
-            $cat->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'Bentuk inovasi is disabled successfully');
+        $bentuk = Bentuk::find($id);
+
+        if (!$bentuk) {
+            return response()->json(['success' => false, 'message' => 'Bentuk not found']);
         }
+        $bentuk->status = $bentuk->status === 'active' ? 'inactive' : 'active';
+        $bentuk->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $bentuk->status,
+            'message' => 'Berhasil merubah status bentuk'
+        ]);
     }
 
-    public function enable($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $cat = Bentuk::findOrFail($id);
-            $cat->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'Bentuk inovasi is enabled successfully');
-        }
-    }
+    // public function disable($id, Request $request)
+    // {
+    //     if (Auth::user()->role == 'admin') {
+    //         $cat = Bentuk::findOrFail($id);
+    //         $cat->update([
+    //             'status'     => 'inactive'
+    //         ]);
+    //         return redirect()->back()->with('success', 'Berhasil merubah status bentuk');
+    //     }
+    // }
+
+    // public function enable($id, Request $request)
+    // {
+    //     if (Auth::user()->role == 'admin') {
+    //         $cat = Bentuk::findOrFail($id);
+    //         $cat->update([
+    //             'status'     => 'active'
+    //         ]);
+    //         return redirect()->back()->with('success', 'Berhasil merubah status bentuk');
+    //     }
+    // }
 }

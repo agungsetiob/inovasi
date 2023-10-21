@@ -1,6 +1,5 @@
 @extends('layouts.header')
 @section('content')
-<!-- Begin Page Content -->
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -14,44 +13,42 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped text-dark" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="50%">name</th>
-                            <th>Created at</th>
-                            <th>Action</th>
+                            <th width="50%">nama</th>
+                            <th>Dibuat pada</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($bentuks as $ben)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
+                        <tr id="index_{{$ben->id}}">
+                            <td>{{ $loop->iteration }}.</td>
                             <td> {{$ben->nama}} </td>
                             <td> {{$ben->created_at}} </td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$ben->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                                data-toggle="modal" 
+                                data-target="#deleteModal" 
+                                data-bentuk-id="{{ $ben->id }}"
+                                data-bentuk-name="{{ $ben->nama }}"><i class="fas fa-trash"></i></button>
                                 <div class="dropdown mb-4 d-inline">
-                                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    {{$ben->status}}
+                                    <button
+                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                    type="button"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    data-bentuk-id="{{ $ben->id }}"
+                                    data-bentuk-status="{{ $ben->status }}">
+                                    {{ $ben->status }}
                                 </button>
-                                @if ($ben->status == 'inactive')
-                                <form method="POST" action="{{url('enable/bentuk/'. $ben->id)}}">
-                                    @csrf
-                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">activate</button>
-                                    </div>
-                                </form>
-                                @elseif ($ben->status == 'active')
-                                <form method="POST" action="{{url('disable/bentuk/'. $ben->id)}}">
-                                    @csrf
-                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">deactivate</button>
-                                    </div>
-                                </form>
-                                @endif
+                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item toggle-status-button" data-action="toggle-status">Change Status</button>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -78,16 +75,25 @@
                         @endphp
                     </div>
                     @endif
+                    <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                        <span id="success-message"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+                        <span id="error-message"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 </div>
 <!-- /.container-fluid -->
-
-
 </div>
 <!-- End of Main Content -->
 
@@ -111,55 +117,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button class="btn btn-primary">Logout</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- delete Modal-->
-@foreach ($bentuks as $ben)
-<div class="modal fade" id="deleteModal{{$ben->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tenane Lur?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('bentuk.destroy', $ben->id) }}">
-                    @csrf
-                    @method ('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
 
 <!-- Add Modal -->
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,20 +143,42 @@ aria-hidden="true">
     </div>
 </div>
 
-<!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+@include ('components.modal-delete-bentuk')
+@include ('components.logout')
+<script>
+    $(document).ready(function() {
+        $(".toggle-status-button").click(function() {
+            var button = $(this);
+            var bentukId = button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-id');
+            var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-status');
 
-<!-- Page level plugins -->
-<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+            $.ajax({
+                url: '/bentuk/change-status/' + bentukId,
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Update the UI with the new status
+                        var newStatus = response.newStatus;
+                        button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-status', newStatus);
+                        button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
+                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-message').text(response.message);
+                        $('#error-alert').addClass('d-none');
+                    }
+                },
+                error: function(response) {
+                    $('#error-message').text('An error occurred.');
+                    $('#error-alert').removeClass('d-none').addClass('show');
+                }
+            });
+        });
+    });
+</script>
 @endsection

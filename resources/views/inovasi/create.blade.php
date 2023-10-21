@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid overflow-auto panjang">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">Create Proposal</h1>
+        <h1 class="h3 mb-0 text-dark">Formulir Proposal Inovasi</h1>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -70,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <div class="row g-3">
-                                <div class="col">
+                                <div class="col-md-4">
                                     <label class="font-weight-bold" for="category">Jenis inovasi:</label>
                                     <select name="category" id="category" class="form-control @error('category') is-invalid @enderror" required>
                                         <option value="" disabled selected>Pilih jenis inovasi</option>
@@ -291,7 +291,6 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -299,7 +298,8 @@
 <script type="text/javascript">
   $(document).ready(function () {
       $('select').selectize({
-          sortField: 'text'
+          sortField: 'text',
+          plugins: ['remove_button']
       });
   });
   ClassicEditor

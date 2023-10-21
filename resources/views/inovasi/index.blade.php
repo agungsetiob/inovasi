@@ -70,20 +70,18 @@
                             </td>
                             <td>
                                 <a href="{{url('print/report', $proposal->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
-                                @if ($proposal->user_id === auth()->user()->id)
-                                <button id="delete-button" class="btn btn-outline-danger btn-sm" title="hapus" 
+                                @if ($proposal->status === 'draft' && $proposal->user_id === auth()->user()->id)
+                                <button class="delete-button btn btn-outline-danger btn-sm" title="hapus" 
                                 data-toggle="modal" 
                                 data-target="#deleteModal" 
                                 data-proposal-id="{{ $proposal->id }}"
                                 data-proposal-name="{{$proposal->nama}}"><i class="fas fa-trash"></i></button>
-                                @elseif ($proposal->status === 'draft' && $proposal->user_id === auth()->user()->id)
                                 <a href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
                                 <button id="send-proposal-{{$proposal->id}}" 
                                     data-toggle="modal" 
                                     data-target="#sendModal"
                                     data-proposal-name="{{$proposal->nama}}"
                                     class="btn btn-outline-dark btn-sm" title="kirim"><i class="fas fa-paper-plane"></i></button>
-                                    {{-- <button id="send-proposal" data-proposal-id="{{ $proposal->id }}" class="btn btn-outline-dark btn-sm" title="kirim"><i class="fa-solid fa-paper-plane"></i></button> --}}
                                 @endif
                                 </tr>
                                 @empty

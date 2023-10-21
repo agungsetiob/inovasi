@@ -25,7 +25,7 @@
                     </div>
                     <label for="bukti">Informasi</label>
                     <div class="form-group">
-                        <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror">
+                        <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror selectized">
                             <option value="">Pilih bukti</option>
                             {{--@foreach ($buktis as $bukti)
                             <option value="{{ $bukti->id }}" {{ old('bukti') == $bukti->id ? 'selected' : ''}}>{{ $bukti->nama }} - bobot {{ $bukti->bobot}}</option>
@@ -59,6 +59,10 @@
     $('body').on('click', '#btn-add', function () {
 
         let indikator_id = $(this).data('id');
+        var selectize = $('#bukti')[0].selectize;
+        if (selectize) {
+            selectize.destroy();
+        }
 
         $.ajax({
             url: `/bukti-dukung/add/${indikator_id}`,

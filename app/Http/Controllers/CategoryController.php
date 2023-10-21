@@ -46,7 +46,7 @@ class CategoryController extends Controller
         $category->status = 'active';
         $category->save();
 
-        return redirect()->back()->with('success','Data added successfully');
+        return redirect()->back()->with('success','Berhasil menambah data');
     }
 
     /**
@@ -93,33 +93,31 @@ class CategoryController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $jeni->delete();
-        
-        return redirect('master/jenis')->with('success', 'Data Deleted Successfully');
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data'
+            ]);
         } else{
             return redirect()->back()->with('error', 'Many ways to rome');
         }
         
     }
 
-    public function disableCategory($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $cat = Category::findOrFail($id);
-            $cat->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'jenis is disabled successfully');
+        $jenis = Category::find($id);
+
+        if (!$jenis) {
+            return response()->json(['success' => false, 'message' => 'jenis tidak ditemukan']);
         }
+        $jenis->status = $jenis->status === 'active' ? 'inactive' : 'active';
+        $jenis->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $jenis->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 
-    public function enableCategory($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $cat = Category::findOrFail($id);
-            $cat->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'Jenis is enabled successfully');
-        }
-    }
 }

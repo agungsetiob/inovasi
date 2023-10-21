@@ -21,6 +21,7 @@ class VisitorController extends Controller
     public function inovasi()
     {
         $profiles = Profile::all();
+        //$proposals = Proposal::
         return view('visitor.index', compact('profiles'));
     }
 

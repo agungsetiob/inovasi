@@ -22,18 +22,19 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg bg-light text-uppercase fixed-top border-bottom" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="#page-top"><img class="rotate-full" width="200" src="assets/logo.png" alt="logo pemkab" /></a>
-             <a class="navbar-brand" href="#page-top"><img class="rotate-full" width="55" src="assets/logo-serasi.png" alt="logo serasi" /></a>
+            <a class="navbar-brand" href="#page-top"><img width="200" src="assets/logo.png" alt="logo pemkab" /></a>
+             <a class="navbar-brand" href="#page-top"><img width="55" src="assets/logo-serasi.png" alt="logo serasi" class="d-none d-md-inline-block" /></a>
             <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars"></i>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="/">Home</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Riset</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contact</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="btn btn-lg btn-outline btn-danger" href="#"><i class="fas fa-arrow-right fa-flip me-2" style="--fa-flip-x: 1; --fa-flip-y: 0;"></i>Lapor.go.id</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="btn btn-lg btn-outline btn-danger" href="#"><i class="fas fa-arrow-right fa-flip me-2" style="--fa-flip-x: 1; --fa-flip-y: 0;"></i>Lapor</a></li>
                     @if (Auth::guest())
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('login') }}">Login</a></li>
                     @elseif (auth()->user())

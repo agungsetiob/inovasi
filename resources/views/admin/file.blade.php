@@ -95,10 +95,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
-<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-@include('components.modal-add-indikator')
-
 <!-- delete Modal-->
 {{--@foreach ($files as $file)
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -125,13 +121,15 @@ aria-hidden="true">
 </div>
 @endforeach--}}
 
-@include('components.modal-edit-indikator')
-@include('components.logout')
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+@include('components.modal-add-indikator')
+{{--@include('components.modal-edit-indikator')--}}
+@include('components.logout')
 <script type="text/javascript">
     document.getElementById('bFile').onchange = function () {
         document.getElementById('uFile').value = this.value;};

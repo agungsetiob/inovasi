@@ -17,8 +17,6 @@ class ProfileController extends Controller
     {
         if (Auth::user()->role == 'admin') {
         $profiles = Profile::all();
-        // $buktis = Bukti::where('status', 'active')->get();
-        // $indikators = Indikator::where('status', 'active')->get();
         $dataExist = $profiles->count() > 0;
         return view('profile.index', compact(
             //'buktis', 
@@ -58,9 +56,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->role == 'admin') {
-        return view('profile.create');
-        }
+        //
     }
 
     /**
@@ -111,42 +107,17 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Profile $profile)
     {
-        $profile = Profile::findOrFail($id);
-        //validate form
         $this->validate($request, [
-            'heading' => 'required|min:5',
-            'about'   => 'required|min:10'
+            'nama'   => 'required',
+            'alamat' => 'required',
+            'skpd'   => 'required',
+            'email'  => 'required|email',
+            'telp'   => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
         ]);
-
-        //check if image is uploaded
-        if ($request->hasFile('image')) {
-
-            //upload new image
-            $image = $request->file('image');
-            $image->storeAs('public/posts', $image->hashName());
-
-            //delete old image
-            Storage::delete('public/posts/'.$profile->image);
-
-            //update post with new image
-            $profile->update([
-                'image'   => $image->hashName(),
-                'heading' => $request->heading,
-                'about'   => $request->about
-            ]);
-
-        } else {
-
-            //update post without image
-            $profile->update([
-                'heading' => $request->heading,
-                'about'   => $request->about
-            ]);
-        }
-
-        //redirect to index
-        return redirect()->intended('setting/profile')->with(['success' => 'Data updated succesfully']);
+        $profile->update($request->all());
+        return redirect()->back()->with(['success' => 'Profil berhasil diperbarui']);
     }
+
 }

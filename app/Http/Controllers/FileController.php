@@ -150,18 +150,13 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        $file = File::findOrFail($id);
-        if (Auth::user()->id == $file->user_id) {
-            //delete file
-            Storage::delete('public/docs/'. $file->file);
-
-            //delete record
-            $file->delete();
-
-            //redirect to index
-            return redirect()->back()->with(['success' => 'File deleted']);
-        } else{
-            return redirect()->back()->with('error', 'ingatlah dunia hanya sementara');
-        }
+        // $file = File::findOrFail($id);
+        // if (Auth::user()->id == $file->user_id) {
+        //     Storage::delete('public/docs/'. $file->file);
+        //     $file->delete();
+        //     return redirect()->back()->with(['success' => 'File deleted']);
+        // } else{
+        //     return redirect()->back()->with('error', 'ingatlah dunia hanya sementara');
+        // }
     }
 }

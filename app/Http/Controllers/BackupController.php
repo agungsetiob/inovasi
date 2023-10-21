@@ -9,7 +9,7 @@ use Session;
 use Illuminate\Support\Facades\Storage;
 
 class BackupController extends Controller{
-     public function index(){
+    public function index(){
         $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
         $files = $disk->files('/public/Inovasi/');
         $backups = [];
@@ -17,13 +17,14 @@ class BackupController extends Controller{
            if (substr($f, -4) == '.zip' && $disk->exists($f)) {
                $backups[] = [
                'file_path' => $f,
-               'file_name' => str_replace(config('laravel-backup.backup.name') . 'public/Inovasi/', '', $f),
+               //'file_name' => str_replace(config('laravel-backup.backup.name') . 'public/inovasi/', '', $f),
+               'file_name' => basename($f),
                'file_size' => $disk->size($f),
                'last_modified' => $disk->lastModified($f),
                 ];
            }
         }
-    $backups = array_reverse($backups);
+        $backups = array_reverse($backups);
         return view("admin.backups")->with(compact('backups'));
     }
 
@@ -51,7 +52,7 @@ class BackupController extends Controller{
     }
 
     public function download($file_name) {
-        $file = config('laravel-backup.backup.name') .'public/Inovasi/'. $file_name;
+        $file = config('laravel-backup.backup.name') .'public/inovasi/'. $file_name;
         $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
 
         if ($disk->exists($file)) {

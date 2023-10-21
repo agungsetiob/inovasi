@@ -32,20 +32,20 @@
                             <td>
                                 <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$tematik->id}}"><i class="fas fa-trash"></i> Hapus</button>
                                 <div class="dropdown mb-4 d-inline">
-                                    <button
-                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    data-tematik-id="{{$tematik->id}}"
-                                    data-tematik-status="{{$tematik->status}}">
-                                    {{$tematik->status}}
-                                </button>
-                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                    <button class="dropdown-item" data-action="toggle-status">change status</button>
-                                </div>
+                                        <button
+                                        class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        data-tematik-id="{{$tematik->id}}"
+                                        data-tematik-status="{{$tematik->status}}">
+                                        {{$tematik->status}}
+                                        </button>
+                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                        <button class="dropdown-item" data-action="toggle-status">change status</button>
+                                    </div>
                                 </div>
                         </td>
                     </tr>
@@ -60,7 +60,6 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-
                     <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
                         <span id="error-message"></span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -128,14 +127,13 @@
 
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-@include ('components.modal-add-tematik')
-@include ('components.logout')
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-
+@include ('components.modal-add-tematik')
+@include ('components.logout')
 <script type="text/javascript">
     $(document).ready(function () {
         $('.dropdown-item[data-action="toggle-status"]').click(function () {
@@ -165,5 +163,4 @@
         });
     });
 </script>
-
 @endsection

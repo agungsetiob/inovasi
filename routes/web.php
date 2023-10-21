@@ -62,12 +62,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('disable/tahapan/{id}', [TahapanController::class, 'disable']);
 
     Route::resource('master/jenis', CategoryController::class);
-    Route::post('enable/jenis/{id}', [CategoryController::class, 'enableCategory']);
-    Route::post('disable/jenis/{id}', [CategoryController::class, 'disableCategory']);
+    Route::post('jenis/change-status/{id}', [CategoryController::class, 'changeStatus']);
 
     Route::resource('master/bentuk', BentukController::class);
-    Route::post('enable/bentuk/{id}', [BentukController::class, 'enable']);
-    Route::post('disable/bentuk/{id}', [BentukController::class, 'disable']);
+    Route::post('bentuk/change-status/{id}', [BentukController::class, 'changeStatus']);
 
     Route::resource('master/skpd', SkpdController::class);
     Route::post('activate/skpd/{id}', [SkpdController::class, 'activate']);
@@ -82,8 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('disable/indikator/{id}', [IndikatorController::class, 'disable']);
 
     Route::resource('master/bukti', BuktiController::class);
-    Route::post('enable/bukti/{id}', [BuktiController::class, 'enable']);
-    Route::post('disable/bukti/{id}', [BuktiController::class, 'disable']);
+    Route::post('bukti/change-status/{id}', [BuktiController::class, 'changeStatus']);
 
     Route::resource('master/klasifikasi', KlasifikasiController::class);
     Route::post('/toggle-status/klasifikasi/{klasifikasi}', [KlasifikasiController::Class, 'toggleStatus']);
@@ -108,7 +105,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('data/profile/', [ProfileController::class, 'index']);
     Route::get('indikator/spd/{profile}', [ProfileController::class, 'show']);
-    //Route::get('setting/profile/create', [ProfileController::class, 'create']);
     //Route::get('setting/profile/{id}', [ProfileController::class, 'edit']);
     Route::post('profile/create', [ProfileController::class, 'store']);
     Route::put('profile/update/{id}', [ProfileController::class, 'update']);

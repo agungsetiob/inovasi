@@ -48,7 +48,6 @@ class BuktiController extends Controller
         $bukti->indikator_id = $request->indikator;
         $bukti->status = 'active';
         $bukti->save();
-        //dd($bukti);
 
         return redirect()->back()->with('success','Data added successfully');
     }
@@ -84,32 +83,30 @@ class BuktiController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $bukti->delete();
-
-            return redirect('master/bukti')->with('success', 'Data Deleted Successfully');
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data'
+            ]);
+            //return redirect('master/bukti')->with('success', 'Data Deleted Successfully');
         } else{
             return redirect()->back()->with('error', 'Many ways to rome');
         }
     }
 
-    public function disable($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $bukti = Bukti::findOrFail($id);
-            $bukti->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'Bukti inovasi is disabled successfully');
-        }
-    }
+        $bukti = Bukti::find($id);
 
-    public function enable($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $bukti = Bukti::findOrFail($id);
-            $bukti->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'Bukti inovasi is enabled successfully');
+        if (!$bukti) {
+            return response()->json(['success' => false, 'message' => 'Bukti tidak ditemukan']);
         }
+        $bukti->status = $bukti->status === 'active' ? 'inactive' : 'active';
+        $bukti->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $bukti->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 }

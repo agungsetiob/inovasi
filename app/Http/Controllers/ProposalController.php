@@ -19,6 +19,7 @@ use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProposalController extends Controller
 {
@@ -37,7 +38,7 @@ class ProposalController extends Controller
         //     return redirect()->back()->with(['error' => 'ojo dibandingke!']);
         // }
         $proposals = Proposal::where('user_id', Auth::user()->id)->get();
-        return view ('inovasi.index', compact( 'proposals'));
+        return view('inovasi.index', compact( 'proposals'));
     }
 
     /**
@@ -261,9 +262,7 @@ class ProposalController extends Controller
         }
 
         $inovasi->update($data);
-        //$indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
         $inovasi->urusans()->sync($request->urusans);
-        //$proposal->indikators()->sync($indikatorIds);
 
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil update inovasi']);
     }
@@ -288,15 +287,29 @@ class ProposalController extends Controller
      */
     public function destroy(Proposal $inovasi)
     {
+        $files = $inovasi->files()->get();
+        foreach ($files as $file) {
+            $fullFilePath = 'public/docs/' . $file->file;
+            if (Storage::exists($fullFilePath)) {
+                if (Storage::delete($fullFilePath)) {
+                    Log::info('File deleted successfully: ' . $fullFilePath);
+                } else {
+                    Log::error('Failed to delete file: ' . $fullFilePath);
+                }
+            } else {
+                Log::warning('File not found: ' . $fullFilePath);
+            }
+        }
         $inovasi->urusans()->detach();
         $inovasi->indikators()->detach();
+        $inovasi->files()->delete();
         Storage::delete('public/profil/' . $inovasi->profil);
         Storage::delete('public/anggaran/' . $inovasi->anggaran);
         $inovasi->delete();
 
         return response()->json(['success' => 'Berhasil menghapus proposal']);
-        //return redirect()->intended('proyek/inovasi')->with(['success' => 'Proposal berhasil dihapus']);
     }
+
 
 
     public function proposalReport($id)

@@ -26,33 +26,31 @@
                     </thead>
                     <tbody>
                         @forelse ($categories as $cat)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
+                        <tr id="index_{{$cat->id}}">
+                            <td>{{ $loop->iteration }}.</td>
                             <td> {{$cat->name}} </td>
                             <td> {{$cat->created_at}} </td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$cat->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                                data-toggle="modal" 
+                                data-target="#deleteModal" 
+                                data-jenis-id="{{ $cat->id }}"
+                                data-jenis-name="{{ $cat->name }}"><i class="fas fa-trash"></i></button>
                                 <div class="dropdown mb-4 d-inline">
-                                    <button class="btn btn-outline-primary dropdown-toggle btn-sm" type="button"
-                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    {{$cat->status}}
+                                    <button
+                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                    type="button"
+                                    id="dropdownMenuButton"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    data-jenis-id="{{ $cat->id }}"
+                                    data-jenis-status="{{ $cat->status }}">
+                                    {{ $cat->status }}
                                 </button>
-                                @if ($cat->status == 'inactive')
-                                <form method="POST" action="{{url('enable/jenis/'. $cat->id)}}">
-                                    @csrf
-                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">activate</button>
-                                    </div>
-                                </form>
-                                @elseif ($cat->status == 'active')
-                                <form method="POST" action="{{url('disable/jenis/'. $cat->id)}}">
-                                    @csrf
-                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item">deactivate</button>
-                                    </div>
-                                </form>
-                                @endif
+                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                    <button class="dropdown-item toggle-status-button" data-action="toggle-status">Change Status</button>
+                                </div>
                             </div>
                         </td>
                     </tr>
@@ -76,6 +74,12 @@
                         @endphp
                     </div>
                     @endif
+                    <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                        <span id="success-message"></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
                 </tbody>
             </table>
         </div>
@@ -110,34 +114,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-@include ('components.logout')
-
-<!-- delete Modal-->
-@foreach ($categories as $cat)
-<div class="modal fade" id="deleteModal{{$cat->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tenane Lur?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('jenis.destroy', $cat->id) }}">
-                    @csrf
-                    @method ('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-
 <!-- Add Modal -->
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -166,17 +142,45 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-
-<!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-<!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+@include ('components.logout')
+@include ('components.modal-delete-category')
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle-status-button").click(function() {
+            var button = $(this);
+            var jenisId = button.closest('.dropdown').find('.dropdown-toggle').data('jenis-id');
+            var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('jenis-status');
+
+            $.ajax({
+                url: '/jenis/change-status/' + jenisId,
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var newStatus = response.newStatus;
+                        button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-status', newStatus);
+                        button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
+                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-message').text(response.message);
+                        $('#error-alert').addClass('d-none');
+                        setTimeout(function() {
+                            $('#success-alert').addClass('d-none').removeClass('show');
+                        }, 3700);
+                    }
+                },
+                error: function(response) {
+                    $('#error-message').text('Sebuah error terjadi');
+                    $('#error-alert').removeClass('d-none').addClass('show');
+                }
+            });
+        });
+    });
+</script>
 @endsection
