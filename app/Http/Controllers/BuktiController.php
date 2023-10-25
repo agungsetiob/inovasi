@@ -87,7 +87,6 @@ class BuktiController extends Controller
                 'success' => true,
                 'message' => 'Berhasil menghapus data'
             ]);
-            //return redirect('master/bukti')->with('success', 'Data Deleted Successfully');
         } else{
             return redirect()->back()->with('error', 'Many ways to rome');
         }

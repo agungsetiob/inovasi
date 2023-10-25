@@ -1,5 +1,5 @@
 {{--edit indikator modal--}}
-<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editSpd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,7 +14,6 @@
                     @method('PUT')
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id_edit">
                     <input type="hidden" class="form-control" name="file_id" id="file_id">
-                    <input type="hidden" class="form-control" name="profile_id" id="profile_id">
                     <label for="indikator_edit">Indikator</label>
                     <div class="form-group">
                         <input type="text" id="indikator_edit" class="form-control" readonly>
@@ -59,8 +58,6 @@
 
         let indikator_id = $(this).data('indikator-id');
         let bukti_id = $(this).data('bukti-id');
-        let profile_id = $(this).data('profile-id');
-        $('#profile_id').val(profile_id);
 
         $.ajax({
             url: `/bukti-dukung/add/${indikator_id}`,
@@ -118,7 +115,7 @@
                     $("#files-table").load(reloadUrl + " #files-table");
 
                     // Close modal and clear input fields
-                    $('#editModal').modal('hide');
+                    $('#editSpd').modal('hide');
                     $('#informasi_edit').val('');
                     $('#bukti_edit').val('');
                     $('#editFile').val('');
@@ -132,8 +129,6 @@
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
                 },
-        //     });
-        // });
 
             error: function (error) {
                 if (error.status === 422) {

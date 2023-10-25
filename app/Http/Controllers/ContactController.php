@@ -114,7 +114,6 @@ class ContactController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $mes = Contact::findOrFail($id);
-        //delete post
             $mes->delete();
 
         //redirect to index

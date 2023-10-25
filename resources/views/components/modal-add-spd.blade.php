@@ -13,7 +13,6 @@
                     @csrf
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
                     <input type="hidden" class="form-control" id="profile_id" name="profile_id" value="{{$profile->id}}">
-                    {{--<input type="hidden" class="form-control" id="proposal_user_id" name="proposal_user_id" value="{{$proposal->user_id}}">--}}
                     <label for="indikator">Indikator</label>
                     <div class="form-group">
                         <input type="text" id="indikator" class="form-control" readonly>

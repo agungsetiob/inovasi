@@ -254,7 +254,7 @@ class FileController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Data Berhasil Diupdate!',
+                'message' => 'Data Berhasil Diupdate',
                 'data' => $file,
             ]);
         } else {

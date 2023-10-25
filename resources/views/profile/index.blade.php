@@ -5,7 +5,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Profil Pemda</h1>
         @if ($dataExist)
-        <i class="fa-solid fa-user-secret"></i>
+        <!-- <i class="fa-solid fa-user-secret"></i> -->
         @else
         <a href="#" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#createProfile"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Create Profile</a>
         @endif
@@ -34,18 +34,18 @@
                         <tr>
                             <th>Nama</th>
                             <th>Indikator SPD</th>
-                            <th width="16%">Aksi</th>
+                            <th width="16%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($profiles as $p)
                         <tr>
-                            <td> {{ $p->nama }} </td>
+                            <td>Kabupaten {{ $p->nama }} </td>
                             <td> 
                                 <a href="{{url('indikator/spd', $p->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>
                             </td>
                             <td>
-                                <a href="{{url('profil/detail', $p->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="detail profil"><i class="fa-solid fa-user-secret"></i></a>
+                                <a href="{{url('indikator/spd', $p->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="detail profil"><i class="fa-solid fa-user-secret"></i></a>
                             </tr>
                             @empty
                             <div class="alert alert-danger">
