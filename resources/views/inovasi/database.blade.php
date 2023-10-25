@@ -4,7 +4,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Inovasi</h1>
-        <a href="{{ route('inovasi.create') }}" class="btn btn-sm btn-primary shadow-sm {{ (request()->is('data/inovasi')) ? 'd-none' : '' }}"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Add Proposal</a>
     </div>
     <!-- DataTables Example -->
     <div class="card shadow mb-4">
@@ -12,24 +11,6 @@
             <h6 class="m-0 font-weight-bold text-primary">Proposals</h6>
         </div>
         <div class="card-body">
-            @if(Session::has('success'))
-            <div class="alert alert-success data-dismiss alert-dismissible">
-                {{ Session::get('success') }}
-                @php
-                Session::forget('success');
-                @endphp
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            @elseif (Session::has('error'))
-            <div class="alert alert-danger">
-                {{ Session::get('error') }}
-                @php
-                Session::forget('error');
-                @endphp
-            </div>
-            @endif
             <div class="table-responsive">
                 <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -70,19 +51,11 @@
                             </td>
                             <td>
                                 <a href="{{url('print/report', $proposal->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
-                                @if ($proposal->status === 'draft')
-                                <button id="hapus-{{$proposal->id}}" class="delete-button btn btn-outline-danger btn-sm" title="hapus" 
-                                data-toggle="modal" 
-                                data-target="#deleteModal" 
-                                data-proposal-id="{{ $proposal->id }}"
-                                data-proposal-name="{{$proposal->nama}}"><i class="fas fa-trash"></i></button>
-                                <a id="edit-{{$proposal->id}}" href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
                                 <button id="send-proposal-{{$proposal->id}}" 
                                     data-toggle="modal" 
                                     data-target="#sendModal"
                                     data-proposal-name="{{$proposal->nama}}"
-                                    class="btn btn-outline-dark btn-sm" title="kirim"><i class="fas fa-paper-plane"></i></button>
-                                @endif
+                                    class="btn btn-outline-warning btn-sm" title="kembalikan"><i class="fa-solid fa-ban"></i></button>
                                 </tr>
                                 @empty
                                 <div class="alert alert-danger">
@@ -95,7 +68,6 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-
                                 <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
                                     <span id="error-message"></span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -136,6 +108,5 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 @include ('components.logout')
-@include ('components.modal-send-proposal')
-@include ('components.modal-delete-proposal')
+@include ('components.modal-return-proposal')
 @endsection

@@ -39,8 +39,6 @@ Route::get('/riset', [VisitorController::class, 'riset']);
 
 Route::post('send/message', [ContactController::class, 'store']);
 
-Route::get('document', [FileController::class, 'document'])->name('docs');
-
 //route group on my own
 Route::middleware(['auth'])->group(function () {
 
@@ -90,9 +88,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('bukti-dukung/{id}', [FileController::class, 'index']);
     Route::post('upload/file', [FileController::class, 'store']);
-    Route::get('bukti-dukung/edit/{id}', [FileController::class, 'edit']);
+    Route::post('upload/spd', [FileController::class, 'storeSpd']);
+    Route::put('spd/edit/{file}', [FileController::class, 'updateSpd']);
+    Route::put('bukti-dukung/edit/{file}', [FileController::class, 'update']);
     Route::get('bukti-dukung/add/{indikator}', [FileController::class, 'show']);
-    Route::delete('delete/docs/{id}', [FileController::class, 'destroy']);
+    Route::get('bukti-dukung/data/{proposal}/{indikator}', [FileController::class, 'edit']);
     Route::get('bukti/inovasi/{id}', [FileController::class, 'bukti']);
     
     Route::get('/backup', [BackupController::class, 'index']);
@@ -105,7 +105,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('data/profile/', [ProfileController::class, 'index']);
     Route::get('indikator/spd/{profile}', [ProfileController::class, 'show']);
-    //Route::get('setting/profile/{id}', [ProfileController::class, 'edit']);
     Route::post('profile/create', [ProfileController::class, 'store']);
     Route::put('profile/update/{id}', [ProfileController::class, 'update']);
 

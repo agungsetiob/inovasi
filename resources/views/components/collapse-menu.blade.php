@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
         <div class="sidebar-brand-icon">
-            <i class="fa fa-hospital-user fa-xl"></i>
+            <img class="img-profile rounded-circle" style="width: 52px; height: 52px;" src="{{url('storage/ava/ava.png')}}">
         </div>
         <div class="sidebar-brand-text mx-3">Hi {{ Auth::user()->username }}</div>
     </a>

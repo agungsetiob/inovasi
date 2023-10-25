@@ -38,7 +38,7 @@
                         <div class="input-group">
                             <label class="input-group-btn">
                                 <span class="btny btn-outline-primary">
-                                    Browse<input accept=".pdf, .mp4, .avi" id="bFile" type="file" style="display: none;" name="file">
+                                    Browse<input accept=".pdf" id="bFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
                             <input id="uFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a file">
@@ -53,10 +53,11 @@
         </div>
     </div>
 </div>
-
-
 <script>
-    $('body').on('click', '#btn-add', function () {
+    document.getElementById('bFile').onchange = function () {
+        document.getElementById('uFile').value = this.value;
+    }
+    $('body').on('click', '.btn-add', function () {
 
         let indikator_id = $(this).data('id');
         var selectize = $('#bukti')[0].selectize;
@@ -80,7 +81,7 @@
                 $('#bukti').selectize({
                     sortField: 'text'
                 });
-                $('#uploadFile').modal('show');
+                //$('#uploadFile').modal('show');
 
             }
         });
@@ -139,7 +140,6 @@
 
                 // Hide success alert if it was shown
                 $('#success-alert').addClass('d-none');
-                console.error(error);
             }
         });
     });

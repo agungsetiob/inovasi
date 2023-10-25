@@ -28,7 +28,7 @@
                         <thead>
                             <tr>
                                 <th>Indikator</th>
-                                <th width="55%">Bukti</th>
+                                <th width="53%">Bukti</th>
                                 <th>Bobot</th>
                                 <th width="12%"></th>
                             </tr>
@@ -45,20 +45,30 @@
                         </tfoot>
                         <tbody>
                             @foreach ($proposal->indikators()->get() as $indikator)
-                            <tr id="@foreach ($proposal->files()->where('proposal_id', $proposalId)->get() as $item)index_{{$item->id}}@endforeach">
+                            <tr>
                                 <td>{{$indikator->nama}}</td>
                                 <td>@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->nama}} @endforeach</td>
-                                <td>@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
-                                <td>
-                                    <a class="btn btn-outline-secondary btn-sm @forelse ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$indikator->id}}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </a>
-                                    <a class="btn btn-outline-success btn-sm @forelse ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @empty d-none @endforelse" title="download" href="@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{url('/storage/docs/'. $item->file )}} @endforeach" target="_blank">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <button class="btn btn-outline-primary btn-sm @foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) @if ($item) d-none @endif @endforeach" data-id="{{$indikator->id}}" id="btn-add" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
+                                <td class="text-center">@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->bobot}} @endforeach</td>
+                                <td class="text-center">
+                                    @if ($proposal->status === 'draft')
+                                        @forelse ($indikator->files()->where('proposal_id', $proposalId)->get() as $item)
+                                            <a class="btn-edit btn btn-outline-secondary btn-sm" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal"
+                                            data-indikator-id="{{$indikator->id}}"
+                                            data-indikator-nama="{{$indikator->nama}}" 
+                                            data-file-id="{{$item->id}}" 
+                                            data-proposal-id="{{$proposal->id}}"
+                                            data-bukti-id="{{$item->bukti->id}}"
+                                            data-file-informasi="{{$item->informasi}}"
+                                            ><i class="fa fa-pen-to-square"></i></a>
+                                            <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank"><i class="fa-solid fa-download"></i></a>
+                                        @empty
+                                            <button class="btn-add btn btn-outline-primary btn-sm" data-id="{{$indikator->id}}" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+                                        @endforelse
+                                    @elseif ($proposal->status === 'sent')
+                                        <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank"><i class="fa-solid fa-download"></i></a>
+                                    @endif
                                 </td>
                             </tr>
                             @endforeach
@@ -69,8 +79,6 @@
         </div>
     </div>
     <!-- /.container-fluid -->
-
-
 </div>
 <!-- End of Main Content -->
 
@@ -95,45 +103,12 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- delete Modal-->
-{{--@foreach ($files as $file)
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">×</span>
-            </button>
-        </div>
-        <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-        <div class="modal-footer">
-            <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-            <form action="{{url('delete/docs', $file->id)}}" method="POST">
-                @csrf
-                @method ('delete')
-                <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-@endforeach--}}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @include('components.modal-add-indikator')
-{{--@include('components.modal-edit-indikator')--}}
+@include('components.modal-edit-indikator')
 @include('components.logout')
-<script type="text/javascript">
-    document.getElementById('bFile').onchange = function () {
-        document.getElementById('uFile').value = this.value;};
-    document.getElementById('editFile').onchange = function () {
-        document.getElementById('newFile').value = this.value;};
-</script>
 @endsection

@@ -8,7 +8,7 @@ aria-hidden="true">
                 <span aria-hidden="true">×</span>
             </button>
         </div>
-        <div class="modal-body">Inovasi <span id="proposal-name-modal" style="color: #0061f2;"></span> akan dikirmi kepada admin. <br>Tekan tombol kirim apabila anda sudah yakin.</div>
+        <div class="modal-body">Inovasi <span id="proposal-name-modal" style="color: #0061f2;"></span> akan dikembalikan kepada pengirim. <br>Tekan tombol kirim apabila anda sudah yakin.</div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
             <button id="send-proposal" class="btn btn-outline-primary" title="kirim"><i class="fa-solid fa-paper-plane"></i> Kirim</button>
@@ -38,16 +38,14 @@ aria-hidden="true">
                 success: function(response) {
                     if (response.success) {
                         $('#success-alert').removeClass('d-none').addClass('show');
-                        $('#success-message').text('Berhasil mengirim proposal');
+                        $('#success-message').text('Berhasil mengembalikan proposal');
                         $('#error-alert').addClass('d-none');
-                        $("#" + "send-proposal-" + proposalId).remove();
-                        $("#edit-" + proposalId).remove();
-                        $("#hapus-" + proposalId).remove();
+                        $('#index_' + proposalId).remove();
                         $('#sendModal').modal('hide');
                     }
                 },
                 error: function(response) {
-                    $('#error-message').text('Gagal mengirim proposal');
+                    $('#error-message').text('Gagal mengembalikan proposal');
                     $('#error-alert').removeClass('d-none').addClass('show');
                 }
             });

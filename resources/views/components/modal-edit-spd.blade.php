@@ -14,6 +14,7 @@
                     @method('PUT')
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id_edit">
                     <input type="hidden" class="form-control" name="file_id" id="file_id">
+                    <input type="hidden" class="form-control" name="profile_id" id="profile_id">
                     <label for="indikator_edit">Indikator</label>
                     <div class="form-group">
                         <input type="text" id="indikator_edit" class="form-control" readonly>
@@ -54,93 +55,93 @@
     document.getElementById('editFile').onchange = function () {
         document.getElementById('newFile').value = this.value;
     }
-
     $('body').on('click', '.btn-edit', function () {
-        var selectize = $('#bukti_edit')[0].selectize;
-        if (selectize) {
-            selectize.destroy();
-        }
+
         let indikator_id = $(this).data('indikator-id');
-        let proposal_id = $(this).data('proposal-id');
-        let indikator_nama = $(this).data('indikator-nama');
-        let informasi = $(this).data('file-informasi');
-        let file_id = $(this).data('file-id');
         let bukti_id = $(this).data('bukti-id');
-
-        $('#indikator_id_edit').val(indikator_id);
-        $('#indikator_edit').val(indikator_nama);
-        $('#informasi_edit').val(informasi);
-        $('#file_id').val(file_id);
-
-        var buktiEditSelect = $('#bukti_edit');
-        buktiEditSelect.empty();
-        var buktiData = bukti_id;
+        let profile_id = $(this).data('profile-id');
+        $('#profile_id').val(profile_id);
 
         $.ajax({
-            url: `/bukti-dukung/data/${proposal_id}/${indikator_id}`,
+            url: `/bukti-dukung/add/${indikator_id}`,
             type: "GET",
             cache: false,
-            success: function (response) {
+            success:function(response){
+                    //fill data to form
+                $('#indikator_id_edit').val(response.data.id);
+                $('#indikator_edit').val(response.data.nama);
+                $('#informasi_edit').val(response.files[0].informasi);
+                $('#file_id').val(response.files[0].id);
+                
+                var buktiEditSelect = $('#bukti_edit');
+                buktiEditSelect.empty(); // Clear existing options
+
                 $.each(response.bukti, function (index, bukti) {
                     var option = $('<option></option>');
                     option.attr('value', bukti.id);
                     option.text(bukti.nama + ' (bobot: ' + bukti.bobot + ')');
 
-                    if (bukti.id == buktiData) {
+                    // Check if this option should be selected
+                    if (bukti.id == bukti_id) {
                         option.attr('selected', 'selected');
                     }
 
                     buktiEditSelect.append(option);
                 });
-
-                $('#bukti_edit').selectize({
-                    sortField: 'text'
-                });
             }
         });
     });
+        $('#updateForm').submit(function (e) {
+            e.preventDefault();
+            $('#upload').addClass('d-none');
+            $('#loading').removeClass('d-none');
 
-    $('#updateForm').submit(function (e) {
-        e.preventDefault();
-        $('#upload').addClass('d-none');
-        $('#loading').removeClass('d-none');
+            var file_id = $('#file_id').val();
+            var informasi = $('#informasi_edit').val();
+            var bukti = $('#bukti_edit').val();
+            var token = $("meta[name='csrf-token']").attr("content");
 
-        var file_id = $('#file_id').val();
-        var informasi = $('#informasi_edit').val();
-        var bukti = $('#bukti_edit').val();
-        var token = $("meta[name='csrf-token']").attr("content");
+            $.ajax({
+                url: "/spd/edit/" + file_id,
+                type: "PUT",
+                cache: false,
+                data: {
+                    "informasi": informasi,
+                    "bukti": bukti,
+                    "_token": token,
+                },
+                success: function (response) {
+                    var id = $('#profile_id').val();
+                    var reloadUrl = '{{ url("/indikator/spd") }}/' + id;
 
-        $.ajax({
-            url: "/bukti-dukung/edit/" + file_id,
-            type: "PUT",
-            cache: false,
-            data: {
-                "informasi": informasi,
-                "bukti": bukti,
-                "_token": token,
-            },
-            success: function (response) {
-                var id = $('#proposal_id').val();
-                var reloadUrl = '{{ url("/bukti-dukung") }}/' + id;
+                    // Reload the table
+                    $("#files-table").load(reloadUrl + " #files-table");
 
-                $("#files-table").load(reloadUrl + " #files-table");
+                    // Close modal and clear input fields
+                    $('#editModal').modal('hide');
+                    $('#informasi_edit').val('');
+                    $('#bukti_edit').val('');
+                    $('#editFile').val('');
+                    $('#newFile').val('');
 
-                $('#editModal').modal('hide');
-                $('#informasi_edit').val('');
-                $('#bukti_edit').val('');
-                $('#editFile').val('');
-                $('#newFile').val('');
+                    $('#success-alert').removeClass('d-none').addClass('show');
+                    $('#success-message').text(response.message);
 
-                $('#success-alert').removeClass('d-none').addClass('show');
-                $('#success-message').text(response.message);
-                $('#error-alert').addClass('d-none');
-                $('#upload').removeClass('d-none');
-                $('#loading').addClass('d-none');
-            },
+                    // Hide error alert if it was shown
+                    $('#error-alert').addClass('d-none');
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                },
+        //     });
+        // });
+
             error: function (error) {
                 if (error.status === 422) {
+                // Loop through the error response and display errors for each field
                     $.each(error.responseJSON.errors, function (field, errors) {
+                    // Construct the ID of the alert element using the field name
                         let alertId = 'alert-' + field + '-edit';
+                    // Find the corresponding alert element and show it
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                     });
                 }
@@ -148,7 +149,10 @@
                 $('#error-alert').removeClass('d-none').addClass('show');
                 $('#upload').removeClass('d-none');
                 $('#loading').addClass('d-none');
+
+                // Hide success alert if it was shown
                 $('#success-alert').addClass('d-none');
+                console.error(error);
             }
         });
     });

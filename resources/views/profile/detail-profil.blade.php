@@ -77,7 +77,6 @@
                             <tr>
                                 <th>Indikator</th>
                                 <th width="57%">Informasi</th>
-                                <!-- <th>Dokumen</th> -->
                                 <th width="12%"></th>
                             </tr>
                         </thead>
@@ -86,17 +85,19 @@
                             <tr id="@foreach ($indikator->files()->get() as $item)index_{{$item->id}}@endforeach">
                                 <td>{{$indikator->nama}}</td>
                                 <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach</td>
-                                {{--<td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->bobot}} @endforeach</td>--}}
                                 <td>
-                                    <a class="btn btn-outline-secondary btn-sm @forelse ($indikator->files()->get() as $item) @empty d-none @endforelse" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal{{$indikator->id}}">
+                                    @forelse ($indikator->files()->get() as $item)
+                                    <a class="btn btn-outline-secondary btn-sm btn-edit" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editModal" data-profile-id="{{$profile->id}}" data-indikator-id="{{$indikator->id}}" data-bukti-id="{{$item->bukti->id}}">
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
-                                    <a class="btn btn-outline-success btn-sm @forelse ($indikator->files()->get() as $item) @empty d-none @endforelse" title="download" href="@foreach ($indikator->files()->get() as $item) {{url('/storage/docs/'. $item->file )}} @endforeach" target="_blank">
+                                    <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank">
                                         <i class="fas fa-download"></i>
                                     </a>
-                                    <button class="btn btn-outline-primary btn-sm @foreach ($indikator->files()->get() as $item) @if ($item) d-none @endif @endforeach" data-id="{{$indikator->id}}" id="btn-add" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
+                                    @empty
+                                    <button class="btn btn-outline-primary btn-sm btn-add" data-id="{{$indikator->id}}" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
                                         <i class="fas fa-pencil-alt"></i>
                                     </button>
+                                    @endforelse
                                 </td>
                             </tr>
                             @endforeach
@@ -133,12 +134,11 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-@include ('components.logout')
-
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 @include('components.modal-add-spd')
+@include('components.modal-edit-spd')
+@include ('components.logout')
 @endsection

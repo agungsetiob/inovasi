@@ -42,10 +42,10 @@ class FileController extends Controller
 
     public function bukti($id)
     {
-        $files = File::with('bukti')->where('proposal_id', $id)->get();
+        $files = File::with('bukti')->where('proposal_id', $id)->get()->pluck('bukti.bobot');
         return response()->json([
             'success' => true,
-            'datax'    => $files
+            'data'    => $files
         ]);
     }
 
@@ -60,40 +60,71 @@ class FileController extends Controller
         $this->validate($request, [
             'informasi' => 'required',
             'bukti' => 'required',
-            'file'   => 'nullable|mimes:pdf,mp4,avi|max:71680',
+            'file' => 'nullable|mimes:pdf|max:3072',
         ]);
 
-        //upload file
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $file->storeAs('public/docs', $file->hashName());
-            //create post
+        $proposal = Proposal::find($request->proposal_id);
+
+        if ($proposal && $proposal->status === 'draft' && auth()->user()->id === $proposal->user_id) {
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $file->storeAs('public/docs', $file->hashName());
+            }
+
             $file = File::create([
-                'file'     => $file->hashName(),
-                'informasi'     => addslashes($request->informasi),
-                'user_id'   => auth()->user()->id,
+                'file' => $file->hashName() ?? null,
+                'informasi' => addslashes($request->informasi),
+                'user_id' => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
                 'bukti_id' => $request->bukti,
                 'indikator_id' => $request->indikator_id,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Disimpan!',
+                'data' => $file
             ]);
         } else {
+            return response()->json(['error' => 'Gagal menyimpan data']);
+        }
+    }
+
+    /**
+     * Store a newly created resource for spd in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSpd(Request $request)
+    {
+        $this->validate($request, [
+            'informasi' => 'required',
+            'bukti' => 'required',
+            'file' => 'nullable|mimes:pdf|max:3072',
+        ]);
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $file->storeAs('public/docs', $file->hashName());
+            }
+
             $file = File::create([
-                'informasi'     => addslashes($request->informasi),
-                'user_id'   => auth()->user()->id,
+                'file' => $file->hashName() ?? null,
+                'informasi' => addslashes($request->informasi),
+                'user_id' => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
                 'bukti_id' => $request->bukti,
                 'indikator_id' => $request->indikator_id,
             ]);
-        }
 
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Data Berhasil Disimpan!',
-            'data'    => $file 
-        ]);
-        //return redirect()->back()->with('success', 'Evidence uploaded successfully');
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Disimpan!',
+                'data' => $file
+            ]);
     }
+
 
     /**
      * Display the specified resource.
@@ -103,7 +134,6 @@ class FileController extends Controller
      */
     public function show(Indikator $indikator)
     {
-        
         $bukti = $indikator->buktis->map(function ($bukti) {
             return [
                 'id' => $bukti->id,
@@ -111,13 +141,26 @@ class FileController extends Controller
                 'bobot' => $bukti->bobot,
             ];
         });
+
+        $files = $indikator->files;
+        $fileData = [];
+        foreach ($files as $file) {
+            $fileData[] = [
+                'informasi' => $file->informasi,
+                'buktiId' => $file->bukti_id,
+                'id'    =>$file->id
+            ];
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Detail Data Indikator',
-            'data'    => $indikator,
-            'bukti'   => $bukti,
-        ]); 
+            'data' => $indikator,
+            'bukti' => $bukti,
+            'files' => $fileData,
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -125,10 +168,25 @@ class FileController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Proposal $proposal, Indikator $indikator)
     {
-        //$file = Indikator::findOrFail($id);
+        $bukti = $indikator->buktis->map(function ($bukti) {
+            return [
+                'id' => $bukti->id,
+                'nama' => $bukti->nama,
+                'bobot' => $bukti->bobot,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Data Indikator',
+            'data' => $proposal,
+            'bukti' => $bukti,
+        ]);
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -139,8 +197,71 @@ class FileController extends Controller
      */
     public function update(Request $request, File $file)
     {
-        //
+        if ($file->user_id === Auth::user()->id && $file->proposal->status === 'draft') {
+            $this->validate($request, [
+                'informasi' => 'required',
+                'bukti' => 'required',
+                'file' => 'nullable|mimes:pdf|max:3072',
+            ]);
+
+            if ($request->hasFile('file')) {
+                $newFile = $request->file('file');
+                $newFileName = $newFile->hashName();
+                $newFile->storeAs('public/docs', $newFileName);
+                $file->file = $newFileName;
+            }
+
+            $file->informasi = $request->informasi;
+            $file->bukti_id = $request->bukti;
+            $file->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Diupdate!',
+                'data' => $file,
+            ]);
+        } else {
+            return response()->json(['error' => 'Gagal update data']);
+        }
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\File  $file
+     * @return \Illuminate\Http\Response
+     */
+    public function updateSpd(Request $request, File $file)
+    {
+        if (Auth::user()->role == 'admin') {
+            $this->validate($request, [
+                'informasi' => 'required',
+                'bukti' => 'required',
+                'file' => 'nullable|mimes:pdf|max:3072',
+            ]);
+
+            if ($request->hasFile('file')) {
+                $newFile = $request->file('file');
+                $newFileName = $newFile->hashName();
+                $newFile->storeAs('public/docs', $newFileName);
+                $file->file = $newFileName;
+            }
+
+            $file->informasi = $request->informasi;
+            $file->bukti_id = $request->bukti;
+            $file->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Data Berhasil Diupdate!',
+                'data' => $file,
+            ]);
+        } else {
+            return response()->json(['error' => 'Gagal update data']);
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.
@@ -150,13 +271,6 @@ class FileController extends Controller
      */
     public function destroy($id)
     {
-        // $file = File::findOrFail($id);
-        // if (Auth::user()->id == $file->user_id) {
-        //     Storage::delete('public/docs/'. $file->file);
-        //     $file->delete();
-        //     return redirect()->back()->with(['success' => 'File deleted']);
-        // } else{
-        //     return redirect()->back()->with('error', 'ingatlah dunia hanya sementara');
-        // }
+        //
     }
 }

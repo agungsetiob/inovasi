@@ -56,7 +56,7 @@
     document.getElementById('bFile').onchange = function () {
         document.getElementById('uFile').value = this.value;};
 
-    $('body').on('click', '#btn-add', function () {
+    $('body').on('click', '.btn-add', function () {
 
         let indikator_id = $(this).data('id');
 
@@ -85,25 +85,11 @@
         $('#loading').removeClass('d-none');
         
         var formData = new FormData(this);
-        // let informasi   = $("#informasi").val();
-        // let bukti   = $("#bukti").val();
-        // let file   = $("#bFile").val();
-        // let indikator_id   = $("#indikator_id").val();
-        // let proposal_id   = $("#proposal_id").val();
-        // let token   = $("meta[name='csrf-token']").attr("content");
 
         $.ajax({
-            url: '{{ url("/upload/file") }}',
+            url: '{{ url("/upload/spd") }}',
             type: "POST",
             cache: false,
-            // data: {
-            //     "informasi" : informasi,
-            //     "bukti"  : bukti,
-            //     "file"  : file,
-            //     "indikator_id" : indikator_id,
-            //     "proposal_id" : proposal_id,
-            //     "_token" : token
-            // },
             contentType: false,
             data: formData,
             processData: false,

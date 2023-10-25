@@ -49,7 +49,7 @@ class ProposalController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $proposals = Proposal::where('status', 'sent')->get();
-            return view ('inovasi.index', compact( 'proposals'));
+            return view ('inovasi.database', compact( 'proposals'));
         } else {
             return redirect()->back()->with(['error' => 'wong kongene kok dibandingke']);
         }
@@ -274,12 +274,16 @@ class ProposalController extends Controller
      */
     public function sendProposal(Proposal $proposal)
     {
-        if ($proposal->user_id === Auth::user()->id) {
-            $proposal->update(['status' => 'sent']);
+        if (Auth::user()->role == 'admin' || ($proposal->user_id === Auth::user()->id)) {
+            $status = $proposal->status === 'sent' ? 'draft' : 'sent';
+
+            $proposal->update(['status' => $status]);
+
             return response()->json(['success' => 'Berhasil mengirim proposal']);
         } else {
             return response()->json(['error' => 'Gagal mengirim proposal']);
         }
+
     }
 
     /**
@@ -290,15 +294,7 @@ class ProposalController extends Controller
         $files = $inovasi->files()->get();
         foreach ($files as $file) {
             $fullFilePath = 'public/docs/' . $file->file;
-            if (Storage::exists($fullFilePath)) {
-                if (Storage::delete($fullFilePath)) {
-                    Log::info('File deleted successfully: ' . $fullFilePath);
-                } else {
-                    Log::error('Failed to delete file: ' . $fullFilePath);
-                }
-            } else {
-                Log::warning('File not found: ' . $fullFilePath);
-            }
+            Storage::delete($fullFilePath);
         }
         $inovasi->urusans()->detach();
         $inovasi->indikators()->detach();
