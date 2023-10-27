@@ -94,15 +94,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+<x-footer/>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -166,7 +158,7 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@include ('components.logout')
+<x-logout/>
 @include ('components.modal-delete-bukti')
 <script type="text/javascript">
     $(document).ready(function() {

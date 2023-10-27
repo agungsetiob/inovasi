@@ -41,64 +41,64 @@
 
             #slider .owl-dots {
                 padding-bottom: 3px;
-                }
+            }
 
-                #slider .owl-nav {
-                    z-index: 2;
-                }
+            #slider .owl-nav {
+                z-index: 2;
+            }
 
-                #slider .owl-carousel .owl-wrapper {
-                    display: flex !important;
-                    flex-direction: column
-                }
+            #slider .owl-carousel .owl-wrapper {
+                display: flex !important;
+                flex-direction: column
+            }
 
-                #slider .owl-carousel .owl-item {
-                    width: 100%;
-                }
+            #slider .owl-carousel .owl-item {
+                width: 100%;
+            }
 
+            #slider .owl-carousel .owl-item img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                max-width: initial;
+            }
+
+            @media(max-width:1000px) {
+                #slider .item {
+                    margin: 0;
+                    /* transform: scale(.9) */
+                }
+            }
+
+            @media screen and (max-width: 900px) {
                 #slider .owl-carousel .owl-item img {
-                    width: 100%;
-                    height: 100%;
+                    border-radius: 0px;
                     object-fit: cover;
-                    max-width: initial;
                 }
 
-                @media(max-width:1000px) {
-                    #slider .item {
-                        margin: 0;
-                        /* transform: scale(.9) */
-                    }
+
+                #slider .item {
+                    margin: 0px;
+                    padding: 0px;
                 }
 
-                @media screen and (max-width: 900px) {
-                    #slider .owl-carousel .owl-item img {
-                        border-radius: 0px;
-                        object-fit: cover;
-                    }
-
-
-                    #slider .item {
-                        margin: 0px;
-                        padding: 0px;
-                    }
-
-                    #slider .owl-dots {
-                        padding-bottom: 0px !important;
-                        padding-top: 0px;
-                    }
-
-                    .thebox {
-                        display: inline-block;
-                        width: 30%;
-                    }
+                #slider .owl-dots {
+                    padding-bottom: 0px !important;
+                    padding-top: 0px;
                 }
-            </style>
+
+                .thebox {
+                    display: inline-block;
+                    width: 30%;
+                }
+            }
+        </style>
         <!-- Masthead Avatar Image-->
-            <div class="owl-carousel owl-theme" id="slider">
-                <div class="item"> <img src="assets/img/1.jpg" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/1.png" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/4.jpg" class="d-block img-fluid rounded"> </div>
-            </div>
+        <div class="owl-carousel owl-theme" id="slider">
+            <div class="item"> <img src="assets/img/1.jpg" class="d-block img-fluid rounded"> </div>
+            <div class="item"> <img src="assets/img/1.png" class="d-block img-fluid rounded"> </div>
+            <div class="item"> <img src="assets/img/4.jpg" class="d-block img-fluid rounded"> </div>
+        </div>
     </div>
 </header>
 <!-- Portfolio Section-->
@@ -131,7 +131,7 @@
     @foreach ($profiles as $p)
     <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">{{$p->nama}}</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white">Kabupaten {{$p->nama}}</h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -146,60 +146,8 @@
     @endforeach
 </section>
 <!-- Contact Section-->
-<section class="page-section" id="contact">
-    <div class="container">
-        <!-- Contact Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Contact Me</h2>
-        <!-- Icon Divider-->
-        <div class="divider-custom">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-envelope fa-flip"></i></div>
-            <div class="divider-custom-line"></div>
-        </div>
-        <!-- Contact Section Form-->
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
-                <form id="contactForm">
-                    <!-- Name input-->
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" autocomplete="on"/>
-                        <label for="name">Full name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                    </div>
-                    <!-- Email address input-->
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" autocomplete="on"/>
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                    </div>
-                    <!-- Message input-->
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                        <label for="message">Message</label>
-                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                    </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                        </div>
-                    </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                    <!-- Submit Button-->
-                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@include ('visitor.modal-send-message')
 <!-- Footer-->
 <footer class="footer text-center">
     <div class="container">
@@ -237,7 +185,6 @@
     <div class="container"><small>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</small></div>
 </div>
 <!-- Portfolio Modals-->
-<!-- Portfolio Modal 1-->
 <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" aria-labelledby="portfolioModal1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -269,215 +216,55 @@
         </div>
     </div>
 </div>
-<!-- Portfolio Modal 2-->
-<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" aria-labelledby="portfolioModal2" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Makanan Rakyat</h2>
-                            <!-- Icon Divider-->
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/cake.png" alt="..." />
-                            <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Portfolio Modal 3-->
-<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" aria-labelledby="portfolioModal3" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Tenda Darurat</h2>
-                            <!-- Icon Divider-->
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/circus.png" alt="..." />
-                            <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Portfolio Modal 4-->
-<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" aria-labelledby="portfolioModal4" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Hati Senang</h2>
-                            <!-- Icon Divider-->
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/game.png" alt="..." />
-                            <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Portfolio Modal 5-->
-<div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" aria-labelledby="portfolioModal5" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Area Aman</h2>
-                            <!-- Icon Divider-->
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/safe.png" alt="..." />
-                            <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Portfolio Modal 6-->
-<div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" aria-labelledby="portfolioModal6" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header border-0"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-            <div class="modal-body text-center pb-5">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8">
-                            <!-- Portfolio Modal - Title-->
-                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">Majid Terapung</h2>
-                            <!-- Icon Divider-->
-                            <div class="divider-custom">
-                                <div class="divider-custom-line"></div>
-                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                                <div class="divider-custom-line"></div>
-                            </div>
-                            <!-- Portfolio Modal - Image-->
-                            <img class="img-fluid rounded mb-5" src="assets/img/portfolio/submarine.png" alt="..." />
-                            <!-- Portfolio Modal - Text-->
-                            <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit soluta, eos quod consequuntur itaque. Nam.</p>
-                            <button class="btn btn-primary" data-bs-dismiss="modal">
-                                <i class="fas fa-xmark fa-fw"></i>
-                                Close Window
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Portfolio Modal-->
+
 <!-- Bootstrap core JS-->
 <script src="js/js/bootstrap.bundle.min.js"></script> 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="js/owl.carousel.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
 <!-- Core theme JS-->
 <script src="js/js/scripts.js"></script>
 <script>
-            $('#slider').owlCarousel({
-        // stagePadding: 200,
-        // stagePadding: 50,
+    $('#slider').owlCarousel({
+        items: 1,
+        lazyLoad: true,
+        nav: false,
+        navText: false,
+        loop: true,
+        autoplay: true,
+        responsive: {
+            0: {
                 items: 1,
-                lazyLoad: true,
-                nav: false,
-                navText: false,
-                loop: true,
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    600: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    900: {
-                        items: 1,
-                        stagePadding: 100
-                    },
-                    1200: {
-                        items: 1,
+                stagePadding: 0
+            },
+            600: {
+                items: 1,
+                stagePadding: 0
+            },
+            900: {
+                items: 1,
+                stagePadding: 100
+            },
+            1200: {
+                items: 1,
                 // stagePadding: 250
-                        stagePadding: 130
-                    },
-                    1400: {
-                        items: 1,
+                stagePadding: 130
+            },
+            1400: {
+                items: 1,
                 // stagePadding: 300
-                        stagePadding: 130
-                    },
-                    1600: {
-                        items: 1,
-                        stagePadding: 350
-                    },
-                    1800: {
-                        items: 1,
-                        stagePadding: 400
-                    }
-                }
-            })
-        </script>
+                stagePadding: 130
+            },
+            1600: {
+                items: 1,
+                stagePadding: 350
+            },
+            1800: {
+                items: 1,
+                stagePadding: 400
+            }
+        }
+    });
+</script>
 @endsection

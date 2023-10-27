@@ -45,7 +45,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $url = URL('/') . '#contact';
+        //$url = URL('/inovasi') . '#contact';
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
             'email'     => 'required|email',
@@ -54,18 +54,19 @@ class ContactController extends Controller
 
         //create 
         if ($validator->fails()) {
-            return redirect($url)
-            ->withErrors($validator)
-            ->withInput();
+            return response()->json($validator->errors(), 422);
         } else{
             Contact::create([
             'name'    => addslashes($request->name),
             'email'   => $request->email,
-            'message' => $request->message
+            'message' => addslashes($request->message)
         ]);
 
         //redirect to index
-            return redirect($url)->with('success', 'Message sent');
+            return response()->json([
+                'success' => true,
+                'message' => 'Pesan terkirim'
+            ]);
         }
 
     }
@@ -117,9 +118,12 @@ class ContactController extends Controller
             $mes->delete();
 
         //redirect to index
-            return redirect('messages')->with(['success' => 'Data deleted succesfully']);
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data'
+            ]);
         } else{
-            return redirect()->back()->with('error', 'ingatlah dunia hanya sementara');
+            return response()->json([ 'success'=> false, ]);
         }
     }
 

@@ -79,31 +79,29 @@ class IndikatorController extends Controller
         if (Auth::user()->role == 'admin') {
             $indikator->delete();
         
-        return redirect('master/indikator')->with('success', 'Data Deleted Successfully');
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data'
+            ]);
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json(['message' => 'Gagal menghapus data']);
         }
     }
 
-    public function disable($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $indikator = Indikator::findOrFail($id);
-            $indikator->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'Indikator inovasi is disabled successfully');
-        }
-    }
+        $indikator = Indikator::find($id);
 
-    public function enable($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $indikator = Indikator::findOrFail($id);
-            $indikator->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'Indikator inovasi is enabled successfully');
+        if (!$indikator) {
+            return response()->json(['success' => false, 'message' => 'Indikator tidak ditemukan']);
         }
+        $indikator->status = $indikator->status === 'active' ? 'inactive' : 'active';
+        $indikator->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $indikator->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 }

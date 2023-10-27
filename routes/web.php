@@ -37,7 +37,7 @@ Route::get('/inovasi', [VisitorController::class, 'inovasi']);
 Route::get('/litbang', [VisitorController::class, 'litbang']);
 Route::get('/riset', [VisitorController::class, 'riset']);
 
-Route::post('send/message', [ContactController::class, 'store']);
+Route::post('/send/message/', [ContactController::class, 'store']);
 
 //route group on my own
 Route::middleware(['auth'])->group(function () {
@@ -52,30 +52,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
 
     Route::resource('master/inisiator', InisiatorController::class);
-    Route::post('enable/inisiator/{id}', [InisiatorController::class, 'enable']);
-    Route::post('disable/inisiator/{id}', [InisiatorController::class, 'disable']);
+    Route::put('inisiator/change-status/{id}', [InisiatorController::class, 'changeStatus']);
 
     Route::resource('master/tahapan', TahapanController::class);
-    Route::post('enable/tahapan/{id}', [TahapanController::class, 'enable']);
-    Route::post('disable/tahapan/{id}', [TahapanController::class, 'disable']);
+    Route::put('tahapan/change-status/{id}', [TahapanController::class, 'changeStatus']);
 
     Route::resource('master/jenis', CategoryController::class);
-    Route::post('jenis/change-status/{id}', [CategoryController::class, 'changeStatus']);
+    Route::put('jenis/change-status/{id}', [CategoryController::class, 'changeStatus']);
 
     Route::resource('master/bentuk', BentukController::class);
     Route::post('bentuk/change-status/{id}', [BentukController::class, 'changeStatus']);
 
     Route::resource('master/skpd', SkpdController::class);
-    Route::post('activate/skpd/{id}', [SkpdController::class, 'activate']);
-    Route::post('deactivate/skpd/{id}', [SkpdController::class, 'deactivate']);
+    Route::put('skpd/change-status/{id}', [SkpdController::class, 'changeStatus']);
 
     Route::resource('master/urusan', UrusanController::class);
     Route::post('/toggle-status/urusan/{urusan}', [UrusanController::Class, 'toggleStatus']);
     Route::get('master/klasifikasi/detail', [UrusanController::Class, 'klasifikasi']);
 
     Route::resource('master/indikator', IndikatorController::class);
-    Route::post('enable/indikator/{id}', [IndikatorController::class, 'enable']);
-    Route::post('disable/indikator/{id}', [IndikatorController::class, 'disable']);
+    Route::put('indikator/change-status/{id}', [IndikatorController::class, 'changeStatus']);
 
     Route::resource('master/bukti', BuktiController::class);
     Route::post('bukti/change-status/{id}', [BuktiController::class, 'changeStatus']);
@@ -100,13 +96,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/backup/delete/{file_name}', [BackupController::class, 'delete']);
 
     Route::get('messages', [ContactController::class, 'index']);
-    Route::get('delete/message/{id}', [ContactController::class, 'destroy']);
+    Route::delete('delete/message/{id}', [ContactController::class, 'destroy']);
     Route::get('messages/laporan/{startdate}/{enddate}', [ContactController::class, 'messagesReport']);
 
     Route::get('data/profile/', [ProfileController::class, 'index']);
     Route::get('indikator/spd/{profile}', [ProfileController::class, 'show']);
     Route::post('profile/create', [ProfileController::class, 'store']);
-    Route::put('profile/update/{id}', [ProfileController::class, 'update']);
+    Route::put('profile/update/{profile}', [ProfileController::class, 'update']);
+    Route::get('edit/profile/{profile}', [ProfileController::class, 'edit']);
 
 
 });

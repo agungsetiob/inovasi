@@ -19,8 +19,6 @@ class ProfileController extends Controller
         $profiles = Profile::all();
         $dataExist = $profiles->count() > 0;
         return view('profile.index', compact(
-            //'buktis', 
-            //'indikators', 
             'profiles',
             'dataExist',
         ));
@@ -89,13 +87,14 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Profile $profile)
     {
-        $profile = Profile::findOrFail($id);
         if (Auth::user()->role == 'admin') {
-            return view('profile.edit', compact('profile'));
+            return response()->json([
+                'data' => $profile,
+            ]);
         } else{
-            return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikan');
+            return response()->json(['message' => 'Tolong jangan puh sepuh']);
         }
     }
 

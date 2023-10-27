@@ -28,15 +28,6 @@ class ProposalController extends Controller
      */
     public function index()
     {
-        // if (Auth::user()->role == 'admin') {
-        //     $proposals = Proposal::all();
-        //     return view ('inovasi.index', compact( 'proposals'));
-        // } elseif (Auth::user()->role == 'user') {
-        //     $proposals = Proposal::where('user_id', Auth::user()->id)->get();
-        //     return view ('inovasi.index', compact( 'proposals'));
-        // }else {
-        //     return redirect()->back()->with(['error' => 'ojo dibandingke!']);
-        // }
         $proposals = Proposal::where('user_id', Auth::user()->id)->get();
         return view('inovasi.index', compact( 'proposals'));
     }

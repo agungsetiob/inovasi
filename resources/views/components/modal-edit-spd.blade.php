@@ -132,20 +132,16 @@
 
             error: function (error) {
                 if (error.status === 422) {
-                // Loop through the error response and display errors for each field
                     $.each(error.responseJSON.errors, function (field, errors) {
-                    // Construct the ID of the alert element using the field name
                         let alertId = 'alert-' + field + '-edit';
-                    // Find the corresponding alert element and show it
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                     });
                 }
+                
                 $('#error-message').text('An error occurred.');
                 $('#error-alert').removeClass('d-none').addClass('show');
                 $('#upload').removeClass('d-none');
                 $('#loading').addClass('d-none');
-
-                // Hide success alert if it was shown
                 $('#success-alert').addClass('d-none');
                 console.error(error);
             }

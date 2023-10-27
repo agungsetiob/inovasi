@@ -50,7 +50,7 @@ class TahapanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(tahapan $tahapan)
+    public function show(Tahapan $tahapan)
     {
         //
     }
@@ -58,7 +58,7 @@ class TahapanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(tahapan $tahapan)
+    public function edit(Tahapan $tahapan)
     {
         //
     }
@@ -66,7 +66,7 @@ class TahapanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, tahapan $tahapan)
+    public function update(Request $request,a Tahapan $tahapan)
     {
         //
     }
@@ -74,36 +74,36 @@ class TahapanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(tahapan $tahapan)
+    public function destroy(Tahapan $tahapan)
     {
         if (Auth::user()->role == 'admin') {
             $tahapan->delete();
         
-        return redirect('master/tahapan')->with('success', 'Data Deleted Successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menghapus data'
+        ]);
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json([
+                'message' => 'This is unauthorized action',
+            ]);
         }
     }
 
-    public function disable($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $cat = tahapan::findOrFail($id);
-            $cat->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'tahapan inovasi is disabled successfully');
-        }
-    }
+        $tahapan = Tahapan::find($id);
 
-    public function enable($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $cat = tahapan::findOrFail($id);
-            $cat->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'tahapan inovasi is enabled successfully');
+        if (!$tahapan) {
+            return response()->json(['success' => false, 'message' => 'Tahapan tidak ditemukan']);
         }
+        $tahapan->status = $tahapan->status === 'active' ? 'inactive' : 'active';
+        $tahapan->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $tahapan->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 }

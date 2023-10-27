@@ -78,31 +78,33 @@ class InisiatorController extends Controller
         if (Auth::user()->role == 'admin') {
             $inisiator->delete();
         
-        return redirect('master/inisiator')->with('success', 'Data Deleted Successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menghapus data'
+
+        ]);
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal menghapus data'
+            ]);
         }
     }
 
-    public function disable($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $cat = inisiator::findOrFail($id);
-            $cat->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'inisiator inovasi is disabled successfully');
-        }
-    }
+        $inisiator = Inisiator::find($id);
 
-    public function enable($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $cat = inisiator::findOrFail($id);
-            $cat->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'inisiator inovasi is enabled successfully');
+        if (!$inisiator) {
+            return response()->json(['success' => false, 'message' => 'inisiator tidak ditemukan']);
         }
+        $inisiator->status = $inisiator->status === 'active' ? 'inactive' : 'active';
+        $inisiator->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $inisiator->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 }

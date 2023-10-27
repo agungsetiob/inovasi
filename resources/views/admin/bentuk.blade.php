@@ -97,15 +97,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+<x-footer/>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -148,7 +140,7 @@
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 @include ('components.modal-delete-bentuk')
-@include ('components.logout')
+<x-logout/>
 <script>
     $(document).ready(function() {
         $(".toggle-status-button").click(function() {

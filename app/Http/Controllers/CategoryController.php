@@ -98,7 +98,7 @@ class CategoryController extends Controller
                 'message' => 'Berhasil menghapus data'
             ]);
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json(['message' => 'Gagal menghapus data']);
         }
         
     }

@@ -14,19 +14,19 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-borderless table-striped text-dark" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th width="51%">name</th>
-                            <th>Created</th>
-                            <th>Action</th>
+                            <th width="51%">Nama</th>
+                            <th>Dibuat pada</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="tabel-klasifikasi">
                         @forelse ($klasifikasis as $klasifikasi)
                         <tr id="index_{{ $klasifikasi->id }}">
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $loop->iteration }}.</td>
                             <td> {{$klasifikasi->nama}} </td>
                             <td> {{$klasifikasi->created_at}} </td>
                             <td>
@@ -79,15 +79,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+<x-footer/>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -128,14 +120,10 @@
 
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-@include ('components.modal-add-klasifikasi')
-@include ('components.logout')
-
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-<script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
-<script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+@include ('components.modal-add-klasifikasi')
+<x-logout/>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -157,6 +145,11 @@
                     var newStatus = response.newStatus;
                     button.text(newStatus);
                     button.data('klasifikasi-status', newStatus);
+                    $('#success-alert').removeClass('d-none').addClass('show');
+                    $('#success-message').text(response.message);
+                    setTimeout(function() {
+                            $('#success-alert').addClass('d-none').removeClass('show');
+                        }, 3700);
                 },
                 error: function (error) {
                     $('#error-message').text('An error occurred.');

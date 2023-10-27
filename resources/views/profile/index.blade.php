@@ -92,7 +92,7 @@
     <i class="fas fa-angle-up"></i>
 </a>
 @include ('components.logout')
-@include ('components.modal-add-profile')
+@include ('components.modal-create-profile')
 
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

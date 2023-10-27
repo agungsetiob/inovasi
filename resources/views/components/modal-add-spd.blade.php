@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('upload/file') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <form action="#" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
                     <input type="hidden" class="form-control" id="profile_id" name="profile_id" value="{{$profile->id}}">
@@ -57,7 +57,7 @@
 
     $('body').on('click', '.btn-add', function () {
 
-        let indikator_id = $(this).data('id');
+        var indikator_id = $(this).data('in-id');
 
         $.ajax({
             url: `/bukti-dukung/add/${indikator_id}`,

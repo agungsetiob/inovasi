@@ -74,31 +74,31 @@ class SkpdController extends Controller
         if (Auth::user()->role == 'admin') {
             $skpd->delete();
         
-        return redirect('master/skpd')->with('success', 'Data Deleted Successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menghapus data'
+        ]);
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json([
+                'message' => 'Not authorized!'
+            ]);
         }
     }
 
-    public function deactivate($id, Request $request)
+    public function changeStatus($id)
     {
-        if (Auth::user()->role == 'admin') {
-            $cat = Skpd::findOrFail($id);
-            $cat->update([
-                'status'     => 'inactive'
-            ]);
-            return redirect()->back()->with('success', 'SKPD is inactive now');
-        }
-    }
+        $skpd = Skpd::find($id);
 
-    public function activate($id, Request $request)
-    {
-        if (Auth::user()->role == 'admin') {
-            $cat = Skpd::findOrFail($id);
-            $cat->update([
-                'status'     => 'active'
-            ]);
-            return redirect()->back()->with('success', 'SKPD is active now');
+        if (!$skpd) {
+            return response()->json(['success' => false, 'message' => 'skpd tidak ditemukan']);
         }
+        $skpd->status = $skpd->status === 'active' ? 'inactive' : 'active';
+        $skpd->save();
+
+        return response()->json([
+            'success' => true, 
+            'newStatus' => $skpd->status,
+            'message' => 'Berhasil merubah status'
+        ]);
     }
 }
