@@ -41,7 +41,7 @@
                             <th>Skor</th>
                             <th width="7%">Tahapan</th>
                             <th width="4%">Bukti Dukung</th>
-                            <th width="16%"></th>
+                            <th width="13%"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,8 +51,8 @@
                             <td> {{ $proposal->skpd->nama }}</td>
                             <td> {{ date('d/m/Y', strtotime($proposal->ujicoba)) }} </td>
                             <td> {{ date('d/m/Y', strtotime($proposal->implementasi)) }} </td>
-                            <td>{{ $proposal->files->sum(function ($file) {return $file->bukti->bobot;}) }}</td>
-                            <td>
+                            <td class="text-center">{{ $proposal->files->sum(function ($file) {return $file->bukti->bobot;}) }}</td>
+                            <td class="text-center">
                                 @switch($proposal->tahapan->nama)
                                 @case('ujicoba')
                                 <span class="badge bg-indigo">{{ $proposal->tahapan->nama }}</span>
@@ -65,7 +65,7 @@
                                 @break
                                 @endswitch
                             </td>
-                            <td> 
+                            <td class="text-center"> 
                                 <a href="{{url('bukti-dukung', $proposal->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>
                             </td>
                             <td>

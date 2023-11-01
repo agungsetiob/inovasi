@@ -12,8 +12,8 @@
                     @csrf
                     @method ('PUT')
                     <div class="form-group">
-                        <input type="hidden" name="id" id="id-profil">
-                        <label for="nama">Nama Pemda</label>
+                        <input type="hidden" class="form-control" name="id" id="id-profil">
+                        <label for="nama-profil">Nama Pemda</label>
                         <input type="text" class="form-control" name="nama" id="nama-profil" required>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
                         <label for="skpd">SKPD Pengampu</label>
@@ -23,7 +23,7 @@
                         <input type="text" class="form-control" name="alamat" id="alamat" required>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-alamat"></div>
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
+                        <input type="email" class="form-control" name="email" id="email" required:email>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-email"></div>
                         <label for="telp">Telpon</label>
                         <input type="text" class="form-control" name="telp" id="telp" required>
@@ -39,21 +39,22 @@
     </div>
 </div>
 <script type="text/javascript">
-    document.getElementById('editFile').onchange = function () {
-        document.getElementById('newFile').value = this.value;
-    }
-    $('body').on('click', '#editProfile', function () {
-
-        let profile_id = $(this).data('profile-id');
+    $('body').on('click', '#edit-profile', function () {
+        let profile_id = $('.btn-edit').data('profile-id');
 
         $.ajax({
-            url: `/edit/profile/`+ 1,
+            url: `/edit/profile/${profile_id}`,
             type: "GET",
             cache: false,
             success:function(response){
                     //fill data to form
                 $('#id-profil').val(response.data.id);
                 $('#nama-profil').val(response.data.nama);
+                $('#skpd').val(response.data.skpd);
+                $('#email').val(response.data.email);
+                $('#alamat').val(response.data.alamat);
+                $('#telp').val(response.data.telp);
+                $('#admin').val(response.data.admin);
             }
         });
     });
@@ -65,16 +66,29 @@
         let id = $('#id-profil').val();
 
         $.ajax({
-            url: '{{ url("profile/update") }}' + id,
+            url: `/profile/update/${id}`,
             type: 'POST',
             data: formData,
             success: function(response) {
-            // Handle a successful response, e.g., show a success message.
-                console.log(response.message);
+                $('#editProfile').modal('hide');
+                $('#success-modal').modal('show');
+                $('#success-message').text(response.message);
+                setTimeout(function() {
+                    $('#success-modal').modal('hide');
+                }, 3900);
             },
-            error: function(xhr) {
-            // Handle errors, e.g., display error messages.
-                console.error(xhr.responseText);
+            error: function(error) {
+                if (error.status === 422) {
+                    $.each(error.responseJSON.errors, function (field, errors) {
+                        let alertId = 'alert-' + field;
+                        $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                    });
+                } else {
+                    let errorResponse = JSON.parse(error.responseText);
+                    $('#editProfile').modal('hide');
+                    $('#error-modal').modal('show');
+                    $('#error-message').text(errorResponse.message);
+                }
             }
         });
     });

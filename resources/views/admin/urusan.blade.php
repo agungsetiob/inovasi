@@ -55,18 +55,6 @@
                         Data  is not available.
                     </div>
                     @endforelse
-                    <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none">
-                        <span id="success-message"></span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none">
-                        <span id="error-message"></span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
                 </tbody>
             </table>
         </div>
@@ -79,16 +67,7 @@
 
 </div>
 <!-- End of Main Content -->
-
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+<x-footer/>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -100,9 +79,6 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-
-<!-- Logout Modal-->
-@include('components.logout')
 
 <!-- delete Modal-->
 @foreach ($urusans as $urusan)
@@ -132,21 +108,14 @@
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<!-- Add Modal -->
-@include('components.modal-add-sub-urusan')
-
-<!-- Core plugin JavaScript-->
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
-
-<!-- Custom scripts for all pages-->
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
-
-<!-- Page level plugins -->
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
-<!-- Page level custom scripts -->
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+@include('components.modal-add-sub-urusan')
+<x-alert-modal/>
+<x-logout/>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.dropdown-item[data-action="toggle-status"]').click(function () {

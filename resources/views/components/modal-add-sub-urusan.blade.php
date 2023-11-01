@@ -56,12 +56,9 @@
                     type: "GET",
                     success: function(klasifikasiResponse) {
                     //data klasifikasi
+                    $('#success-modal').modal('show');
                     $('#success-message').text(response.message);
-                    $('#success-alert').removeClass('d-none').addClass('show');
-
-                    // Hide error alert if it was shown
-                    $('#error-alert').addClass('d-none');
-
+                    
                     let urusan = `
                     <tr id="index_${response.data.id}">
                     <td>${response.data.id}</td>
@@ -122,13 +119,11 @@
                     $('#alert-klasifikasi').removeClass('d-none');
                     $('#alert-klasifikasi').addClass('d-block');
                     $('#alert-klasifikasi').html('klasifikasi wajib diisi');
+                } else {
+                    $('#error-message').text('An error occurred.');
+                    $('#error-modal').modal('show');
                 }
-                $('#error-message').text('An error occurred.');
-                $('#error-alert').removeClass('d-none').addClass('show');
-
-                // Hide success alert if it was shown
-                $('#success-alert').addClass('d-none');
-
+                
             }
         });
     });

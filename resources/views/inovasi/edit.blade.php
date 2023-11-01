@@ -258,9 +258,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-md btn-primary">Publish</button>
-                        <button type="reset" class="btn btn-md btn-warning" disabled>Draft</button>
-
+                        <button type="submit" class="btn btn-md btn-outline-primary"><i class="fa fa-save"></i> Save</button>
                     </form> 
                 </div>
             </div>
@@ -268,47 +266,39 @@
     </div>
 </div>
 <!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
-<!-- End of Page Wrapper -->
+<x-footer/>
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Logout Modal-->
-@include ('components.logout')
-
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+<script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
+<x-logout/>
 <script type="text/javascript">
-  $(document).ready(function () {
-      $('select').selectize({
-          sortField: 'text'
-      });
-  });
-  ClassicEditor
-  .create( document.querySelector( '#rancang' ) )
-  ClassicEditor
-  .create( document.querySelector( '#manfaat' ) )
-  ClassicEditor
-  .create( document.querySelector( '#hasil' ) )
-  .then( editor => {
-    console.log( editor );
-    } )
-      .catch( error => {
-        console.error( error );
-    } );
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text',
+            plugins: ['remove_button']
+        });
+    });
+    CKEDITOR.replace('rancang', {
+        contentsCss: ["{{asset('vendor/ckeditor/plugins/wordcount/css/wordcount.css')}}"],
+        extraPlugins: 'wordcount',
+        wordcount: {
+        showParagraphs: false,
+        showWordCount: true
+        }
+    });
+
+        CKEDITOR.replace('manfaat')
+
+        CKEDITOR.replace('hasil')
+
 </script>
 @endsection

@@ -69,7 +69,8 @@ class ProfileController extends Controller
             'alamat'     => 'required',
             'skpd'  => 'required',
             'email' => 'required|email',
-            'telp' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'
+            'telp' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
+            'admin' => 'required'
         ]);
 
         //create
@@ -91,6 +92,7 @@ class ProfileController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             return response()->json([
+                'success' => true,
                 'data' => $profile,
             ]);
         } else{
@@ -112,10 +114,16 @@ class ProfileController extends Controller
             'alamat' => 'required',
             'skpd'   => 'required',
             'email'  => 'required|email',
+            'admin' => 'required',
             'telp'   => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11',
         ]);
-        $profile->update($request->all());
-        return redirect()->back()->with(['success' => 'Profil berhasil diperbarui']);
+        if (Auth::user()->role == 'admin') {
+            $profile->update($request->all());
+            return response()->json(['success' => true, 'message' => 'Berhasil update profil']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Something went wrong']);
+        }
+        
     }
 
 }

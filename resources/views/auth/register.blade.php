@@ -82,7 +82,7 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('inovasi.index') }}">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('admin.index') }}">
                     {{ __('Back to dashboard') }}
                 </a>
 
@@ -91,13 +91,40 @@
                 </x-button>
             </div>
         </form>
+
         @elseif (Auth::user()->role == 'user')
+        <style type="text/css">
+            .alert {
+              position: relative;
+              padding: 0.75rem 1.25rem;
+              margin-bottom: 1rem;
+              border: 1px solid transparent;
+              border-radius: 0.35rem;
+              }
+              .alert-danger {
+                  color: #78261f;
+                  background-color: #fadbd8;
+                  border-color: #f8ccc8;
+              }
+              .alert-dismissible {
+                  padding-right: 4rem;
+              }
+
+              .alert-dismissible .close {
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  z-index: 2;
+                  padding: 0.75rem 1.25rem;
+                  color: inherit;
+              }
+        </style>
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
             Area Khusus Admin pale!
         </div>
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('inovasi.index') }}">
+            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('user.index') }}">
                 {{ __('Back to dashboard') }}
             </a>
         </div>

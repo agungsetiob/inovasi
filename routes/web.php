@@ -45,11 +45,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('proyek/inovasi', ProposalController::class);
     Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
     Route::get('data/inovasi', [ProposalController::class, 'database'])->name('database');
-    Route::put('send/inovasi/{proposal}', [ProposalController::class, 'sendProposal']);
+    Route::put('send/inovasi/{inovasi}', [ProposalController::class, 'sendProposal']);
     Route::delete('/delete/inovasi/{inovasi}', [ProposalController::class, 'destroy']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
-    Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user']);
+    Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user.index');
 
     Route::resource('master/inisiator', InisiatorController::class);
     Route::put('inisiator/change-status/{id}', [InisiatorController::class, 'changeStatus']);

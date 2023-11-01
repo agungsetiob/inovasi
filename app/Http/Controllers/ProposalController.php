@@ -181,7 +181,7 @@ class ProposalController extends Controller
                 }
             }
         }
-        if (auth()->user()->id == $inovasi->user_id) {
+        if (auth()->user()->id == $inovasi->user_id && $inovasi->status === 'draft') {
             return view('inovasi.edit', compact(
                 'inovasi',
                 'categories', 
@@ -263,12 +263,12 @@ class ProposalController extends Controller
      * Send proposal to admin
      * 
      */
-    public function sendProposal(Proposal $proposal)
+    public function sendProposal(Proposal $inovasi)
     {
-        if (Auth::user()->role == 'admin' || ($proposal->user_id === Auth::user()->id)) {
-            $status = $proposal->status === 'sent' ? 'draft' : 'sent';
+        if (Auth::user()->role == 'admin' || ($inovasi->user_id === Auth::user()->id)) {
+            $status = $inovasi->status === 'sent' ? 'draft' : 'sent';
 
-            $proposal->update(['status' => $status]);
+            $inovasi->update(['status' => $status]);
 
             return response()->json(['success' => 'Berhasil mengirim proposal']);
         } else {
@@ -282,19 +282,24 @@ class ProposalController extends Controller
      */
     public function destroy(Proposal $inovasi)
     {
-        $files = $inovasi->files()->get();
-        foreach ($files as $file) {
-            $fullFilePath = 'public/docs/' . $file->file;
-            Storage::delete($fullFilePath);
-        }
-        $inovasi->urusans()->detach();
-        $inovasi->indikators()->detach();
-        $inovasi->files()->delete();
-        Storage::delete('public/profil/' . $inovasi->profil);
-        Storage::delete('public/anggaran/' . $inovasi->anggaran);
-        $inovasi->delete();
+        if (auth()->user()->id == $inovasi->user_id && $inovasi->status === 'draft') {
+            $files = $inovasi->files()->get();
+            foreach ($files as $file) {
+                $fullFilePath = 'public/docs/' . $file->file;
+                Storage::delete($fullFilePath);
+            }
+            $inovasi->urusans()->detach();
+            $inovasi->indikators()->detach();
+            $inovasi->files()->delete();
+            Storage::delete('public/profil/' . $inovasi->profil);
+            Storage::delete('public/anggaran/' . $inovasi->anggaran);
+            $inovasi->delete();
 
-        return response()->json(['success' => 'Berhasil menghapus proposal']);
+            return response()->json(['success' => true]);
+        } else{
+            return response()->json(['success' => false]);
+        }
+
     }
 
 

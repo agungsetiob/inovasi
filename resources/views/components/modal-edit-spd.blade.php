@@ -121,11 +121,11 @@
                     $('#editFile').val('');
                     $('#newFile').val('');
 
-                    $('#success-alert').removeClass('d-none').addClass('show');
+                    $('#success-modal').modal('show');
                     $('#success-message').text(response.message);
-
-                    // Hide error alert if it was shown
-                    $('#error-alert').addClass('d-none');
+                    setTimeout(function() {
+                        $('#success-modal').modal('hide');
+                    }, 3900);
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
                 },
@@ -136,14 +136,17 @@
                         let alertId = 'alert-' + field + '-edit';
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                     });
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                } else {    
+                    let errorResponse = JSON.parse(error.responseText);
+                    $('#editSpd').modal('hide');
+                    $('#error-modal').modal('show');
+                    $('#error-message').text(errorResponse.message);
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                    console.error(error);
                 }
-                
-                $('#error-message').text('An error occurred.');
-                $('#error-alert').removeClass('d-none').addClass('show');
-                $('#upload').removeClass('d-none');
-                $('#loading').addClass('d-none');
-                $('#success-alert').addClass('d-none');
-                console.error(error);
             }
         });
     });

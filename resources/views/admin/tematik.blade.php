@@ -77,16 +77,7 @@
 <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
-
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+<x-footer/>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -133,7 +124,7 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 @include ('components.modal-add-tematik')
-@include ('components.logout')
+<x-logout/>
 <script type="text/javascript">
     $(document).ready(function () {
         $('.dropdown-item[data-action="toggle-status"]').click(function () {

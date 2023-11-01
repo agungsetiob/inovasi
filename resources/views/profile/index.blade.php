@@ -44,7 +44,7 @@
                             <td> 
                                 <a href="{{url('indikator/spd', $p->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <a href="{{url('indikator/spd', $p->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="detail profil"><i class="fa-solid fa-user-secret"></i></a>
                             </tr>
                             @empty
@@ -52,19 +52,6 @@
                                 Data is not available.
                             </div>
                             @endforelse
-                            <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
-                                <span id="success-message"></span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-                                <span id="error-message"></span>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
                         </tbody>
                     </table>
                 </div>
@@ -75,14 +62,7 @@
     <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-        </div>
-    </div>
-</footer>
+<x-footer/>
 <!-- End of Footer -->
 
 </div>
@@ -91,11 +71,11 @@
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
-@include ('components.logout')
 @include ('components.modal-create-profile')
 
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+<x-logout/>
 @endsection

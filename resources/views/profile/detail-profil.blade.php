@@ -1,5 +1,4 @@
 @extends('layouts.header')
-@section('content')
 <style type="text/css">
 
     nav > .nav.nav-tabs{
@@ -48,34 +47,21 @@
       transition:background 0.20s linear;
   }
 </style>
+@section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">Kabupaten Tanah Bumbu</h1>
-        <a href="#" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#editProfile" data-profile-id="{{$profile->id}}">
-            <i class="fa-solid fa-user-secret"></i></i> Update Profile
+        <a id="edit-profile" href="javascript:void(0)" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#editProfile">
+            <i class="fa-solid fa-user-secret"></i> Update Profile
         </a>
     </div>
     <div class="card shadow mb-4">
-        <nav>
+        <nav style="padding-bottom: 1.3rem;">
             <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="true">Profil</a>
                 <a class="nav-item nav-link" id="nav-indikator-tab" data-toggle="tab" href="#indikators" role="tab" aria-controls="indikator" aria-selected="false">Indikator</a>
             </div>
         </nav>
-        <div class="card-body">
-            <div id="success-alert" class="alert alert-success d-none">
-                <span id="success-message"></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div id="error-alert" class="alert alert-danger d-none">
-                <span id="error-message"></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
         <div class="tab-content px-sm-0" id="myTabContent">
             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <ul class="list-group list-group-flush">
@@ -108,24 +94,12 @@
             <div class="tab-pane fade" id="indikators" role="tabpanel" aria-labelledby="nav-indikator-tab">
                 <div class="card-body">
                     <div class="table-responsive">
-                        <div id="success-alert" class="alert alert-success d-none">
-                            <span id="success-message"></span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div id="error-alert" class="alert alert-danger d-none">
-                            <span id="error-message"></span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
                         <table class="table table-borderless table-striped" width="100%" cellspacing="0" id="files-table">
                             <thead>
                                 <tr>
                                     <th>Indikator</th>
                                     <th width="57%">Informasi</th>
-                                    <th width="12%"></th>
+                                    <th width="10%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -133,20 +107,20 @@
                                 <tr id="@foreach ($indikator->files()->get() as $item)index_{{$item->id}}@endforeach">
                                     <td>{{$indikator->nama}}</td>
                                     <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach</td>
-                                    <td>
+                                    <td class="text-center">
                                         @forelse ($indikator->files()->get() as $item)
                                         <a class="btn btn-outline-secondary btn-sm btn-edit" title="edit" href="javascript:void(0)" data-toggle="modal" data-target="#editSpd" 
                                         data-profile-id="{{$profile->id}}" 
                                         data-indikator-id="{{$indikator->id}}" 
                                         data-bukti-id="{{$item->bukti->id}}">
-                                        <i class="fas fa-pencil-alt"></i>
+                                        <i class="fa fa-pen-to-square"></i>
                                         </a>
                                         <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank">
-                                            <i class="fas fa-download"></i>
+                                            <i class="fa fa-download"></i>
                                         </a>
                                         @empty
                                         <button class="btn btn-outline-primary btn-sm btn-add" data-in-id="{{$indikator->id}}" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
-                                            <i class="fas fa-pencil-alt"></i>
+                                            <i class="fa fa-pen-to-square"></i>
                                         </button>
                                         @endforelse
                                     </td>
@@ -183,4 +157,5 @@
 @include('components.modal-edit-spd')
 @include('profile.modal-edit-profile')
 <x-logout/>
+<x-alert-modal/>
 @endsection

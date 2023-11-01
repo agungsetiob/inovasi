@@ -66,7 +66,7 @@ class TahapanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,a Tahapan $tahapan)
+    public function update(Request $request, Tahapan $tahapan)
     {
         //
     }

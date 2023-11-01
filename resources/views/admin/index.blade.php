@@ -287,7 +287,7 @@
           hoverBorderColor: "rgba(234, 236, 244, 1)"
       }],
     },
-    options: {
+     options: {
         maintainAspectRatio: false,
         tooltips: {
           backgroundColor: "rgb(255,255,255)",
@@ -303,7 +303,7 @@
           display: false
       },
       cutoutPercentage: 80,
-  },
-});
+     },
+    });
 </script>
 @endsection

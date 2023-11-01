@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,7 +51,7 @@
               <li class="nav-item dropdown no-arrow">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down text-white mr-1"></i> 
-                <span class="mr-2 d-none d-lg-inline text-white small"> {{Auth::user()->name}}</span>
+                <span class="mr-2 d-none d-lg-inline text-white small">{{Auth::user()->name}}</span>
                 <img class="img-profile rounded-circle"
                 src="{{url('storage/ava/'.Auth::user()->avatar)}}">
               </a>
