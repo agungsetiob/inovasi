@@ -44,14 +44,17 @@
 
                 // Hide error alert if it was shown
                 $('#error-alert').addClass('d-none');
+                $('#alert-nama').addClass('d-none').removeClass('d-block');
 
                 let klasifikasi = `
                 <tr id="index_${response.data.id}">
-                <td>${response.data.id}</td>
+                <td></td>
                 <td>${response.data.nama}</td>
                 <td>${response.data.created_at}</td>
                 <td>
-                    <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal${response.data.id}"><i class="fas fa-trash"></i> Hapus</button>
+                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                    data-klasifikasi-id="${response.data.id}"
+                    data-klasifikasi-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
                     <div class="dropdown mb-4 d-inline">
                         <button
                             class="btn btn-outline-primary dropdown-toggle btn-sm"

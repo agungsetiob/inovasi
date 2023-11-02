@@ -40,11 +40,8 @@
             },
             success:function(response){
                 //data tematik
+                $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
-                $('#success-alert').removeClass('d-none').addClass('show');
-
-                // Hide error alert if it was shown
-                $('#error-alert').addClass('d-none');
 
                 let tematik = `
                 <tr id="index_${response.data.id}">
@@ -52,7 +49,9 @@
                 <td>${response.data.nama}</td>
                 <td>${response.data.created_at}</td>
                 <td>
-                    <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal${response.data.id}"><i class="fas fa-trash"></i> Hapus</button>
+                    <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                        data-tematik-id="${response.data.id}"
+                        data-tematik-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
                     <div class="dropdown mb-4 d-inline">
                         <button
                             class="btn btn-outline-primary dropdown-toggle btn-sm"
@@ -74,6 +73,7 @@
                 `;                
                 //append to table
                 $('#tabel-tematik').append(tematik);
+                $('#alert-nama').removeClass('show').addClass('d-none');
                 
                 //clear form
                 $('#nama').val('');
@@ -90,12 +90,10 @@
 
                     //add message to alert
                     $('#alert-nama').html(error.responseJSON.nama[0]);
+                } else {
+                    $('#error-message').text('An error occurred.');
+                    $('#error-modal').modal('show');
                 }
-                $('#error-message').text('An error occurred.');
-                $('#error-alert').removeClass('d-none').addClass('show');
-
-                // Hide success alert if it was shown
-                $('#success-alert').addClass('d-none');
 
             }
         });

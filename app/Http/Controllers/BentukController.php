@@ -78,7 +78,10 @@ class BentukController extends Controller
             'message' => 'Berhasil menghapus data',
         ]); 
         } else{
-            return redirect()->back()->with('error', 'Many ways to rome');
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized to delete data'
+            ], 403);
         }
     }
 

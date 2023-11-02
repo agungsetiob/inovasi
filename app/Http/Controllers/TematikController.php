@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tematik;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Auth;
 
 class TematikController extends Controller
 {
@@ -13,8 +14,12 @@ class TematikController extends Controller
      */
     public function index()
     {
-        $tematiks = Tematik::all();
-        return view('admin.tematik', compact('tematiks'));
+        if (Auth::user()->role == 'admin') {
+            $tematiks = Tematik::all();
+            return view('admin.tematik', compact('tematiks'));
+        } else {
+            return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
+        }
     }
 
     /**
@@ -31,7 +36,7 @@ class TematikController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'     => 'required',
+            'nama'     => 'required|unique:tematiks',
         ]);
 
         if ($validator->fails()) {
@@ -62,7 +67,7 @@ class TematikController extends Controller
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
         $tematik->update(['status' => $newStatus]);
 
-        return response()->json(['newStatus' => $newStatus]);
+        return response()->json(['newStatus' => $newStatus, 'message' => 'Berhasil merubah status']);
     }
 
     /**
@@ -94,6 +99,17 @@ class TematikController extends Controller
      */
     public function destroy(Tematik $tematik)
     {
-        //
+        if (Auth::user()->role == 'admin') {
+            $tematik->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data',
+            ]); 
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized to delete data'
+            ], 403);
+        }
     }
 }

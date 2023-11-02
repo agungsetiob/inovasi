@@ -77,7 +77,7 @@ class UrusanController extends Controller
         $currentStatus = request('currentStatus');
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
         $urusan->update(['status' => $newStatus]);
-        return response()->json(['newStatus' => $newStatus]);
+        return response()->json(['newStatus' => $newStatus, 'message' => 'Berhasil merubah status']);
     }
 
     /**
@@ -109,6 +109,17 @@ class UrusanController extends Controller
      */
     public function destroy(Urusan $urusan)
     {
-        //
+        if (Auth::user()->role == 'admin') {
+            $urusan->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data',
+            ]); 
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized to delete data'
+            ], 403);
+        }
     }
 }

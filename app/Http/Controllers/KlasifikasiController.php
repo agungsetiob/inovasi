@@ -37,7 +37,7 @@ class KlasifikasiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama'     => 'required',
+            'nama'     => 'required|unique:klasifikasis',
         ]);
 
         if ($validator->fails()) {
@@ -100,6 +100,17 @@ class KlasifikasiController extends Controller
      */
     public function destroy(Klasifikasi $klasifikasi)
     {
-        //
+        if (Auth::user()->role == 'admin') {
+            $klasifikasi->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil menghapus data',
+            ]); 
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized to delete data'
+            ], 403);
+        }
     }
 }

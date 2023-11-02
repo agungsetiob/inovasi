@@ -1,6 +1,6 @@
 <style type="text/css">
     #success-modal .page-body{
-      max-width:300px;
+      max-width:355px;
       background-color:#FFFFFF;
       margin:10% auto;
     }
@@ -140,8 +140,8 @@
     }
 
     .modal-confirm {        
-    color: #434e65;
-    width: 525px;
+        color: #434e65;
+        width: 525px;
     }
     .modal-confirm .modal-content {
         padding: 20px;
@@ -193,7 +193,7 @@
     <div class="modal-dialog modal-confirm modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <i class="fas fa-exclamation-triangle text-white fa-shake" style="font-size: 55px;"></i>
+                <i class="fa fa-exclamation-triangle text-white fa-shake" style="font-size: 75px;"></i>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body text-center">

@@ -1,4 +1,5 @@
 @extends('layouts.header')
+@section('content')
 <style type="text/css">
 
     nav > .nav.nav-tabs{
@@ -47,7 +48,6 @@
       transition:background 0.20s linear;
   }
 </style>
-@section('content')
 <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0">Kabupaten Tanah Bumbu</h1>

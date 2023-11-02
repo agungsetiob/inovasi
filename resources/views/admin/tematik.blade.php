@@ -30,7 +30,11 @@
                             <td> {{$tematik->nama}} </td>
                             <td> {{$tematik->created_at}} </td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$tematik->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                                    data-toggle="modal" 
+                                    data-target="#deleteModal" 
+                                    data-tematik-id="{{ $tematik->id }}"
+                                    data-tematik-name="{{ $tematik->nama }}"><i class="fas fa-trash"></i></button>
                                 <div class="dropdown mb-4 d-inline">
                                         <button
                                         class="btn btn-outline-primary dropdown-toggle btn-sm"
@@ -54,7 +58,7 @@
                         Data  is not available.
                     </div>
                     @endforelse
-                    <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                    <!-- <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
                         <span id="success-message"></span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -65,7 +69,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div> -->
 
                 </tbody>
             </table>
@@ -90,32 +94,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- delete Modal-->
-@foreach ($tematiks as $tematik)
-<div class="modal fade" id="deleteModal{{$tematik->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tenane Lur?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('tematik.destroy', $tematik->id) }}">
-                    @csrf
-                    @method ('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -124,10 +102,12 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 @include ('components.modal-add-tematik')
+@include('components.modal-delete-tematik')
+<x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.dropdown-item[data-action="toggle-status"]').click(function () {
+        $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function() {
             var button = $(this).closest('.dropdown').find('button.dropdown-toggle');
             var tematikId = button.data('tematik-id');
             var currentStatus = button.data('tematik-status');
@@ -141,14 +121,19 @@
                     currentStatus: currentStatus
                 },
                 success: function (response) {
+                    $('#success-modal').modal('show');
+                    $('#success-message').text(response.message);
                     // Update the button text and data attributes
                     var newStatus = response.newStatus;
                     button.text(newStatus);
                     button.data('tematik-status', newStatus);
+                    setTimeout(function() {
+                        $('#success-modal').modal('hide');
+                    }, 3900);
                 },
                 error: function (error) {
                     $('#error-message').text('An error occurred.');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });

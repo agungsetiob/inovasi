@@ -2,76 +2,75 @@
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
-<div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">Urusan Inovasi</h1>
-        <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Urusan</a>
-    </div>
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Daftar urusan</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th width="40%">nama</th>
-                            <th width="40%">Klasifikasi</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabel-urusan">
-                        @forelse ($urusans as $urusan)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td> {{$urusan->nama}} </td>
-                            <td id="klasifikasi"> {{--$urusan->created_at--}}{{$urusan->klasifikasi->nama}} </td>
-                            <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$urusan->id}}"><i class="fas fa-trash"></i> Hapus</button>
-                                <div class="dropdown mb-4 d-inline">
-                                    <button
-                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    data-urusan-id="{{$urusan->id}}"
-                                    data-urusan-status="{{$urusan->status}}">
-                                    {{$urusan->status}}
-                                </button>
-                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                    <button class="dropdown-item" data-action="toggle-status">change status</button>
-                                </div>
-                                </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <div class="alert alert-danger">
-                        Data  is not available.
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 class="h3 mb-0 text-dark">Urusan Inovasi</h1>
+                    <a href="#" class="d-sm-inline-block btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#addCategory"><i class="fas fa-plus fa-sm text-white fa-flip"></i> Tambah Urusan</a>
+                </div>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Daftar urusan</h6>
                     </div>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th width="40%">nama</th>
+                                        <th width="40%">urusan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabel-urusan">
+                                    @forelse ($urusans as $urusan)
+                                    <tr id="index_{{$urusan->id}}">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td> {{$urusan->nama}} </td>
+                                        <td id="urusan"> {{--$urusan->created_at--}}{{$urusan->klasifikasi->nama}} </td>
+                                        <td>
+                                            <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                                                data-toggle="modal" 
+                                                data-target="#deleteModal" 
+                                                data-urusan-id="{{ $urusan->id }}"
+                                                data-urusan-name="{{ $urusan->nama }}"><i class="fas fa-trash"></i></button>
+                                            <div class="dropdown mb-4 d-inline">
+                                                <button
+                                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                                    type="button"
+                                                    id="dropdownMenuButton"
+                                                    data-toggle="dropdown"
+                                                    aria-haspopup="true"
+                                                    aria-expanded="false"
+                                                    data-urusan-id="{{$urusan->id}}"
+                                                    data-urusan-status="{{$urusan->status}}">
+                                                    {{$urusan->status}}
+                                                </button>
+                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                                    <button class="dropdown-item" data-action="toggle-status">change status</button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <div class="alert alert-danger">
+                                        Data  is not available.
+                                    </div>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 <!-- /.container-fluid -->
-
-
-</div>
+        </div>
 <!-- End of Main Content -->
-<x-footer/>
-
-</div>
+    <x-footer/>
+    </div>
 <!-- End of Content Wrapper -->
-
 </div>
 <!-- End of Page Wrapper -->
 
@@ -80,32 +79,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- delete Modal-->
-@foreach ($urusans as $urusan)
-<div class="modal fade" id="deleteModal{{$urusan->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tenane Lur?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('urusan.destroy', $urusan->id) }}">
-                    @csrf
-                    @method ('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-<!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
@@ -114,11 +87,12 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 @include('components.modal-add-sub-urusan')
+@include('components.modal-delete-urusan')
 <x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.dropdown-item[data-action="toggle-status"]').click(function () {
+        $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function() {
             var button = $(this).closest('.dropdown').find('button.dropdown-toggle');
             var urusanId = button.data('urusan-id');
             var currentStatus = button.data('urusan-status');
@@ -132,6 +106,8 @@
                     currentStatus: currentStatus
                 },
                 success: function (response) {
+                    $('#success-modal').modal('show');
+                    $('#success-message').text(response.message);
                     // Update the button text and data attributes
                     var newStatus = response.newStatus;
                     button.text(newStatus);
@@ -139,7 +115,7 @@
                 },
                 error: function (error) {
                     $('#error-message').text('An error occurred.');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });

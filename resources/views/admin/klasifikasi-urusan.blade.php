@@ -30,7 +30,11 @@
                             <td> {{$klasifikasi->nama}} </td>
                             <td> {{$klasifikasi->created_at}} </td>
                             <td>
-                                <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal{{$klasifikasi->id}}"><i class="fas fa-trash"></i> Hapus</button>
+                                <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                                data-toggle="modal" 
+                                data-target="#deleteModal" 
+                                data-klasifikasi-id="{{ $klasifikasi->id }}"
+                                data-klasifikasi-name="{{ $klasifikasi->nama }}"><i class="fas fa-trash"></i></button>
                                 <div class="dropdown mb-4 d-inline">
                                     <button
                                     class="btn btn-outline-primary dropdown-toggle btn-sm"
@@ -92,42 +96,17 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- delete Modal-->
-@foreach ($klasifikasis as $klasifikasi)
-<div class="modal fade" id="deleteModal{{$klasifikasi->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tenane Lur?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Select "Delete" below if you are sure to delete this data.</div>
-            <div class="modal-footer">
-                <button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
-                <form method="POST" action="{{ route('klasifikasi.destroy', $klasifikasi->id) }}">
-                    @csrf
-                    @method ('DELETE')
-                    <button class="btn btn-danger" type="submit">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-@endforeach
-
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 @include ('components.modal-add-klasifikasi')
+@include ('components.modal-delete-klasifikasi')
 <x-logout/>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('.dropdown-item[data-action="toggle-status"]').click(function () {
+        $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function(){
             var button = $(this).closest('.dropdown').find('button.dropdown-toggle');
             var klasifikasiId = button.data('klasifikasi-id');
             var currentStatus = button.data('klasifikasi-status');

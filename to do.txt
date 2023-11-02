@@ -1,6 +1,6 @@
 to do
-1. delete urusan master
-2. delete tematik master
-3. delete klasifikasi urusan master
+1. delete urusan master - done
+2. delete tematik master - done
+3. delete klasifikasi urusan master - done
 4. ajax store data for other than those three
 5. visitor page
