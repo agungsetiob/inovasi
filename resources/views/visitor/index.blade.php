@@ -127,7 +127,7 @@
             </div>
             @empty
             <div class="alert alert-dark">
-                No backup available.
+                No data available.
             </div>
             @endforelse
         </div>

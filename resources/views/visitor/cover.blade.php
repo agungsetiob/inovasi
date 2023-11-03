@@ -13,14 +13,16 @@
     <link href="css/styles.css" rel="stylesheet" />
 </head>
 <body id="page-top" class="bg-pattern-doubs">
-        <div class="row justify-content-between px-4 pt-4">
+    <div class="container">
+        <div class="row justify-content-between pt-4">
             <img style="width:93px" class="img-fluid" src="img/garuda.png"/>
             <img style="width:93px" class="img-fluid" src="assets/img/logo.png"/>
         </div>
+    </div>
     <!-- Masthead-->
     <header class="masthead text-white text-center">
         <div class="container d-flex align-items-center justify-content-center">
-            <img style="width:193px" class="img-fluid mb-5" src="assets/cover-logo.png"/>
+            <img style="width:193px" class="img-fluid mb-5" src="assets/cover-logo.png" title="logo" alt="logo" />
         </div>
 
         <div class="container d-flex align-items-center flex-column">

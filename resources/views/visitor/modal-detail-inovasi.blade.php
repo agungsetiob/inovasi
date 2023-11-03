@@ -8,7 +8,7 @@
                         <div class="col-lg-11">
                             <h6 class="text-secondary text-uppercase mb-0" id="inovasi-name"></h6>
                             Inisiator : <p class="mb-4 text-success" id="skpd"></p>
-                            <!-- Icon Divider-->
+                            <a id="print" href="" target="_blank" class="btn btn-outline-danger btn-sm" title="cetak"><i class="fas fa-file-alt"></i> Download proposal inovasi</a>
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
                                 <div class="divider-custom-icon"><i class="fas fa-star text-yellow"></i></div>
@@ -32,6 +32,8 @@
     $('body').on('click', '.show-inovasi', function () {
 
         let id = $(this).data('id');
+        let href = `/print/report/${id}`;
+        $('#print').attr('href', href);
 
         $.ajax({
             url: `/show/inovasi/${id}`,
