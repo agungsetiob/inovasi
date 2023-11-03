@@ -1,6 +1,6 @@
 @extends ('layouts.header-riset')
 @section ('content')
-<header class="masthead bg-carousel text-white text-center">
+<header class="masthead-carousel bg-carousel text-white text-center">
     <div class="d-flex">
         <style>
             .thebox {

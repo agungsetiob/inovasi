@@ -105,6 +105,14 @@
   --bs-highlight-bg: #fff3cd;
 }
 
+.text-blue {
+  color: var(--bs-blue);
+}
+
+.text-yellow {
+  color: var(--bs-yellow);
+}
+
 *,
 *::before,
 *::after {
@@ -178,6 +186,7 @@ h2, .h2 {
 h3, .h3 {
   font-size: calc(1.3rem + 0.6vw);
 }
+
 @media (min-width: 1200px) {
   h3, .h3 {
     font-size: 1.75rem;
@@ -11049,7 +11058,7 @@ html {
 }*/
 
 .masthead {
-  padding-top: calc(2rem + 74px);
+  padding-top: calc(0.1rem + 74px);
   padding-bottom: 2rem;
 }
 
@@ -11081,7 +11090,12 @@ html {
   }*/
 
   .masthead {
-    padding-top: calc(2rem + 104px);
+    padding-top: calc(0.3rem + 54px);
+    padding-bottom: 1rem;
+  }
+
+  .masthead-carousel {
+    padding-top: calc(1.75rem + 104px);
     padding-bottom: 1rem;
   }
 

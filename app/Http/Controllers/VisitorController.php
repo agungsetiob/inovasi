@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\Proposal;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
@@ -21,8 +22,11 @@ class VisitorController extends Controller
     public function inovasi()
     {
         $profiles = Profile::all();
-        //$proposals = Proposal::
-        return view('visitor.index', compact('profiles'));
+        $proposals = Proposal::all();//where('status', 'sent')
+            // ->orderBy('created_at', 'desc')
+            // ->take(6)
+            // ->get();
+        return view('visitor.index', compact('profiles', 'proposals'));
     }
 
     /**
@@ -62,9 +66,14 @@ class VisitorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Proposal $proposal)
     {
-        //
+        $skpd = $proposal->skpd->nama;
+        return response()->json([
+            'success' => true,
+            'data' => $proposal,
+            'skpd' => $skpd
+        ]);
     }
 
     /**
