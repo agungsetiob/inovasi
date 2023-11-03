@@ -9,7 +9,7 @@
         @if(Session::has('fail'))
         <div class="alert alert-danger">
             {{ Session::get('fail') }}
-            atau klik <a class="text-primary" target="_blank" href="https://api.whatsapp.com/send?phone=6282225976594&text=Halo admin saya melakukan pendaftaran akun web rsud, mohon diaktifkan akun saya. Terimakasih">disini</a>
+            atau klik <a class="text-primary" target="_blank" href="https://api.whatsapp.com/send?phone=6282225976594&text=Halo admin saya melakukan pendaftaran, mohon diaktifkan akun saya. Terimakasih">disini</a>
             @php
                 Session::forget('fail');
             @endphp
@@ -37,9 +37,9 @@
                 <x-label for="password" :value="__('Password')" />
 
                 <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+                    type="password"
+                    name="password"
+                    required autocomplete="current-password" />
             </div>
 
             <!-- Remember Me -->
