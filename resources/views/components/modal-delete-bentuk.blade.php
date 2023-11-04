@@ -20,7 +20,7 @@ aria-hidden="true">
     $(document).ready(function() {
         var bentukId;
 
-        $(".delete-button").click(function() {
+        $(".container-fluid").on("click", ".delete-button", function() {
             bentukId = $(this).data("bentuk-id");
             var bentukName = $(this).data("bentuk-name");
             $("#bentuk-name").text(bentukName);
@@ -33,16 +33,15 @@ aria-hidden="true">
                 headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" }, // Use headers to send CSRF token
                 success: function(response) {
                     if (response.success) {
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#error-alert').addClass('d-none');
                         $('#index_' + bentukId).remove();
                         $('#deleteModal').modal('hide');
                     }
                 },
                 error: function(response) {
                     $('#error-message').text('Gagal menghapus bentuk inovasi');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });

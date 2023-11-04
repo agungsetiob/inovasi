@@ -1,9 +1,9 @@
 <!-- Add Modal -->
-<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="bentukLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah bentuk</h5>
+                <h5 class="modal-title" id="bentukLabel">Tambah bentuk</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -49,7 +49,7 @@
                 <td>${response.data.nama}</td>
                 <td>${response.data.created_at}</td>
                 <td>
-                    <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
                         data-bentuk-id="${response.data.id}"
                         data-bentuk-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
                     <div class="dropdown mb-4 d-inline">

@@ -22,7 +22,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tabel-bentuk">
                         @forelse ($bentuks as $ben)
                         <tr id="index_{{$ben->id}}">
                             <td>{{ $loop->iteration }}.</td>
@@ -57,7 +57,7 @@
                         Data  is not available.
                     </div>
                     @endforelse
-                    @if(Session::has('success'))
+                    {{--@if(Session::has('success'))
                     <div class="alert alert-success data-dismiss alert-dismissible">
                         {{ Session::get('success') }}
                         @php
@@ -86,7 +86,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
+                    </div>--}}
                 </tbody>
             </table>
         </div>
@@ -116,10 +116,11 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 @include ('components.modal-add-bentuk')
 @include ('components.modal-delete-bentuk')
+<x-alert-modal/>
 <x-logout/>
 <script>
     $(document).ready(function() {
-        $(".toggle-status-button").click(function() {
+        $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function(){
             var button = $(this);
             var bentukId = button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-id');
             var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-status');
@@ -136,14 +137,13 @@
                         var newStatus = response.newStatus;
                         button.closest('.dropdown').find('.dropdown-toggle').data('bentuk-status', newStatus);
                         button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#error-alert').addClass('d-none');
                     }
                 },
                 error: function(response) {
                     $('#error-message').text('An error occurred.');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });

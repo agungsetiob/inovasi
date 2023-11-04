@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bentuk;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class BentukController extends Controller
@@ -34,12 +35,22 @@ class BentukController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'nama'     => 'required|unique:bentuks',
+        ]);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
         $bentuk = new Bentuk();
         $bentuk->nama = $request->nama;
         $bentuk->status = 'active';
         $bentuk->save();
 
-        return redirect()->back()->with('success','Data added successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhasil Disimpan',
+            'data'  => $bentuk
+        ]);
     }
 
     /**

@@ -49,7 +49,7 @@
                 <td>${response.data.nama}</td>
                 <td>${response.data.created_at}</td>
                 <td>
-                    <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
                         data-tematik-id="${response.data.id}"
                         data-tematik-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
                     <div class="dropdown mb-4 d-inline">
