@@ -110,35 +110,11 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Add Modal -->
-<div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tambah Bentuk inovasi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{{ route('bentuk.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nama">Bentuk inovasi</label>
-                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" required placeholder="Masukkan Bentuk inovasi">   
-                    </div>
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
-                </form>
-            </div> 
-        </div>
-    </div>
-</div>
-
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+@include ('components.modal-add-bentuk')
 @include ('components.modal-delete-bentuk')
 <x-logout/>
 <script>

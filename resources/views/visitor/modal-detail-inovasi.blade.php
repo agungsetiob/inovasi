@@ -8,7 +8,7 @@
                         <div class="col-lg-11">
                             <h6 class="text-secondary text-uppercase mb-0" id="inovasi-name"></h6>
                             Inisiator : <p class="mb-4 text-success" id="skpd"></p>
-                            <a id="print" href="" target="_blank" class="btn btn-outline-danger btn-sm" title="cetak"><i class="fas fa-file-alt"></i> Download proposal inovasi</a>
+                            <a id="print" href="" target="_blank" class="btn btn-outline-danger btn-sm" title="cetak"><i class="fas fa-file-alt"></i> Download proposal</a>
                             <div class="divider-custom">
                                 <div class="divider-custom-line"></div>
                                 <div class="divider-custom-icon"><i class="fas fa-star text-yellow"></i></div>

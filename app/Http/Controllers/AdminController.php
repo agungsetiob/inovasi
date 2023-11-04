@@ -40,8 +40,7 @@ class AdminController extends Controller
             $labelBentuk = Bentuk::whereHas('proposals')->pluck('nama')->unique();
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
 
-            return view ('admin.index', 
-                compact(
+            return view ('admin.index', compact(
                     'activeUsers', 
                     'inactiveUsers',
                     'totalProposals',
