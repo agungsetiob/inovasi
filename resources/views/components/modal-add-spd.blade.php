@@ -49,11 +49,10 @@
         </div>
     </div>
 </div>
-
-
 <script>
     document.getElementById('bFile').onchange = function () {
-        document.getElementById('uFile').value = this.value;};
+        document.getElementById('uFile').value = this.value;
+    }
 
     $('body').on('click', '.btn-add', function () {
 

@@ -1,9 +1,9 @@
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Apakah anda yakin?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
@@ -18,7 +18,7 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
-            <button id="delete-bukti" class="btn btn-outline-danger" title="kirim"><i class="fa-solid fa-trash"></i> Hapus</button>
+            <button id="delete-bukti" class="btn btn-outline-danger" title="hapus"><i class="fa-solid fa-trash"></i> Hapus</button>
         </div>
     </div>
 </div>
@@ -27,7 +27,7 @@ aria-hidden="true">
     $(document).ready(function() {
         var buktiId;
 
-        $(".delete-button").click(function() {
+        $(".container-fluid").on("click", ".delete-button", function() {
             buktiId = $(this).data("bukti-id");
             var buktiName = $(this).data("bukti-name");
             $("#bukti-name").text(buktiName);
@@ -40,16 +40,18 @@ aria-hidden="true">
                 headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
                 success: function(response) {
                     if (response.success) {
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#error-alert').addClass('d-none');
                         $('#index_' + buktiId).remove();
                         $('#deleteModal').modal('hide');
+                        setTimeout(function() {
+                            $('#success-modal').modal('hide');
+                        }, 3900);
                     }
                 },
                 error: function(response) {
                     $('#error-message').text('Gagal menghapus bukti inovasi');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });

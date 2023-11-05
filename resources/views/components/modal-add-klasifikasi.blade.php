@@ -52,9 +52,7 @@
                 <td>${response.data.nama}</td>
                 <td>${response.data.created_at}</td>
                 <td>
-                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                    data-klasifikasi-id="${response.data.id}"
-                    data-klasifikasi-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal" data-klasifikasi-id="${response.data.id}" data-klasifikasi-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
                     <div class="dropdown mb-4 d-inline">
                         <button
                             class="btn btn-outline-primary dropdown-toggle btn-sm"

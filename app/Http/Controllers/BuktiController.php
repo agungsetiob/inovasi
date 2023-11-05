@@ -28,7 +28,13 @@ class BuktiController extends Controller
      */
     public function create()
     {
-        //
+        // if (Auth::user()->role == 'admin') {
+        //     $buktis = Bukti::all();
+        //     $indikators = Indikator::where('status', 'active')->orderBy('jenis')->get();
+        //     return view ('admin.bukti', compact('buktis', 'indikators'))->fragment('daftar-bukti');
+        // } else {
+        //     return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
+        // }
     }
 
     /**
@@ -40,16 +46,22 @@ class BuktiController extends Controller
             'indikator'     => 'required',
             'nama'     => 'required|unique:buktis',
             'bobot'   => 'required',
-
         ]);
+
         $bukti = new Bukti();
         $bukti->nama = $request->nama;
         $bukti->bobot = $request->bobot;
         $bukti->indikator_id = $request->indikator;
         $bukti->status = 'active';
         $bukti->save();
-
-        return redirect()->back()->with('success','Data added successfully');
+        $indikator = $bukti->indikator->nama;
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil simpan jenis bukti',
+            'data' => $bukti,
+            'indikator' => $indikator
+        ]);
+        //return redirect()->back()->with('success','Data added successfully');
     }
 
     /**
