@@ -15,8 +15,8 @@
 <body id="page-top" class="bg-pattern-doubs">
     <div class="container">
         <div class="row justify-content-between pt-4">
-            <img style="width:93px" class="img-fluid" src="img/garuda.png"/>
-            <img style="width:93px" class="img-fluid" src="assets/img/logo.png"/>
+            <img style="width:93px" class="img-fluid" src="img/garuda.png" title="garuda" alt="garuda" />
+            <img style="width:93px" class="img-fluid" src="assets/img/logo.png" title="tanbu" alt="tanbu" />
         </div>
     </div>
     <!-- Masthead-->
