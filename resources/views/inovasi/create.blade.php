@@ -1,6 +1,6 @@
 @extends('layouts.header-create')
 @section('content')
-<div class="container-fluid overflow-auto panjang">
+<div class="container-fluid" id="createForm">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Formulir Proposal Inovasi</h1>
     </div>

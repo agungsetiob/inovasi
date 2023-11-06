@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" id="createForm">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-dark">Inovasi</h1>
@@ -83,7 +83,8 @@
                                     data-proposal-name="{{$proposal->nama}}"
                                     class="btn m-1 btn-outline-dark btn-sm" title="kirim"><i class="fas fa-paper-plane"></i></button>
                                 @endif
-                                </tr>
+                            </td>
+                        </tr>
                                 @empty
                                 <div class="alert alert-danger">
                                     Data is not available.
@@ -107,19 +108,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container-fluid -->
     </div>
     <!-- End of Main Content -->
     <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Copyright &copy; Bappedalitbang Tanah Bumbu 2023</span>
-            </div>
-        </div>
-    </footer>
+    <x-footer/>
     <!-- End of Footer -->
 
 </div>
@@ -135,7 +129,7 @@
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
-@include ('components.logout')
+<x-logout/>
 @include ('components.modal-send-proposal')
 @include ('components.modal-delete-proposal')
 @endsection
