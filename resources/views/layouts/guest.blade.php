@@ -21,7 +21,7 @@
     <div class="absolute top-0 right-0 p-6">
         <img src="{{ asset('img/logo.png') }}" class="w-16 h-16">
     </div>
-    <div class="font-sans text-gray-900 antialiased">
+    <div class="font-sans text-white antialiased">
         {{ $slot }}
     </div>
 </body>
