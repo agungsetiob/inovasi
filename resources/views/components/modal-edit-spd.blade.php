@@ -25,7 +25,7 @@
                     </div>
                     <label for="bukti_edit">Informasi</label>
                     <div class="form-group">
-                        <select name="bukti" id="bukti_edit" class="select form-control @error('bukti') is-invalid @enderror selectized">
+                        <select name="bukti" id="bukti_edit" class="select form-control selectized">
                             <option value="">Pilih bukti</option>
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti-edit"></div>
@@ -38,9 +38,9 @@
                                     Browse<input accept=".pdf" id="editFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
-                            <input id="newFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a file">
+                            <input id="newFile" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file-edit"></div> 
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button id="upload" type="submit" class="btn btn-primary">Upload</button>
@@ -53,6 +53,7 @@
 <script type="text/javascript">
     document.getElementById('editFile').onchange = function () {
         document.getElementById('newFile').value = this.value;
+        console.log(this.value)
     }
     $('body').on('click', '.btn-edit', function () {
 
@@ -94,19 +95,15 @@
             $('#loading').removeClass('d-none');
 
             var file_id = $('#file_id').val();
-            var informasi = $('#informasi_edit').val();
-            var bukti = $('#bukti_edit').val();
-            var token = $("meta[name='csrf-token']").attr("content");
+            var formData = new FormData($("#updateForm")[0]);
 
             $.ajax({
                 url: "/spd/edit/" + file_id,
-                type: "PUT",
+                type: "POST",
                 cache: false,
-                data: {
-                    "informasi": informasi,
-                    "bukti": bukti,
-                    "_token": token,
-                },
+                contentType: false,
+                data: formData,
+                processData: false,
                 success: function (response) {
                     var id = $('#profile_id').val();
                     var reloadUrl = '{{ url("/indikator/spd") }}/' + id;
@@ -138,6 +135,7 @@
                     });
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
+                    console.error(error);
                 } else {    
                     let errorResponse = JSON.parse(error.responseText);
                     $('#editSpd').modal('hide');

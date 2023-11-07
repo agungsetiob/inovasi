@@ -75,9 +75,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="z-index: 10;">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#"><i class="fas fa-fw fa-wrench"></i> Web setting</a>
-                {{--<a class="collapse-item" href="{{url('setting/profile')}}"><i class="fas fa-fw fa-mosque"></i> About</a>--}}
-                <a class="collapse-item" href="{{url('upload-file')}}"><i class="fas fa-fw fa-image"></i> Carousel</a>
+                <a class="collapse-item" href="/system/setting"><i class="fas fa-fw fa-wrench"></i> Web setting</a>
+                <a class="collapse-item" href="{{url('carousel')}}"><i class="fas fa-fw fa-image"></i> Carousel</a>
             </div>
         </div>
     </li>

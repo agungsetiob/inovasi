@@ -12,7 +12,9 @@ use App\Http\Controllers\{
     BuktiController,
     KlasifikasiController,
     TematikController,
-    TahapanController
+    TahapanController,
+    CarouselController,
+    SettingController
 };
 use App\Http\Controllers\BentukController;
 use App\Http\Controllers\InisiatorController;
@@ -106,6 +108,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile/create', [ProfileController::class, 'store']);
     Route::put('profile/update/{profile}', [ProfileController::class, 'update']);
     Route::get('edit/profile/{profile}', [ProfileController::class, 'edit']);
+
+    Route::get('carousel', [CarouselController::class, 'index']);
+    Route::post('carousel/upload', [CarouselController::class, 'store']);
+    Route::delete('carousel/{carousel}', [CarouselController::class, 'destroy']);
+
+    Route::get('system/setting', [SettingController::class, 'index']);
+    Route::post('setting/create', [SettingController::class, 'store']);
 
 
 });

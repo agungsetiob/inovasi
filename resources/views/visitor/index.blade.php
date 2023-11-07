@@ -95,9 +95,9 @@
         </style>
         <!-- Masthead Avatar Image-->
         <div class="owlslider owl-carousel mb-0 owl-loaded owl-drag owl-theme owl-carousel-init" id="slider">
-            <div class="item"> <img src="assets/img/1.jpg" class="d-block img-fluid rounded"> </div>
-            <div class="item"> <img src="assets/img/1.png" class="d-block img-fluid rounded"> </div>
-            <div class="item"> <img src="assets/img/4.jpg" class="d-block img-fluid rounded"> </div>
+            @foreach ($carousels as $carousel)
+            <div class="item"> <img src="{{url('storage/carousels/'. $carousel->image)}}" class="d-block img-fluid rounded"> </div>
+            @endforeach
         </div>
     </div>
 </header>
@@ -126,7 +126,7 @@
                 </div>
             </div>
             @empty
-            <div class="alert alert-dark">
+            <div class="alert alert-dark text-center">
                 No data available.
             </div>
             @endforelse
@@ -134,17 +134,16 @@
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-secondary btn-outline-light" href="#">
                 <i class="fas fa-atom me-2 fa-spin"></i>
-                Open all inovations
+                Lihat semua inovasi
             </a>
         </div>
     </div>
 </section>
 <!-- About Section-->
 <section class="page-section bg-primary text-white mb-0" id="about">
-    @foreach ($profiles as $p)
     <div class="container">
         <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">Kabupaten {{ $p->nama }}</h2>
+        <h2 class="page-section-heading text-center text-uppercase text-white">Sistem Informasi Riset dan Inovasi</h2>
         <!-- Icon Divider-->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -156,7 +155,6 @@
             <div class="col-lg-12 ms-auto"><p class="lead">Inovasi Daerah adalah semua bentuk pembaharuan dalam penyelenggaraan Pemerintahan Daerah yang bertujuan untuk meningkatkan kinerja penyelenggaraan Pemerintahan Daerah dengan sasaran untuk mempercepat terwujudnya kesejahteraan masyarakat melalui: peningkatan Pelayanan Publik, pemberdayaan dan peran serta masyarakat, dan peningkatan daya saing Daerah</p></div>
         </div>
     </div>
-    @endforeach
 </section>
 <!-- Contact Section-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

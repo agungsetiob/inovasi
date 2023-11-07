@@ -25,7 +25,7 @@
                     </div>
                     <label for="bukti_edit">Informasi</label>
                     <div class="form-group">
-                        <select name="bukti" id="bukti_edit" class="select form-control @error('bukti') is-invalid @enderror selectized">
+                        <select name="bukti" id="bukti_edit" class="select form-control selectized">
                             <option value="">Pilih bukti</option>
                         </select>
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti-edit"></div>
@@ -38,7 +38,7 @@
                                     Browse<input accept=".pdf" id="editFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
-                            <input id="newFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a file">
+                            <input id="newFile" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
                     </div>
@@ -106,19 +106,15 @@
         $('#loading').removeClass('d-none');
 
         var file_id = $('#file_id').val();
-        var informasi = $('#informasi_edit').val();
-        var bukti = $('#bukti_edit').val();
-        var token = $("meta[name='csrf-token']").attr("content");
+        var formData = new FormData(this);
 
         $.ajax({
             url: "/bukti-dukung/edit/" + file_id,
-            type: "PUT",
+            type: "POST",
             cache: false,
-            data: {
-                "informasi": informasi,
-                "bukti": bukti,
-                "_token": token,
-            },
+            contentType: false,
+            data: formData,
+            processData: false,
             success: function (response) {
                 var id = $('#proposal_id').val();
                 var reloadUrl = '{{ url("/bukti-dukung") }}/' + id;

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_sistem')->nullable();
+            $table->string('logo_sistem')->nullable();
+            $table->string('logo_pemkab')->nullable();
+            $table->text('tentang')->nullable();
+            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }

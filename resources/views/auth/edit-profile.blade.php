@@ -56,7 +56,7 @@
                             <input accept="image/*" id="avatar" type="file" style="display: none;" multiple name="avatar">
                         </span>
                     </label>
-                        <input id="uploadFile" type="text" class="form-control @error('image') is-invalid @enderror" readonly placeholder="Choose an image">
+                        <input id="uploadFile" type="text" class="bg-gray-400 form-control @error('image') is-invalid @enderror" readonly placeholder="Choose an image">
                 </div>
                 @error('image')
                 <div class="alert alert-danger mt-2">

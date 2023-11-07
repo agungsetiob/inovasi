@@ -95,9 +95,9 @@
             </style>
         <!-- Masthead Avatar Image-->
             <div class="owl-carousel owl-theme" id="slider">
-                <div class="item"> <img src="assets/img/1.jpg" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/1.png" class="d-block img-fluid rounded"> </div>
-                <div class="item"> <img src="assets/img/4.jpg" class="d-block img-fluid rounded"> </div>
+                @foreach ($carousels as $carousel)
+                <div class="item"> <img src="{{url('storage/carousels/'. $carousel->image)}}" class="d-block img-fluid rounded"> </div>
+                @endforeach
             </div>
     </div>
 </header>

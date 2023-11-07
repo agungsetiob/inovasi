@@ -241,12 +241,14 @@ class ProposalController extends Controller
         ];
 
         if ($request->hasFile('profil')) {
+            Storage::delete('public/profil/' . $inovasi->profil);
             $profil = $request->file('profil');
             $profil->storeAs('public/profil', $profil->hashName());
             $data['profil'] = $profil->hashName();
         }
 
         if ($request->hasFile('anggaran')) {
+            Storage::delete('public/anggaran/' . $inovasi->anggaran);
             $anggaran = $request->file('anggaran');
             $anggaran->storeAs('public/anggaran', $anggaran->hashName());
             $data['anggaran'] = $anggaran->hashName();
@@ -310,6 +312,6 @@ class ProposalController extends Controller
         $files = Indikator::where('status', 'active')->get();
         $pdf = PDF::loadview('inovasi.proposal-report',compact('proposal', 'files'))->setPaper('A4', 'portrait');
         set_time_limit(300);
-        return $pdf->stream('proposal-'.$id.'.pdf');
+        return $pdf->stream('proposal-inovasi'.$id.'.pdf');
     }
 }

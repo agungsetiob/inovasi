@@ -205,6 +205,7 @@ class FileController extends Controller
             ]);
 
             if ($request->hasFile('file')) {
+                Storage::delete('public/docs/' . $file->file);
                 $newFile = $request->file('file');
                 $newFileName = $newFile->hashName();
                 $newFile->storeAs('public/docs', $newFileName);
@@ -242,6 +243,7 @@ class FileController extends Controller
             ]);
 
             if ($request->hasFile('file')) {
+                Storage::delete('public/docs/' . $file->file);
                 $newFile = $request->file('file');
                 $newFileName = $newFile->hashName();
                 $newFile->storeAs('public/docs', $newFileName);

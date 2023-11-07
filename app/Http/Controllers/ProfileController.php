@@ -15,7 +15,7 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->role === 'admin') {
         $profiles = Profile::all();
         $dataExist = $profiles->count() > 0;
         return view('profile.index', compact(
@@ -90,7 +90,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->role === 'admin') {
             return response()->json([
                 'success' => true,
                 'data' => $profile,

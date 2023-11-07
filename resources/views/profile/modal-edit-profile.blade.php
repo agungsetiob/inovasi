@@ -70,6 +70,8 @@
             type: 'POST',
             data: formData,
             success: function(response) {
+                var reloadUrl = '/indikator/spd/' + id;
+                $("#profile").load(reloadUrl + " #profile");
                 $('#editProfile').modal('hide');
                 $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
