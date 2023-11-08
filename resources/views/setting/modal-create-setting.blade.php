@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('setting/create') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <form action="#" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <div class="form-group">
                         <label for="nama-sistem">Nama sistem</label>
@@ -30,16 +30,16 @@
                             <input id="uFile" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
                         <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-logo_sistem"></div>
-                        <label for="logo-pemkab">Logo cover</label>
+                        <label for="logo-cover">Logo cover</label>
                         <div class="input-group">
                             <label class="input-group-btn">
                                 <span class="btny btn-outline-primary">
-                                    Browse<input accept="image/*" id="logo-pemkab" type="file" style="display: none;" name="logo_pemkab">
+                                    Browse<input accept="image/*" id="logo-cover" type="file" style="display: none;" name="logo_cover">
                                 </span>
                             </label>
                             <input id="upFile" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-logo_pemkab"></div>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-logo_cover"></div>
                     </div>
                     <button id="store" type="submit" class="btn btn-primary">Save</button>
                 </form>
@@ -52,7 +52,7 @@
     document.getElementById('logo-sistem').onchange = function () {
         document.getElementById('uFile').value = this.value;
     }
-    document.getElementById('logo-pemkab').onchange = function () {
+    document.getElementById('logo-cover').onchange = function () {
         document.getElementById('upFile').value = this.value;
     }
 
@@ -71,6 +71,7 @@
             success: function (response) {
                 var reloadUrl = '/system/setting/';
                 $("#setting").load(reloadUrl + " #setting");
+                $("#form-button").load(reloadUrl + " #form-button");
 
                 $('#createSetting').modal('hide');
                 $('#success-modal').modal('show');

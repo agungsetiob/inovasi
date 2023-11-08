@@ -33,11 +33,13 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Inovasi</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#about">About</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contact">Contact</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="btn btn-lg btn-outline-danger" href="https://www.lapor.go.id/" target="_blank"><i class="fas fa-arrow-right fa-flip me-2" style="--fa-flip-x: 1; --fa-flip-y: 0;"></i>Lapor</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="btn btn-lg btn-outline-danger" href="https://www.lapor.go.id/" target="_blank"><i class="fa fa-arrow-right fa-flip me-2" style="--fa-flip-x: 1; --fa-flip-y: 0;"></i>Lapor</a></li>
                     @if (Auth::guest())
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('login') }}">Login</a></li>
-                    @elseif (auth()->user())
+                    @elseif (auth()->user()->role === 'admin')
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('admin.index') }}">{{Auth::user()->username}}</a></li>
+                    @elseif (auth()->user()->role === 'user')
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('user.index') }}">{{Auth::user()->username}}</a></li>
                     @endif
                 </ul>
             </div>

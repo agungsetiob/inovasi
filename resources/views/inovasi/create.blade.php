@@ -12,7 +12,7 @@
                         @csrf
                         <div class="form-group">
                             <label class="font-weight-bold" for="nama">Nama inovasi:</label>
-                            <input id="nama" type="text" class="form-control @error('title') is-invalid @enderror" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama inovasi">
+                            <input id="nama" type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ old('nama') }}" placeholder="Masukkan nama inovasi">
                             
                             <!-- error message untuk title -->
                             @error('nama')
@@ -294,8 +294,8 @@
         contentsCss: ["{{asset('vendor/ckeditor/plugins/wordcount/css/wordcount.css')}}"],
         extraPlugins: 'wordcount',
         wordcount: {
-        showParagraphs: false,
-        showWordCount: true
+            showParagraphs: false,
+            showWordCount: true
         }
     });
 

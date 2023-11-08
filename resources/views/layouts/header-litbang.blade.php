@@ -5,15 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.title') }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/img/logo.png" />
-    <!-- Font Awesome icons (free version)-->
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
@@ -41,8 +39,10 @@
                     <li class="nav-item mx-0 mx-lg-1"><a class="btn btn-lg btn-outline btn-danger" href="https://www.lapor.go.id/" target="_blank"><i class="fas fa-arrow-right fa-flip me-2" style="--fa-flip-x: 1; --fa-flip-y: 0;"></i>Lapor</a></li>
                     @if (Auth::guest())
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('login') }}">Login</a></li>
-                    @elseif (auth()->user())
+                    @elseif (auth()->user()->role === 'admin')
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('admin.index') }}">{{Auth::user()->username}}</a></li>
+                    @elseif (auth()->user()->role === 'user')
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('user.index') }}">{{Auth::user()->username}}</a></li>
                     @endif
                 </ul>
             </div>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carousel;
-use App\Models\Profile;
 use App\Models\Proposal;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class VisitorController extends Controller
@@ -14,7 +14,8 @@ class VisitorController extends Controller
      */
     public function index()
     {
-        return view('visitor.cover');
+        $settings = Setting::all();
+        return view('visitor.cover', compact('settings'));
     }
 
     /**
@@ -23,11 +24,12 @@ class VisitorController extends Controller
     public function inovasi()
     {
         $carousels = Carousel::all();
+        $settings = Setting::all();
         $proposals = Proposal::where('status', 'sent')
             ->orderBy('created_at', 'desc')
             ->take(6)
             ->get();
-        return view('visitor.index', compact('proposals', 'carousels'));
+        return view('visitor.index', compact('proposals', 'carousels', 'settings'));
     }
 
     /**
@@ -36,7 +38,8 @@ class VisitorController extends Controller
     public function litbang()
     {
         $carousels = Carousel::all();
-        return view('visitor.litbang', compact('carousels'));
+        $settings = Setting::all();
+        return view('visitor.litbang', compact('carousels', 'settings'));
     }
 
     /**
@@ -45,7 +48,8 @@ class VisitorController extends Controller
     public function riset()
     {
         $carousels = Carousel::all();
-        return view('visitor.riset', compact('carousels'));
+        $settings = Setting::all();
+        return view('visitor.riset', compact('carousels', 'settings'));
     }
 
     /**

@@ -4,10 +4,11 @@
             <!-- Footer Location-->
             <div class="col-lg-4 mb-5 mb-lg-0">
                 <h4 class="text-uppercase mb-4">Location</h4>
+                @foreach ($settings as $s)
                 <p class="lead mb-0">
-                    Jl. Dharma Praja No.1, Pd. Butun, Kec. Batulicin, Kabupaten Tanah Bumbu, Kalimantan Selatan 72273,
-                    Indonesia
+                    {{$s->alamat}}
                 </p>
+                @endforeach
             </div>
             <!-- Footer Social Icons-->
             <div class="col-lg-4 mb-5 mb-lg-0">

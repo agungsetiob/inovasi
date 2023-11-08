@@ -142,24 +142,23 @@
 <!-- About Section-->
 <section class="page-section bg-primary text-white mb-0" id="about">
     <div class="container">
-        <!-- About Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">Sistem Informasi Riset dan Inovasi</h2>
-        <!-- Icon Divider-->
+        {{--@foreach ($settings as $s)        
+        <h2 class="page-section-heading text-center text-uppercase text-white">{{$s->nama_sistem}}</h2>
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-mosque fa-fade"></i></div>
             <div class="divider-custom-line"></div>
         </div>
-        <!-- About Section Content-->
         <div class="row">
-            <div class="col-lg-12 ms-auto"><p class="lead">Inovasi Daerah adalah semua bentuk pembaharuan dalam penyelenggaraan Pemerintahan Daerah yang bertujuan untuk meningkatkan kinerja penyelenggaraan Pemerintahan Daerah dengan sasaran untuk mempercepat terwujudnya kesejahteraan masyarakat melalui: peningkatan Pelayanan Publik, pemberdayaan dan peran serta masyarakat, dan peningkatan daya saing Daerah</p></div>
+            <div class="col-lg-12 ms-auto"><p class="lead">{{$s->tentang}}</p></div>
         </div>
+        @endforeach--}}
     </div>
 </section>
 <!-- Contact Section-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @include ('visitor.send-message-form')
-<x-footer-visitor/>
+@include ('components.footer-visitor')
 <!-- Bootstrap core JS-->
 <script src="js/js/bootstrap.bundle.min.js"></script> 
 <script src="js/owl.carousel.min.js"></script>

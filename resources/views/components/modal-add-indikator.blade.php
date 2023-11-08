@@ -81,8 +81,6 @@
                 $('#bukti').selectize({
                     sortField: 'text'
                 });
-                //$('#uploadFile').modal('show');
-
             }
         });
     });

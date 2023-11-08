@@ -1,10 +1,10 @@
 @extends('layouts.header')
 @section('content')
             <div class="container-fluid">
-                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <div id="form-button" class="d-sm-flex align-items-center justify-content-between mb-4">
                     <h1 class="h3 mb-0 text-dark">Pengaturan sistem</h1>
                     @if ($dataExist)
-                    <a id="edit-profile" href="javascript:void(0)" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#editSetting">
+                    <a id="edit-setting" data-id="@foreach ($settings as $s){{$s->id}}@endforeach" href="javascript:void(0)" class="btn btn-sm btn-primary shadow-sm" data-toggle="modal" data-target="#editSetting">
                         <i class="fa-solid fa-gear fa-spin"></i> Update setting
                     </a>
                     @else
@@ -33,7 +33,7 @@
                             </li>
                             <li class="list-group-item">
                                 <strong>Logo cover:</strong><br>
-                                <img src="{{url('storage/system/' . $set->logo_pemkab)}}" class="w-25" alt="logo_cover">
+                                <img src="{{url('storage/system/' . $set->logo_cover)}}" class="w-25" alt="logo_cover">
                             </li>
                         </ul>
                     </div>
@@ -59,6 +59,7 @@
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 @include ('setting.modal-create-setting')
+@include ('setting.modal-edit-setting')
 <x-logout/>
 <x-alert-modal/>
 @endsection

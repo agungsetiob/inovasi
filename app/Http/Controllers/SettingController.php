@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -21,16 +22,8 @@ class SettingController extends Controller
                 'dataExist',
             ));
         } else {
-            return redirect()->back()->with(['error' => 'ojo dibandingke!']);
+            return view('cukrukuk');
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -43,20 +36,20 @@ class SettingController extends Controller
                 'nama_sistem'   => 'required',
                 'alamat'     => 'required',
                 'tentang'   => 'required',
-                'logo_pemkab' => 'mimes:png|max:300',
-                'logo_sistem' => 'mimes:png:512'
+                'logo_cover' => 'mimes:png|max:300',
+                'logo_sistem' => 'mimes:png|max:400'
             ]);
             if ($request->hasFile('logo_sistem')) {
                 $sistem = $request->file('logo_sistem');
                 $sistem->storeAs('public/system', $sistem->hashName());
             }
-            if ($request->hasFile('logo_pemkab')) {
-                $pemkab = $request->file('logo_pemkab');
-                $pemkab->storeAs('public/system', $pemkab->hashName());
+            if ($request->hasFile('logo_cover')) {
+                $cover = $request->file('logo_cover');
+                $cover->storeAs('public/system', $cover->hashName());
             }
             Setting::create([
                 'logo_sistem' => $sistem->hashName(),
-                'logo_pemkab' => $pemkab->hashName(),
+                'logo_cover' => $cover->hashName(),
                 'nama_sistem' => $request->nama_sistem,
                 'tentang' => $request->tentang,
                 'alamat' => $request->alamat
@@ -72,15 +65,9 @@ class SettingController extends Controller
      */
     public function show(Setting $setting)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Setting $setting)
-    {
-        //
+        return response()->json([
+            'data' => $setting
+        ]);
     }
 
     /**
@@ -88,14 +75,37 @@ class SettingController extends Controller
      */
     public function update(Request $request, Setting $setting)
     {
-        //
-    }
+        if (Auth::user()->role == 'admin') {
+            $this->validate($request, [
+                'nama_sistem' => 'required',
+                'alamat' => 'required',
+                'tentang' => 'required',
+                'logo_sistem' => 'mimes:png|max:300',
+                'logo_cover' => 'mimes:png|max:300',
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Setting $setting)
-    {
-        //
+            if ($request->hasFile('logo_sistem')) {
+                Storage::delete('public/system/' . $setting->logo_sistem);
+                $sistem = $request->file('logo_sistem');
+                $sistem->storeAs('public/system', $sistem->hashName());
+                $setting->logo_sistem = $sistem->hashName();
+            }
+
+            if ($request->hasFile('logo_cover')) {
+                Storage::delete('public/system/' . $setting->logo_cover);
+                $cover = $request->file('logo_cover');
+                $cover->storeAs('public/system', $cover->hashName());
+                $setting->logo_cover = $cover->hashName();
+            }
+
+            $setting->nama_sistem = $request->nama_sistem;
+            $setting->tentang = $request->tentang;
+            $setting->alamat = $request->alamat;
+            $setting->save();
+
+            return response()->json(['success' => true, 'message' => 'Berhasil update setting']);
+        } else {
+            return response()->json(['success' => false, 'message' => 'Permission denied']);
+        }
     }
 }

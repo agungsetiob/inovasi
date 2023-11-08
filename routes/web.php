@@ -115,6 +115,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('system/setting', [SettingController::class, 'index']);
     Route::post('setting/create', [SettingController::class, 'store']);
+    Route::get('setting/show/{setting}', [SettingController::class, 'show']);
+    Route::put('setting/update/{setting}', [SettingController::class, 'update']);
 
 
 });
