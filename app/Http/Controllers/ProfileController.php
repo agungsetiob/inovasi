@@ -23,7 +23,7 @@ class ProfileController extends Controller
             'dataExist',
         ));
         } else {
-            return redirect()->back()->with(['error' => 'ojo dibandingke!']);
+            return view('cukrukuk');
         }
     }
 

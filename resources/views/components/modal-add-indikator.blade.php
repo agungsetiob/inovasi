@@ -130,14 +130,16 @@
                         // Find the corresponding alert element and show it
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                     });
-                }
-                $('#error-message').text('An error occurred.');
-                $('#error-alert').removeClass('d-none').addClass('show');
-                $('#upload').removeClass('d-none');
-                $('#loading').addClass('d-none');
+                } else {
+                    $('#error-message').text(error.responseJSON.error);
+                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
+                    $('#uploadFile').modal('hide');
 
-                // Hide success alert if it was shown
-                $('#success-alert').addClass('d-none');
+                    // Hide success alert if it was shown
+                    $('#success-alert').addClass('d-none');
+                }
             }
         });
     });

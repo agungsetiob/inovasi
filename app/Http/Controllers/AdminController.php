@@ -52,7 +52,7 @@ class AdminController extends Controller
                     'totalSkpds',
                 ));
         } else {
-            return redirect()->back()->with(['error' => 'ojo dibandingke!']);
+            return view('cukrukuk');
         }
     }
 
@@ -76,9 +76,9 @@ class AdminController extends Controller
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
             return view('admin.index', compact('totalProposals', 'chartJenis', 'chartBentuk', 'labelJenis', 'labelBentuk', 'totalSkpds'));
         }else
-      {
-        return redirect()->back();
-      }
+        {
+            return view('cukrukuk');
+        }
     }
 
     /**

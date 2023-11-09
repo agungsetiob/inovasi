@@ -86,7 +86,10 @@ class FileController extends Controller
                 'data' => $file
             ]);
         } else {
-            return response()->json(['error' => 'Gagal menyimpan data']);
+            return response()->json([
+                'error' => 'Unauthorized action',
+                'success' => false
+            ], 401);
         }
     }
 
@@ -222,7 +225,7 @@ class FileController extends Controller
                 'data' => $file,
             ]);
         } else {
-            return response()->json(['error' => 'Gagal update data']);
+            return response()->json(['error' => 'Gagal update data'], 403);
         }
     }
 
@@ -260,7 +263,7 @@ class FileController extends Controller
                 'data' => $file,
             ]);
         } else {
-            return response()->json(['error' => 'Gagal update data']);
+            return response()->json(['error' => 'Gagal update data'], 403);
         }
     }
 
