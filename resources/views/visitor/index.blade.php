@@ -134,7 +134,7 @@
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-secondary btn-outline-light" href="#">
                 <i class="fas fa-atom me-2 fa-spin"></i>
-                Lihat semua inovasi
+                Lihat semua
             </a>
         </div>
     </div>
@@ -142,7 +142,7 @@
 <!-- About Section-->
 <section class="page-section bg-primary text-white mb-0" id="about">
     <div class="container">
-        {{--@foreach ($settings as $s)        
+        @foreach ($settings as $s)        
         <h2 class="page-section-heading text-center text-uppercase text-white">{{$s->nama_sistem}}</h2>
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -152,7 +152,7 @@
         <div class="row">
             <div class="col-lg-12 ms-auto"><p class="lead">{{$s->tentang}}</p></div>
         </div>
-        @endforeach--}}
+        @endforeach
     </div>
 </section>
 <!-- Contact Section-->

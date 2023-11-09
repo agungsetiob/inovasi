@@ -69,19 +69,19 @@
                                 <a href="{{url('bukti-dukung', $proposal->id)}}" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>
                             </td>
                             <td>
-                                <a href="{{url('print/report', $proposal->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm m-1" title="cetak"><i class="fas fa-file-alt"></i></a>
+                                <a href="{{url('print/report', $proposal->id)}}" target="_blank" class="btn btn-outline-secondary btn-sm" title="cetak"><i class="fas fa-file-alt"></i></a>
                                 @if ($proposal->status === 'draft')
-                                <button id="hapus-{{$proposal->id}}" class="delete-button btn btn-outline-danger btn-sm m-1" title="hapus" 
+                                <button id="hapus-{{$proposal->id}}" class="delete-button btn btn-outline-danger btn-sm" title="hapus" 
                                 data-toggle="modal" 
                                 data-target="#deleteModal" 
                                 data-proposal-id="{{ $proposal->id }}"
                                 data-proposal-name="{{$proposal->nama}}"><i class="fas fa-trash"></i></button>
-                                <a id="edit-{{$proposal->id}}" href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm m-1" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
+                                <a id="edit-{{$proposal->id}}" href="{{route('inovasi.edit', $proposal->id)}}" class="btn btn-outline-success btn-sm" title="edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>
                                 <button id="send-proposal-{{$proposal->id}}" 
                                     data-toggle="modal" 
                                     data-target="#sendModal"
                                     data-proposal-name="{{$proposal->nama}}"
-                                    class="btn m-1 btn-outline-dark btn-sm" title="kirim"><i class="fas fa-paper-plane"></i></button>
+                                    class="btn btn-outline-dark btn-sm" title="kirim"><i class="fas fa-paper-plane"></i></button>
                                 @endif
                             </td>
                         </tr>

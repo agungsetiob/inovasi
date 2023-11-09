@@ -1,4 +1,4 @@
-@extends ('layouts.header-riset')
+@extends ('layouts.header-inovasi')
 @section ('content')
 <header class="masthead-carousel bg-carousel text-white text-center">
     <div class="d-flex">
@@ -166,7 +166,7 @@
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-secondary btn-outline-light" href="#">
                 <i class="fas fa-atom me-2 fa-spin"></i>
-                Open all inovations
+                Lihat semua
             </a>
         </div>
     </div>
@@ -229,6 +229,7 @@
 <script src="js/js/bootstrap.bundle.min.js"></script> 
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/js/scripts.js"></script>
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script>
             $('#slider').owlCarousel({
         // stagePadding: 200,

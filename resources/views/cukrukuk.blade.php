@@ -13,7 +13,7 @@
 <body>
     <div class="content">
         <img src="{{ url('assets/cukrukuk.svg') }}" title="error" width="550px" />
-        <p>What do you want?</p>
+        <p>Jangan puh sepuh</p>
     </div>
 </body>
 </html>

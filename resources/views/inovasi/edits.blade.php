@@ -1,34 +1,18 @@
 @extends('layouts.header-create')
 @section('content')
-    <div class="container-fluid" id="createForm">
-      <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-dark">Formulir Proposal Inovasi</h1>
-      </div>
-      <div class="row">
+<div class="container-fluid overflow-auto panjang">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-dark">Edit Proposal</h1>
+    </div>
+    <div class="row">
         <div class="col-md-12">
-          <div class="card border-0 shadow rounded mb-4">
-            <div class="card-body">
-              <div id="stepper1" class="bs-stepper">
-                <div class="bs-stepper-header" role="tablist">
-                  <div class="step" data-target="#test-l-1">
-                    <button type="button" class="step-trigger" role="tab" id="stepper1trigger1" aria-controls="test-l-1">
-                      <span class="bs-stepper-circle">1</span>
-                    </button>
-                  </div>
-                  <div class="bs-stepper-line"></div>
-                  <div class="step" data-target="#test-l-2">
-                    <button type="button" class="step-trigger" role="tab" id="stepper1trigger2" aria-controls="test-l-2">
-                      <span class="bs-stepper-circle">2</span>
-                    </button>
-                  </div>
-                </div>
-                <div class="bs-stepper-content">
-                  <form action="{{ route('inovasi.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
-                    <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
-                      <!-- uuuuu -->
-                      <div class="form-group">
+            <div class="card border-0 shadow rounded">
+                <div class="card-body">
+                    <form action="{{ route('inovasi.update', $inovasi->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="form-group">
                             <label class="font-weight-bold" for="nama">Nama inovasi:</label>
                             <input id="nama" type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" value="{{ old('nama', $inovasi->nama) }}" placeholder="Masukkan nama inovasi">
                             
@@ -135,12 +119,49 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="rancang">Rancang bangun:</label>
+                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang_bangun') is-invalid @enderror" name="rancang_bangun" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang_bangun', $inovasi->rancang_bangun) }}</textarea>
+                            
+                            <!-- error message untuk content -->
+                            @error('rancang_bangun')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
                         <div class="form-group">
                             <label class="font-weight-bold" for="tujuan">Tujuan inovasi:</label>
                             <input id="tujuan" type="text" class="editor form-control @error('tujuan') is-invalid @enderror" name="tujuan" value="{{ old('tujuan', $inovasi->tujuan) }}" placeholder="Masukkan tujuan pembuatan inovasi Daerah">
                             
                             <!-- error message untuk title -->
                             @error('tujuan')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="manfaat">Manfaat yang diperoleh:</label>
+                            <textarea id="manfaat" rows="7" class="editor form-control @error('manfaat') is-invalid @enderror" name="manfaat" placeholder="Masukkan manfaat dari inovasi yang dilakukan">{{ old('manfaat', $inovasi->manfaat) }}</textarea>
+                            
+                            <!-- error message untuk title -->
+                            @error('manfaat')
+                            <div class="alert alert-danger mt-2">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label class="font-weight-bold" for="hasil">Hasil inovasi:</label>
+                            <textarea id="hasil" rows="7" class="editor form-control @error('hasil') is-invalid @enderror" name="hasil" placeholder="Masukkan hasil dari inovasi yang dilakukan">{{ old('hasil', $inovasi->hasil) }}</textarea>
+                            
+                            <!-- error message untuk content -->
+                            @error('hasil')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>
@@ -220,47 +241,6 @@
                                 </div>
                             </div>
                         </div>
-                      <button type="button" class="btn btn-primary" id="nextB">Next <i class="fa-solid fa-forward"></i></button>
-                    </div>
-                    <!-- ioiii -->
-                    <div id="test-l-2" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger2">
-                      <div class="form-group">
-                            <label class="font-weight-bold" for="rancang">Rancang bangun:</label>
-                            <textarea rows="7" id="rancang" class="editor form-control @error('rancang_bangun') is-invalid @enderror" name="rancang_bangun" rows="5" placeholder="Masukkan rancang bangun dan pokok perubahan yang dilakukan">{{ old('rancang_bangun', $inovasi->rancang_bangun) }}</textarea>
-                            
-                            <!-- error message untuk content -->
-                            @error('rancang_bangun')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="manfaat">Manfaat yang diperoleh:</label>
-                            <textarea id="manfaat" rows="7" class="editor form-control @error('manfaat') is-invalid @enderror" name="manfaat" placeholder="Masukkan manfaat dari inovasi yang dilakukan">{{ old('manfaat', $inovasi->manfaat) }}</textarea>
-                            
-                            <!-- error message untuk title -->
-                            @error('manfaat')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="font-weight-bold" for="hasil">Hasil inovasi:</label>
-                            <textarea id="hasil" rows="7" class="editor form-control @error('hasil') is-invalid @enderror" name="hasil" placeholder="Masukkan hasil dari inovasi yang dilakukan">{{ old('hasil', $inovasi->hasil) }}</textarea>
-                            
-                            <!-- error message untuk content -->
-                            @error('hasil')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
-                            @enderror
-                        </div>
-
-                        
                         <div class="form-group">
                             <div class="row g-3">
                                 <div class="col d-none">
@@ -278,68 +258,47 @@
                                 </div>
                             </div>
                         </div>
-                      <button class="btn btn-primary" id="prevB"><i class="fa-solid fa-backward"></i> Previous</button>
-                      <button type="submit" class="btn btn-md btn-outline-primary float-right"><i class="fa fa-save"></i> Save</button>
-                    </div>
-
-                  </form> 
+                        <button type="submit" class="btn btn-md btn-outline-primary"><i class="fa fa-save"></i> Save</button>
+                    </form> 
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <!-- Footer -->
-    <x-footer/>
-  </div>
 </div>
+<!-- Footer -->
+<x-footer/>
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
-  <i class="fas fa-angle-up"></i>
+    <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/ckeditor/ckeditor.js')}}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
 <x-logout/>
 <script type="text/javascript">
-  $(document).ready(function () {
-    var stepper = new Stepper($('.bs-stepper')[0],{
-      linear: false
+    $(document).ready(function () {
+        $('select').selectize({
+            sortField: 'text',
+            plugins: ['remove_button']
+        });
     });
-    $("#nextB").click(function () {
-      stepper.next();
+    CKEDITOR.replace('rancang', {
+        contentsCss: ["{{asset('vendor/ckeditor/plugins/wordcount/css/wordcount.css')}}"],
+        extraPlugins: 'wordcount',
+        wordcount: {
+        showParagraphs: false,
+        showWordCount: true
+        }
     });
-    $("#prevB").click(function () {
-      stepper.previous();
-    });   
-  });
 
-  $(document).ready(function () {
-    $('select').selectize({
-      sortField: 'text',
-      plugins: ['remove_button']
-    });
-  });
-  CKEDITOR.replace('rancang', {
-    contentsCss: ["{{asset('vendor/ckeditor/plugins/wordcount/css/wordcount.css')}}"],
-    extraPlugins: 'wordcount',
-    wordcount: {
-      showParagraphs: false,
-      showWordCount: true
-    }
-  });
+        CKEDITOR.replace('manfaat')
 
-  CKEDITOR.replace('manfaat')
-
-  CKEDITOR.replace('hasil')
+        CKEDITOR.replace('hasil')
 
 </script>
 @endsection

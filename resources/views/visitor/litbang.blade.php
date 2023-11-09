@@ -1,4 +1,4 @@
-@extends ('layouts.header-litbang')
+@extends ('layouts.header-inovasi')
 @section ('content')
 <header class="masthead-carousel bg-carousel text-white text-center">
     <div class="d-flex">
@@ -122,7 +122,7 @@
         <div class="text-center mt-4">
             <a class="btn btn-xl btn-secondary btn-outline-light" href="#">
                 <i class="fas fa-atom me-2 fa-spin"></i>
-                Open all inovations
+                Lihat semua
             </a>
         </div>
     </div>
