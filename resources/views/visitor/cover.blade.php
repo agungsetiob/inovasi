@@ -23,7 +23,7 @@
     <header class="masthead text-white text-center">
         @foreach ($settings as $s)
         <div class="container d-flex align-items-center justify-content-center">
-            <img style="width:193px" class="img-fluid mb-5" src="{{url('storage/system/' . $s->logo_cover)}}" title="logo" alt="logo" />
+            <img style="height:193px" class="img-fluid mb-5" src="{{url('storage/system/' . $s->logo_cover)}}" title="logo" alt="logo" />
         </div>
         @endforeach
         <div class="container d-flex align-items-center flex-column">

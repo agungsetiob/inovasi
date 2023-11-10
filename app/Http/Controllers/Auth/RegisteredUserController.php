@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Skpd;
+use App\Models\Setting;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -17,9 +18,10 @@ class RegisteredUserController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->role === 'admin') {
             $users = User::all();
-            return view('admin.users', compact('users'));
+            $setting = Setting::latest()->first();
+            return view('admin.users', compact('users', 'setting'));
         } else{
             return back()->with('error', 'Get out!');
         }
@@ -35,7 +37,8 @@ class RegisteredUserController extends Controller
     public function create()
     {
         $skpds = Skpd::all();
-        return view ('auth.register', compact('skpds'));       
+        $setting = Setting::latest()->first();
+        return view ('auth.register', compact('skpds', 'setting'));       
     }
 
     /**
@@ -78,7 +81,8 @@ class RegisteredUserController extends Controller
     public function createUser()
     {
         $skpds = Skpd::all();
-        return view ('auth.user-register', compact('skpds'));
+        $setting = Setting::latest()->first();
+        return view ('auth.user-register', compact('skpds', 'setting'));
     }
 
     //handle user registration proses
@@ -134,7 +138,8 @@ class RegisteredUserController extends Controller
     {
         $user = User::findOrFail($id);
         if (Auth::user()->id == $user->id ) {
-            return view('auth.edit-profile', compact('user'));
+            $setting = Setting::latest()->first();
+            return view('auth.edit-profile', compact('user', 'setting'));
         }
 
     }

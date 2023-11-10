@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Password;
 
 class PasswordResetLinkController extends Controller
@@ -15,12 +16,14 @@ class PasswordResetLinkController extends Controller
      */
     public function create()
     {
-        return view('auth.forgot-password');
+        $setting = Setting::latest()->first();
+        return view('auth.forgot-password', compact('setting'));
     }
 
     public function changePassword()
     {
-        return view('auth.change-password');
+        $setting = Setting::latest()->first();
+        return view('auth.change-password', compact('setting'));
     }
 
     /**
