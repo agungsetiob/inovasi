@@ -231,47 +231,47 @@
 <script src="js/js/scripts.js"></script>
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script>
-            $('#slider').owlCarousel({
+    $('#slider').owlCarousel({
         // stagePadding: 200,
         // stagePadding: 50,
+        items: 1,
+        lazyLoad: true,
+        nav: false,
+        navText: false,
+        loop: true,
+        autoplay: true,
+        responsive: {
+            0: {
                 items: 1,
-                lazyLoad: true,
-                nav: false,
-                navText: false,
-                loop: true,
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    600: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    900: {
-                        items: 1,
-                        stagePadding: 100
-                    },
-                    1200: {
-                        items: 1,
+                stagePadding: 0
+            },
+            600: {
+                items: 1,
+                stagePadding: 0
+            },
+            900: {
+                items: 1,
+                stagePadding: 100
+            },
+            1200: {
+                items: 1,
                 // stagePadding: 250
-                        stagePadding: 130
-                    },
-                    1400: {
-                        items: 1,
+                stagePadding: 130
+            },
+            1400: {
+                items: 1,
                 // stagePadding: 300
-                        stagePadding: 130
-                    },
-                    1600: {
-                        items: 1,
-                        stagePadding: 350
-                    },
-                    1800: {
-                        items: 1,
-                        stagePadding: 400
-                    }
-                }
-            })
-        </script>
+                stagePadding: 130
+            },
+            1600: {
+                items: 1,
+                stagePadding: 350
+            },
+            1800: {
+                items: 1,
+                stagePadding: 400
+            }
+        }
+    })
+</script>
 @endsection

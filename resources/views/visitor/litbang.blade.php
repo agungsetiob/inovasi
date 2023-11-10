@@ -144,22 +144,6 @@
     </div>
 </section>
 <!-- Contact Section-->
-<section class="page-section bg-primary text-white mb-0" id="about">
-    <div class="container">
-        @foreach ($settings as $s)        
-        <h2 class="page-section-heading text-center text-uppercase text-white">{{$s->nama_sistem}}</h2>
-        <div class="divider-custom divider-light">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-mosque fa-fade"></i></div>
-            <div class="divider-custom-line"></div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 ms-auto"><p class="lead">{{$s->tentang}}</p></div>
-        </div>
-        @endforeach
-    </div>
-</section>
-<!-- Contact Section-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 @include ('visitor.send-message-form')
 @include ('components.footer-visitor')
@@ -201,47 +185,47 @@
 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 <script src="js/js/scripts.js"></script>
 <script>
-            $('#slider').owlCarousel({
+    $('#slider').owlCarousel({
         // stagePadding: 200,
         // stagePadding: 50,
+        items: 1,
+        lazyLoad: true,
+        nav: false,
+        navText: false,
+        loop: true,
+        autoplay: true,
+        responsive: {
+            0: {
                 items: 1,
-                lazyLoad: true,
-                nav: false,
-                navText: false,
-                loop: true,
-                autoplay: true,
-                responsive: {
-                    0: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    600: {
-                        items: 1,
-                        stagePadding: 0
-                    },
-                    900: {
-                        items: 1,
-                        stagePadding: 100
-                    },
-                    1200: {
-                        items: 1,
+                stagePadding: 0
+            },
+            600: {
+                items: 1,
+                stagePadding: 0
+            },
+            900: {
+                items: 1,
+                stagePadding: 100
+            },
+            1200: {
+                items: 1,
                 // stagePadding: 250
-                        stagePadding: 130
-                    },
-                    1400: {
-                        items: 1,
+                stagePadding: 130
+            },
+            1400: {
+                items: 1,
                 // stagePadding: 300
-                        stagePadding: 130
-                    },
-                    1600: {
-                        items: 1,
-                        stagePadding: 350
-                    },
-                    1800: {
-                        items: 1,
-                        stagePadding: 400
-                    }
-                }
-            })
-        </script>
+                stagePadding: 130
+            },
+            1600: {
+                items: 1,
+                stagePadding: 350
+            },
+            1800: {
+                items: 1,
+                stagePadding: 400
+            }
+        }
+    })
+</script>
 @endsection
