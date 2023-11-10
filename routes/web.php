@@ -39,11 +39,12 @@ Route::get('/inovasi', [VisitorController::class, 'inovasi']);
 Route::get('/litbang', [VisitorController::class, 'litbang']);
 Route::get('/riset', [VisitorController::class, 'riset']);
 Route::get('show/inovasi/{proposal}', [VisitorController::class, 'show']);
+Route::get('inovasi/all', [VisitorController::class, 'proposal']);
 
 Route::post('/send/message/', [ContactController::class, 'store']);
 
 Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
-//route group on my own
+
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('proyek/inovasi', ProposalController::class);

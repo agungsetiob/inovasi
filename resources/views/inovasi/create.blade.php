@@ -271,7 +271,7 @@
                           </div>
                         </div>
                       </div>
-                        <button class="btn btn-primary" id="prevB"><i class="fa-solid fa-backward"></i> Previous</button>
+                        <button type="button" class="btn btn-primary" id="prevB"><i class="fa-solid fa-backward"></i> Previous</button>
                         <button type="submit" class="btn btn-md btn-outline-primary float-right"><i class="fa fa-save"></i> Save</button>
                     </div>
 

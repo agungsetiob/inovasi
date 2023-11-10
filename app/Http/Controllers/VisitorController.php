@@ -53,19 +53,13 @@ class VisitorController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    * Display all inovations
+    */
+    public function proposal()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $proposals = Proposal::latest()->paginate(9);
+        $settings = Setting::all();
+        return view('visitor.all-inovasi', compact('proposals', 'settings'));
     }
 
     /**
@@ -79,29 +73,5 @@ class VisitorController extends Controller
             'data' => $proposal,
             'skpd' => $skpd
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

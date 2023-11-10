@@ -193,7 +193,7 @@
     <div class="modal-dialog modal-confirm modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header justify-content-center">
-                <i class="fa fa-exclamation-triangle text-white fa-shake" style="font-size: 75px;"></i>
+                <i class="fa fa-bell text-white fa-shake" style="font-size: 75px;"></i>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body text-center">

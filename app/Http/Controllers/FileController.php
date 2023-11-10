@@ -225,7 +225,7 @@ class FileController extends Controller
                 'data' => $file,
             ]);
         } else {
-            return response()->json(['error' => 'Gagal update data'], 403);
+            return response()->json(['error' => 'Unauthorized to update this data'], 403);
         }
     }
 

@@ -44,7 +44,7 @@
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button id="upload" type="submit" class="btn btn-primary">Upload</button>
-                    <button id="loading" type="submit" class="btn btn-primary d-none"><i class="fa-solid fa-circle-notch fa-spin"></i></button>
+                    <button id="loading" type="submit" class="btn btn-primary d-none" disabled><i class="fa-solid fa-circle-notch fa-spin"></i></button>
                 </form>
             </div> 
         </div>
@@ -127,24 +127,29 @@
                 $('#editFile').val('');
                 $('#newFile').val('');
 
-                $('#success-alert').removeClass('d-none').addClass('show');
+                $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
-                $('#error-alert').addClass('d-none');
+                setTimeout(function() {
+                    $('#success-modal').modal('hide');
+                }, 3900);
                 $('#upload').removeClass('d-none');
                 $('#loading').addClass('d-none');
             },
             error: function (error) {
                 if (error.status === 422) {
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
                     $.each(error.responseJSON.errors, function (field, errors) {
                         let alertId = 'alert-' + field + '-edit';
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                     });
+
+                } else {
+                    $('#error-message').text(error.responseJSON.error);
+                    $('#error-modal').modal('show');
+                    $('#upload').removeClass('d-none');
+                    $('#loading').addClass('d-none');
                 }
-                $('#error-message').text('An error occurred.');
-                $('#error-alert').removeClass('d-none').addClass('show');
-                $('#upload').removeClass('d-none');
-                $('#loading').addClass('d-none');
-                $('#success-alert').addClass('d-none');
             }
         });
     });

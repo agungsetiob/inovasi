@@ -135,7 +135,6 @@
                     });
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
-                    console.error(error);
                 } else {    
                     let errorResponse = JSON.parse(error.responseText);
                     $('#editSpd').modal('hide');
@@ -143,7 +142,6 @@
                     $('#error-message').text(errorResponse.message);
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
-                    console.error(error);
                 }
             }
         });

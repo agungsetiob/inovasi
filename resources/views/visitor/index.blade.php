@@ -131,8 +131,8 @@
             </div>
             @endforelse
         </div>
-        <div class="text-center mt-4">
-            <a class="btn btn-xl btn-secondary btn-outline-light" href="#">
+        <div class="text-center mt-2">
+            <a class="btn btn-xl btn-secondary btn-outline-light" href="inovasi/all">
                 <i class="fas fa-atom me-2 fa-spin"></i>
                 Lihat semua
             </a>
