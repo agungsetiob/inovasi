@@ -35,7 +35,7 @@
                         <div class="input-group">
                             <label class="input-group-btn">
                                 <span class="btny btn-outline-primary">
-                                    Browse<input accept=".pdf" id="editFile" type="file" style="display: none;" name="file">
+                                    Browse<input accept=".png, .jpg, .jpeg, .pdf" id="editFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
                             <input id="newFile" type="text" class="form-control" readonly placeholder="Choose a file">

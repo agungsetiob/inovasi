@@ -60,7 +60,7 @@ class FileController extends Controller
         $this->validate($request, [
             'informasi' => 'required',
             'bukti' => 'required',
-            'file' => 'nullable|mimes:pdf|max:3072',
+            'file' => 'nullable|mimes:pdf,jpg,jpeg,png|max:3072',
         ]);
 
         $proposal = Proposal::find($request->proposal_id);
@@ -204,7 +204,7 @@ class FileController extends Controller
             $this->validate($request, [
                 'informasi' => 'required',
                 'bukti' => 'required',
-                'file' => 'nullable|mimes:pdf|max:3072',
+                'file' => 'nullable|mimes:pdf,png,jpg,jpeg|max:3072',
             ]);
 
             if ($request->hasFile('file')) {
