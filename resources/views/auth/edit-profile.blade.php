@@ -52,7 +52,7 @@
                 <x-label for="username" :value="__('Profile photo')" />
                 <div class="input-group">
                     <label class="input-group-btn">
-                        <span class="btny btn-outline-primary">Browse
+                        <span class="btny btn-outline-light">Browse
                             <input accept="image/*" id="avatar" type="file" style="display: none;" multiple name="avatar">
                         </span>
                     </label>

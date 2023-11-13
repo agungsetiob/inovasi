@@ -12,18 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <!-- <div id="success-alert" class="alert alert-success d-none">
-                            <span id="success-message"></span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div id="error-alert" class="alert alert-danger d-none">
-                            <i class="fa fa-bell fa-shake mr-1"></i><span id="error-message"></span>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div> -->
+                        <!-- previous alert -->
                             <table class="table table-borderless table-striped" width="100%" cellspacing="0" id="files-table">
                                 <thead>
                                     <tr>

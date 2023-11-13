@@ -15,6 +15,9 @@ module.exports = {
             },
         },
     },
+    variants: {
+        opacity: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    },
 
     plugins: [require('@tailwindcss/forms')],
 };

@@ -1,4 +1,5 @@
 <x-guest-layout>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -23,7 +24,7 @@
             <div class="mt-4">
                 <x-label for="skpd_id" :value="__('SKPD')" />
 
-                <select name="skpd_id" id="skpd_id" class="form-control @error('skpd_id') is-invalid @enderror" required>
+                <select name="skpd_id" id="skpd_id" class="hover:opacity-100 focus:opacity-100 text-gray-700 form-control @error('skpd_id') is-invalid @enderror" required>
                     <option value="" disabled selected>Pilih SKPD</option>
                     @foreach ($skpds as $s)
                     <option value="{{ $s->id }}" {{ old('category') == $s->id ? 'selected' : ''}}>{{ $s->nama }}</option>
@@ -49,7 +50,7 @@
             <!-- Role -->
             <div class="mt-4">
                 <x-label for="role" :value="__('Role')" />
-                <select name="role" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <select name="role" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-700">
                     <option selected disabled>Choose a role</option>
                     <option :value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
                     <option :value="user" {{ old('role') == 'user' ? 'selected' : '' }}>user</option>
@@ -76,13 +77,13 @@
             </div>
 
             <!-- Status -->
-            <div class="mt-4">
+            <div class="mt-4" hidden>
                 <x-label for="status" :value="__('Status')" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="status" value="active" disabled autofocus />
+                <x-input id="status" class="block mt-1 w-full" type="text" name="status" value="active" disabled autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('admin.index') }}">
+                <a class="underline text-sm text-white" href="{{ route('admin.index') }}">
                     {{ __('Back to dashboard') }}
                 </a>
 
@@ -93,41 +94,22 @@
         </form>
 
         @elseif (Auth::user()->role == 'user')
-        <style type="text/css">
-            .alert {
-              position: relative;
-              padding: 0.75rem 1.25rem;
-              margin-bottom: 1rem;
-              border: 1px solid transparent;
-              border-radius: 0.35rem;
-              }
-              .alert-danger {
-                  color: #78261f;
-                  background-color: #fadbd8;
-                  border-color: #f8ccc8;
-              }
-              .alert-dismissible {
-                  padding-right: 4rem;
-              }
-
-              .alert-dismissible .close {
-                  position: absolute;
-                  top: 0;
-                  right: 0;
-                  z-index: 2;
-                  padding: 0.75rem 1.25rem;
-                  color: inherit;
-              }
-        </style>
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
             Area Khusus Admin pale!
         </div>
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('user.index') }}">
+            <a class="underline text-sm text-white" href="{{ route('user.index') }}">
                 {{ __('Back to dashboard') }}
             </a>
         </div>
         @endif
     </x-auth-card>
+<script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script type="text/javascript">
+    $('#skpd_id').selectize({
+        sortField: 'text'
+    });
+</script>
 </x-guest-layout>
