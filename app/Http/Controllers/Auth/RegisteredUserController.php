@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Skpd;
 use App\Models\Setting;
+use App\Models\Profile;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -81,8 +82,9 @@ class RegisteredUserController extends Controller
     public function createUser()
     {
         $skpds = Skpd::all();
-        $setting = Setting::latest()->first();
-        return view ('auth.user-register', compact('skpds', 'setting'));
+        $setting = Setting::latest()->value('logo_cover');
+        $telp = Profile::latest()->value('telp');
+        return view ('auth.user-register', compact('skpds', 'setting', 'telp'));
     }
 
     //handle user registration proses

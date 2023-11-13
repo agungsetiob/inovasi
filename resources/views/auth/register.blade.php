@@ -1,5 +1,4 @@
 <x-guest-layout>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
@@ -24,10 +23,10 @@
             <div class="mt-4">
                 <x-label for="skpd_id" :value="__('SKPD')" />
 
-                <select name="skpd_id" id="skpd_id" class="hover:opacity-100 focus:opacity-100 text-gray-700 form-control @error('skpd_id') is-invalid @enderror" required>
-                    <option value="" disabled selected>Pilih SKPD</option>
+                <select name="skpd_id" id="skpd_id" class="hover:opacity-100 focus:opacity-100 opacity-50 text-gray-700 form-control @error('skpd_id') is-invalid @enderror" required>
+                    <option class="opacity-100" value="" disabled selected>Pilih SKPD</option>
                     @foreach ($skpds as $s)
-                    <option value="{{ $s->id }}" {{ old('category') == $s->id ? 'selected' : ''}}>{{ $s->nama }}</option>
+                    <option class="opacity-100" value="{{ $s->id }}" {{ old('category') == $s->id ? 'selected' : ''}}>{{ $s->nama }}</option>
                     @endforeach
                 </select>
             </div>
@@ -50,7 +49,7 @@
             <!-- Role -->
             <div class="mt-4">
                 <x-label for="role" :value="__('Role')" />
-                <select name="role" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-700">
+                <select id="role" name="role" class="hover:opacity-100 focus:opacity-100 opacity-50 block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-700">
                     <option selected disabled>Choose a role</option>
                     <option :value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
                     <option :value="user" {{ old('role') == 'user' ? 'selected' : '' }}>user</option>
@@ -105,11 +104,15 @@
         </div>
         @endif
     </x-auth-card>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.bootstrap4.min.css" integrity="sha512-ht3CSPjgWsxdbLti7wtKNEk5hLoGtP2J8C40muB5/PCWwNw9M/NMJpyvHdeko7ADC60SEOiCenU5pg+kJiG9lg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
     $('#skpd_id').selectize({
         sortField: 'text'
+    });
+    $('.selectize-control').click(function() {
+        $('.selectize-dropdown').removeClass('opacity-50');
     });
 </script>
 </x-guest-layout>
