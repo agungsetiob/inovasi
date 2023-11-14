@@ -17,16 +17,16 @@
                             <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th></th>
                                         <th width="50%">nama</th>
                                         <th>Jenis</th>
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tabel-indikator">
                                     @forelse ($indikators as $in)
                                     <tr id="index_{{$in->id}}">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}.</td>
                                         <td> {{$in->nama}} </td>
                                         <td> {{$in->jenis}} </td>
                                         <td>
@@ -58,22 +58,7 @@
                                         Data  is not available.
                                     </div>
                                     @endforelse
-                                    @if(Session::has('success'))
-                                    <div class="alert alert-success data-dismiss">
-                                        {{ Session::get('success') }}
-                                        @php
-                                        Session::forget('success');
-                                        @endphp
-                                    </div>
-                                    @elseif (Session::has('error'))
-                                    <div class="alert alert-danger">
-                                        {{ Session::get('error') }}
-                                        @php
-                                        Session::forget('error');
-                                        @endphp
-                                    </div>
-                                    @endif
-                                    <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                                    <!-- <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
                                         <span id="success-message"></span>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
@@ -84,7 +69,7 @@
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
-                                    </div>
+                                    </div> -->
                                 </tbody>
                             </table>
                         </div>
@@ -108,7 +93,7 @@
 
 <!-- Add Modal -->
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Tambah Indikator inovasi</h5>
@@ -117,20 +102,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('indikator.store') }}" method="POST">
+                <form action="#{{ route('indikator.store') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="nama">Indikator inovasi</label>
-                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" required placeholder="Masukkan indikator inovasi" value="{{old('nama')}}">
-                        <label class="font-weight-bold" for="tahapan">Satuan indikator:</label>
-                        <select name="jenis" id="jenis" class="form-control @error('jenis') is-invalid @enderror" required>
+                        <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan indikator inovasi">
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
+                        <label class="font-weight-bold" for="jenis">Satuan indikator:</label>
+                        <select name="jenis" id="jenis" class="form-control" required>
                             <option value="">Pilih satuan indikator</option>
                             <option value="sid" @selected(old('jenis') == 'sid')>Satuan Inovasi Daerah</option>
                             <option value="spd" @selected(old('jenis') == 'spd')>Satuan Pemerintah Daerah</option>
-                        </select> 
+                        </select>
+                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-jenis"></div>
                     </div>
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button id="store" type="button" class="btn btn-primary">Save</button>
                 </form>
             </div> 
         </div>
@@ -145,6 +131,7 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 <x-delete-master-indikator/>
+<x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -164,19 +151,94 @@
                         var newStatus = response.newStatus;
                         button.closest('.dropdown').find('.dropdown-toggle').data('indikator-status', newStatus);
                         button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#error-alert').addClass('d-none');
                         setTimeout(function() {
-                            $('#success-alert').addClass('d-none').removeClass('show');
+                            $('#success-modal').modal('hide');
                         }, 3700);
                     }
                 },
                 error: function(response) {
                     $('#error-message').text('Error gagal merubah status');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
+        });
+    });
+
+    $('#store').click(function(e) {
+        e.preventDefault();
+
+        //define variable
+        let nama   = $("#nama").val();
+        let jenis   = $("#jenis").val();
+        let token   = $("meta[name='csrf-token']").attr("content");
+        
+        //ajax
+        $.ajax({
+            url: `/master/indikator`,
+            type: "POST",
+            cache: false,
+            data: {
+                "nama": nama,
+                "jenis": jenis,
+                "_token": token
+            },
+            success:function(response){
+                //data indikator
+                $('#success-modal').modal('show');
+                $('#success-message').text(response.message);
+
+                let indikator = `
+                <tr id="index_${response.data.id}">
+                <td>${response.data.id}</td>
+                <td width="50%">${response.data.nama}</td>
+                <td>${response.data.jenis}</td>
+                <td>
+                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                        data-indikator-id="${response.data.id}"
+                        data-indikator-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
+                    <div class="dropdown mb-4 d-inline">
+                        <button
+                            class="btn btn-outline-primary dropdown-toggle btn-sm"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            data-indikator-id="${response.data.id}"
+                            data-indikator-status="${response.data.status}">
+                            ${response.data.status}
+                        </button>
+                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                        <button class="dropdown-item" data-action="toggle-status">change status</button>
+                    </div>
+                    </div>
+                </td>
+                </tr>
+                `;                
+                //append to table
+                $('#tabel-indikator').append(indikator);
+                
+                //clear form
+                $('#nama').val('');
+                $('#jenis').val('');
+                $('#addCategory').modal('hide');
+                
+            },
+            error:function(error){
+
+                if (error.status === 422) {
+                    $.each(error.responseJSON.errors, function (field, errors) {
+                        let alertId = 'alert-' + field;
+                        $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                    });
+                } else {
+                    $('#error-message').text('An error occurred.');
+                    $('#error-modal').modal('show');
+                }
+
+            }
         });
     });
 </script>

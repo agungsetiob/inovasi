@@ -44,7 +44,13 @@ class IndikatorController extends Controller
         $indikator->jenis = $request->jenis;
         $indikator->save();
 
-        return redirect()->back()->with('success','Data added successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Data Berhasil Disimpan',
+            'data' => $indikator
+        ]);
+
+        //return redirect()->back()->with('success','Data added successfully');
     }
 
     /**

@@ -34,7 +34,7 @@ aria-hidden="true">
                 headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" }, // Use headers to send CSRF token
                 success: function(response) {
                     if (response.success) {
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
                         $('#error-alert').addClass('d-none');
                         $('#index_' + indikatorId).remove();
@@ -43,7 +43,7 @@ aria-hidden="true">
                 },
                 error: function(response) {
                     $('#error-message').text('Gagal menghapus indikator inovasi');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-modal').modal('show');
                 }
             });
         });
