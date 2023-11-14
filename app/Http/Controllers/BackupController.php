@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class BackupController extends Controller{
     public function index(){
         $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
-        $files = $disk->files('/public/Inovasi/');
+        $files = $disk->files('/public/serasi/');
         $backups = [];
         foreach ($files as $k => $f) {
            if (substr($f, -4) == '.zip' && $disk->exists($f)) {
@@ -52,7 +52,7 @@ class BackupController extends Controller{
     }
 
     public function download($file_name) {
-        $file = config('laravel-backup.backup.name') .'public/inovasi/'. $file_name;
+        $file = config('laravel-backup.backup.name') .'public/serasi/'. $file_name;
         $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
 
         if ($disk->exists($file)) {
@@ -73,8 +73,8 @@ class BackupController extends Controller{
 
      public function delete($file_name){
           $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
-          if ($disk->exists(config('laravel-backup.backup.name') . 'public/Inovasi/' . $file_name)) {
-               $disk->delete(config('laravel-backup.backup.name') . 'public/Inovasi/' . $file_name);
+          if ($disk->exists(config('laravel-backup.backup.name') . 'public/serasi/' . $file_name)) {
+               $disk->delete(config('laravel-backup.backup.name') . 'public/serasi/' . $file_name);
                session()->flash('delete', 'Successfully deleted backup!');
                return redirect()->back();
           } else {

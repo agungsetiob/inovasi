@@ -34,7 +34,7 @@
                                         <!-- <td> {{ date('F jS, Y, g:ia (T)',$backup['last_modified']) }} </td> -->
                                         <td> {{ \Carbon\Carbon::parse($backup['last_modified'])->diffForHumans() }} </td>
                                         <td>
-                                            <a class="btn btn-outline-warning btn-sm" href="{{ asset('storage/inovasi/' . $backup['file_name']) }}"><i class="fa fa-download"></i> Download</a>
+                                            <a class="btn btn-outline-warning btn-sm" href="{{ asset('storage/serasi/' . $backup['file_name']) }}"><i class="fa fa-download"></i> Download</a>
 
                                             <a class="btn btn-outline-danger btn-sm" onclick="return confirm('Do you really want to delete this file?')" data-button-type="delete"
                                             href="{{ url('backup/delete/'.$backup['file_name']) }}"><i class="fa fa-trash"></i>
