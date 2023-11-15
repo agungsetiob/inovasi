@@ -16,13 +16,13 @@ class PasswordResetLinkController extends Controller
      */
     public function create()
     {
-        $setting = Setting::latest()->first();
+        $setting = Setting::latest()->value('logo_cover');
         return view('auth.forgot-password', compact('setting'));
     }
 
     public function changePassword()
     {
-        $setting = Setting::latest()->first();
+        $setting = Setting::latest()->value('logo_cover');
         return view('auth.change-password', compact('setting'));
     }
 

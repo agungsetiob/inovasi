@@ -17,7 +17,7 @@
                             <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th></th>
                                         <th>Name</th>
                                         <th>SKPD</th>
                                         <th>Email</th>
@@ -27,7 +27,7 @@
                                 <tbody>
                                     @forelse ($users as $user)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}.</td>
                                         <td> {{$user->name}} </td>
                                         <td> {{$user->skpd->nama}} </td>
                                         <td> {{$user->email}} </td>

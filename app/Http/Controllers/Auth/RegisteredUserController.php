@@ -21,8 +21,7 @@ class RegisteredUserController extends Controller
     {
         if (Auth::user()->role === 'admin') {
             $users = User::all();
-            $setting = Setting::latest()->first();
-            return view('admin.users', compact('users', 'setting'));
+            return view('admin.users', compact('users'));
         } else{
             return back()->with('error', 'Get out!');
         }
@@ -38,7 +37,7 @@ class RegisteredUserController extends Controller
     public function create()
     {
         $skpds = Skpd::all();
-        $setting = Setting::latest()->first();
+        $setting = Setting::latest()->value('logo_cover');
         return view ('auth.register', compact('skpds', 'setting'));       
     }
 
@@ -140,7 +139,7 @@ class RegisteredUserController extends Controller
     {
         $user = User::findOrFail($id);
         if (Auth::user()->id == $user->id ) {
-            $setting = Setting::latest()->first();
+            $setting = Setting::latest()->value('logo_cover');
             return view('auth.edit-profile', compact('user', 'setting'));
         }
 

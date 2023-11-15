@@ -18,7 +18,7 @@ class ConfirmablePasswordController extends Controller
      */
     public function show()
     {
-        $setting = Setting::latest()->first();
+        $setting = Setting::latest()->value('logo_cover');
         return view('auth.confirm-password', compact('setting'));
     }
 

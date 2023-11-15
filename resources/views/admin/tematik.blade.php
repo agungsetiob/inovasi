@@ -17,7 +17,7 @@
                 <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th></th>
                             <th width="51%">name</th>
                             <th>Created</th>
                             <th>Action</th>
@@ -26,7 +26,7 @@
                     <tbody id="tabel-tematik">
                         @forelse ($tematiks as $tematik)
                         <tr id="index_{{ $tematik->id }}">
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $loop->iteration }}.</td>
                             <td> {{$tematik->nama}} </td>
                             <td> {{$tematik->created_at}} </td>
                             <td>

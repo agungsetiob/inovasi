@@ -18,7 +18,7 @@
                             <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th></th>
                                         <th width="40%">nama</th>
                                         <th width="40%">urusan</th>
                                         <th></th>
@@ -27,7 +27,7 @@
                                 <tbody id="tabel-urusan">
                                     @forelse ($urusans as $urusan)
                                     <tr id="index_{{$urusan->id}}">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}.</td>
                                         <td> {{$urusan->nama}} </td>
                                         <td id="urusan"> {{--$urusan->created_at--}}{{$urusan->klasifikasi->nama}} </td>
                                         <td>

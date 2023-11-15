@@ -20,7 +20,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        $setting = Setting::latest()->first();
+        $setting = Setting::latest()->value('logo_cover');
         return view('auth.login', compact('setting'));
     }
 

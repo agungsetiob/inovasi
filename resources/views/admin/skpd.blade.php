@@ -18,7 +18,7 @@
                             <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th></th>
                                         <th width="51%">Nama</th>
                                         <th>Dibuat pada</th>
                                         <th></th>
@@ -27,7 +27,7 @@
                                 <tbody>
                                     @forelse ($skpds as $skpd)
                                     <tr id="index_{{$skpd->id}}">
-                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $loop->iteration }}.</td>
                                         <td> {{$skpd->nama}} </td>
                                         <td> {{$skpd->created_at}} </td>
                                         <td>

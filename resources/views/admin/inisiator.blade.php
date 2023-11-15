@@ -16,7 +16,7 @@
                 <table class="table table-borderless table-striped text-dark" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th></th>
                             <th width="50%">Nama</th>
                             <th>Dibuat pada</th>
                             <th></th>
@@ -25,7 +25,7 @@
                     <tbody>
                         @forelse ($inisiators as $inisiator)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $loop->iteration }}.</td>
                             <td> {{$inisiator->nama}} </td>
                             <td> {{$inisiator->created_at}} </td>
                             <td>

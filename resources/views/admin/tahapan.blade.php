@@ -14,7 +14,7 @@
                             <table class="table table-borderless table-striped text-dark" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
+                                        <th></th>
                                         <th width="50%">nama</th>
                                         <th>Dibuat</th>
                                         <th></th>

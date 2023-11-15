@@ -17,7 +17,7 @@
                 <table class="table table-borderless table-striped text-dark" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th></th>
                             <th width="51%">Nama</th>
                             <th>Dibuat pada</th>
                             <th></th>
