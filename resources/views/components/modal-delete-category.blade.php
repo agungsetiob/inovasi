@@ -47,9 +47,10 @@ aria-hidden="true">
                         $('#deleteModal').modal('hide');
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text(response.message);
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-alert').removeClass('d-none').addClass('show');
+                    console.error(error);
                 }
             });
         });

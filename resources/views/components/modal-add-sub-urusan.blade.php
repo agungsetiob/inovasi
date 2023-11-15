@@ -129,7 +129,7 @@
                     $('#alert-klasifikasi').addClass('d-block');
                     $('#alert-klasifikasi').html('klasifikasi wajib diisi');
                 } else {
-                    $('#error-message').text('An error occurred.');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
                 

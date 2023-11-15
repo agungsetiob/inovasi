@@ -116,9 +116,8 @@
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('show');
                     });
                 } else {
-                    $('#error-message').text('An error occurred.');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
-                    console.error(error);
                 }
             }
         });

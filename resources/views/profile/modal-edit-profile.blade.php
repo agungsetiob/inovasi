@@ -40,7 +40,7 @@
 </div>
 <script type="text/javascript">
     $('body').on('click', '#edit-profile', function () {
-        let profile_id = $('.btn-edit').data('profile-id');
+        let profile_id = $('#edit-profile').data('profile-id');
 
         $.ajax({
             url: `/edit/profile/${profile_id}`,

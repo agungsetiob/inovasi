@@ -18,7 +18,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th width="50%">nama</th>
+                                        <th width="65%">nama</th>
                                         <th>Jenis</th>
                                         <th></th>
                                     </tr>
@@ -180,7 +180,7 @@
                 let indikator = `
                 <tr id="index_${response.data.id}">
                 <td>${response.data.id}</td>
-                <td width="50%">${response.data.nama}</td>
+                <td width="65%">${response.data.nama}</td>
                 <td>${response.data.jenis}</td>
                 <td>
                     <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
@@ -220,9 +220,10 @@
                     $.each(error.responseJSON.errors, function (field, errors) {
                         let alertId = 'alert-' + field;
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                        $('#' + field).addClass('is-invalid');
                     });
                 } else {
-                    $('#error-message').text('An error occurred.');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
 

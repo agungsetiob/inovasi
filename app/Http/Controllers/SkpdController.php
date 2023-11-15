@@ -38,7 +38,7 @@ class SkpdController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Berhasil menyimpan data',
-            'data' => $skpd,
+            'data' => $skpd
         ]);
 
         //return redirect()->back()->with('success','Data added successfully');

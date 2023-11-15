@@ -9,12 +9,6 @@ aria-hidden="true">
             </button>
         </div>
         <div class="modal-body">SKPD <span id="skpd-name" style="color: #0061f2;"></span> akan dihapus. <br>Tekan tombol hapus apabila anda sudah yakin.
-            <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-                <span id="error-message"></span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
         </div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
@@ -37,7 +31,7 @@ aria-hidden="true">
             $.ajax({
                 url: '/master/skpd/' + skpdId,
                 type: 'DELETE',
-                headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+                //headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
                 success: function(response) {
                     if (response.success) {
                         $('#success-modal').modal('show');
