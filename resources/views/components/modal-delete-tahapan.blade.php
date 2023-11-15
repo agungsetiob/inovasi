@@ -44,8 +44,8 @@ aria-hidden="true">
                         }, 3700);
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Gagal menghapus tahapan inovasi');
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-alert').removeClass('d-none').addClass('show');
                 }
             });

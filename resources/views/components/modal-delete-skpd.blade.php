@@ -31,7 +31,7 @@ aria-hidden="true">
             $.ajax({
                 url: '/master/skpd/' + skpdId,
                 type: 'DELETE',
-                //headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+                headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
                 success: function(response) {
                     if (response.success) {
                         $('#success-modal').modal('show');
@@ -43,8 +43,9 @@ aria-hidden="true">
                         }, 3700);
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Gagal menghapus skpd');
+                error: function(error) {
+                    $('#deleteModal').modal('hide');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
             });

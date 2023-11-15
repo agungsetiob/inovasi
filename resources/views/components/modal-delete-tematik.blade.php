@@ -40,10 +40,9 @@ aria-hidden="true">
                         $('#deleteModal').modal('hide');
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Gagal menghapus tematik inovasi');
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
-                    console.log(response);
                 }
             });
         });

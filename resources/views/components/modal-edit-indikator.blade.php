@@ -145,7 +145,7 @@
                     });
 
                 } else {
-                    $('#error-message').text(error.responseJSON.error);
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');

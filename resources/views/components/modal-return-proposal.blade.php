@@ -44,8 +44,8 @@ aria-hidden="true">
                         $('#sendModal').modal('hide');
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Gagal mengembalikan proposal');
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-alert').removeClass('d-none').addClass('show');
                 }
             });

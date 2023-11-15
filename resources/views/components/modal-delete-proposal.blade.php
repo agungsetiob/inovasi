@@ -34,7 +34,7 @@ aria-hidden="true">
                 type: 'DELETE',
                 cache: false,
                 data: {
-                   // _token: "{{ csrf_token() }}"
+                    _token: "{{ csrf_token() }}"
                 },
                 success: function(response) {
                     if (response.success) {
@@ -48,7 +48,7 @@ aria-hidden="true">
                         }, 4700);
                     }
                 },
-                error: function(response) {
+                error: function(error) {
                     $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-alert').removeClass('d-none').addClass('show');
                 }
