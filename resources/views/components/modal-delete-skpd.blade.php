@@ -40,19 +40,18 @@ aria-hidden="true">
                 headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
                 success: function(response) {
                     if (response.success) {
-                        $('#success-alert').removeClass('d-none').addClass('show');
+                        $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#error-alert').addClass('d-none');
                         $('#index_' + skpdId).remove();
                         $('#deleteModal').modal('hide');
                         setTimeout(function() {
-                            $('#success-alert').addClass('d-none').removeClass('show');
+                            $('#success-modal').modal('hide');
                         }, 3700);
                     }
                 },
                 error: function(response) {
-                    $('#error-message').text('Gagal menghapus skpd inovasi');
-                    $('#error-alert').removeClass('d-none').addClass('show');
+                    $('#error-message').text('Gagal menghapus skpd');
+                    $('#error-modal').modal('show');
                 }
             });
         });

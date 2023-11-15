@@ -61,31 +61,6 @@ class BuktiController extends Controller
             'data' => $bukti,
             'indikator' => $indikator
         ]);
-        //return redirect()->back()->with('success','Data added successfully');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Bukti $bukti)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Bukti $bukti)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Bukti $bukti)
-    {
-        //
     }
 
     /**

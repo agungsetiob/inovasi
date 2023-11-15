@@ -13,7 +13,7 @@ class SkpdController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 'admin') {
+        if (Auth::user()->role === 'admin') {
             $skpds = Skpd::all();
             return view ('admin.skpd', compact('skpds'));
         } else {
@@ -22,48 +22,26 @@ class SkpdController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'nama'     => 'required|unique:skpds',
+        ]);
+
         $skpd = new Skpd();
         $skpd->nama = $request->nama;
         $skpd->status = 'active';
         $skpd->save();
 
-        return redirect()->back()->with('success','Data added successfully');
-    }
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menyimpan data',
+            'data' => $skpd,
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Skpd $skpd)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Skpd $skpd)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Skpd $skpd)
-    {
-        //
+        //return redirect()->back()->with('success','Data added successfully');
     }
 
     /**
