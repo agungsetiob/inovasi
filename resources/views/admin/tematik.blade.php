@@ -58,19 +58,6 @@
                         Data  is not available.
                     </div>
                     @endforelse
-                    <!-- <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
-                        <span id="success-message"></span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div id="error-alert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-                        <span id="error-message"></span>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> -->
-
                 </tbody>
             </table>
         </div>

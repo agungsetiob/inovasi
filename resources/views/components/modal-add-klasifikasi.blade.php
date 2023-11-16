@@ -78,6 +78,7 @@
                 //clear form
                 $('#nama').val('');
                 $('#addCategory').modal('hide');
+                $('#empty').addClass('d-none');
                 
             },
             error:function(error){

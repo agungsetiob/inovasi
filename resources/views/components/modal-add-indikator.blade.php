@@ -9,7 +9,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('upload/file') }}" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <form action="#" method="POST" enctype="multipart/form-data" id="uploadForm">
                     @csrf
                     <input type="hidden" class="form-control" name="indikator_id" id="indikator_id">
                     <input type="hidden" class="form-control" id="proposal_id" name="proposal_id" value="{{$proposal->id}}">
@@ -93,7 +93,8 @@
         var formData = new FormData(this);
 
         $.ajax({
-            url: '{{ url("/upload/file") }}',
+            //url: '{{ url("/upload/file") }}',
+            url: "/upload/file",
             type: "POST",
             cache: false,
             contentType: false,

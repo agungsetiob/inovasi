@@ -9,15 +9,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="nama">nama skpd</label>
-                        <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan nama skpd">
-                        <p class="text-danger" id="alert-nama"></p>
-                    </div>
-                    <button id="store" type="button" class="btn btn-primary">Save</button>
-                </form>
+                <div class="form-group">
+                    <label for="nama">nama skpd</label>
+                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Masukkan nama skpd">
+                    <p class="text-danger" id="alert-nama"></p>
+                </div>
+                <button id="store" type="button" class="btn btn-primary">Save</button>
             </div> 
         </div>
     </div>
@@ -43,7 +40,7 @@
             success:function(response){
                 //data skpd
                 $('#success-modal').modal('show');
-                $('#success-message').text(response.message);
+                $('#success-message').html(response.message + '<p class="text-success">' + response.data.nama + '</p>');
 
                 let skpd = `
                 <tr id="index_${response.data.id}">
@@ -74,7 +71,7 @@
                 </tr>
                 `;                
                 //append to table
-                $('#tabel-skpd').append(skpd);
+                $('#tabel-skpd').prepend(skpd);
                 
                 //clear form
                 $('#nama').val('');

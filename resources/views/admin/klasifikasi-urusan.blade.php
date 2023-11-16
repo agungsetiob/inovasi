@@ -54,7 +54,7 @@
                         </td>
                     </tr>
                     @empty
-                    <div class="alert alert-danger">
+                    <div id="empty" class="alert alert-danger">
                         Data  is not available.
                     </div>
                     @endforelse
