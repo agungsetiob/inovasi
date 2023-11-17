@@ -51,62 +51,58 @@
                 "_token": token
             },
             success:function(response){
+                $('#success-modal').modal('show');
+                $('#success-message').html('<p class="text-success">' + response.data.nama + '</p>' + 'berhasil disimpan');
+                setTimeout(function() {
+                    $('#success-modal').modal('hide');
+                }, 3700);
                 $.ajax({
                     url: `/master/klasifikasi/detail`,
                     type: "GET",
                     success: function(klasifikasiResponse) {
-                    //data klasifikasi
-                    $('#success-modal').modal('show');
-                    $('#success-message').text(response.message);
-                    var reloadUrl = '{{ url("/master/urusan") }}';
-                
-                // Reload the table
-                    $("#dataTable").load(reloadUrl + " #dataTable");
+                        //data klasifikasi
+                        var reloadUrl = '{{ url("/master/urusan") }}';
                     
-                    // let urusan = `
-                    // <tr id="index_${response.data.id}">
-                    // <td>${response.data.id}</td>
-                    // <td>${response.data.nama}</td>
-                    // <td>${klasifikasiResponse.data[0].klasifikasi.nama}</td>
-                    // <td>
-                    //     <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                    //         data-urusan-id="${response.data.id}"
-                    //         data-urusan-name="${response.data.nama}"><i class="fas fa-trash"></i>
-                    //     </button>
-                    //     <div class="dropdown mb-4 d-inline">
-                    //         <button
-                    //             class="btn btn-outline-primary dropdown-toggle btn-sm"
-                    //             type="button"
-                    //             id="dropdownMenuButton"
-                    //             data-toggle="dropdown"
-                    //             aria-haspopup="true"
-                    //             aria-expanded="false"
-                    //             data-urusan-id="${response.data.id}"
-                    //             data-urusan-status="${response.data.status}">
-                    //             ${response.data.status}
-                    //         </button>
-                    //     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                    //         <button class="dropdown-item" data-action="toggle-status">change status</button>
-                    //     </div>
-                    //     </div>
-                    // </td>
-                    // </tr>
-                    // `;                
-                    // //append to table
-                    // $('#tabel-urusan').prepend(urusan);
-                    $('#alert-nama').removeClass('d-block').addClass('d-none');
-                    $('#alert-klasifikasi').removeClass('d-block').addClass('d-none');
+                    // Reload the table
+                        $("#dataTable").load(reloadUrl + " #dataTable");                        
+                        // let urusan = `
+                        // <tr id="index_${response.data.id}">
+                        // <td>${response.data.id}</td>
+                        // <td>${response.data.nama}</td>
+                        // <td>${klasifikasiResponse.data[0].klasifikasi.nama}</td>
+                        // <td>
+                        //     <button class="btn btn-outline-danger btn-sm" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                        //         data-urusan-id="${response.data.id}"
+                        //         data-urusan-name="${response.data.nama}"><i class="fas fa-trash"></i>
+                        //     </button>
+                        //     <div class="dropdown mb-4 d-inline">
+                        //         <button
+                        //             class="btn btn-outline-primary dropdown-toggle btn-sm"
+                        //             type="button"
+                        //             id="dropdownMenuButton"
+                        //             data-toggle="dropdown"
+                        //             aria-haspopup="true"
+                        //             aria-expanded="false"
+                        //             data-urusan-id="${response.data.id}"
+                        //             data-urusan-status="${response.data.status}">
+                        //             ${response.data.status}
+                        //         </button>
+                        //     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                        //         <button class="dropdown-item" data-action="toggle-status">change status</button>
+                        //     </div>
+                        //     </div>
+                        // </td>
+                        // </tr>
+                        // `;                
+                        // //append to table
+                        // $('#tabel-urusan').prepend(urusan);
+                        $('#alert-nama').removeClass('d-block').addClass('d-none');
+                        $('#alert-klasifikasi').removeClass('d-block').addClass('d-none');
                     },
-                error: function(error) {
-                    if(error.responseJSON && error.responseJSON.klasifikasi_id && error.responseJSON.klasifikasi_id[0]) {
-
-                        $('#alert-klasifikasi').removeClass('d-none');
-                        $('#alert-klasifikasi').addClass('d-block');
-                        $('#alert-klasifikasi').html(error.responseJSON.klasifikasi_id[0]);
+                    error: function(error) {
+                        $('#error-message').text(error.status + ' ' + error.responseJSON.message);
+                        $('#error-modal').modal('show');
                     }
-                    $('#error-message').text('An error occurred.');
-                    $('#error-modal').modal('show');
-                }
                 });
                 
                 //clear form

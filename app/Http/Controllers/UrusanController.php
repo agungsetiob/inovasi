@@ -64,7 +64,7 @@ class UrusanController extends Controller
         //return response
         return response()->json([
             'success' => true,
-            'message' => 'Data Berhasil Disimpan!',
+            'message' => 'Data',
             'data'    => $urusan 
         ]);
     }

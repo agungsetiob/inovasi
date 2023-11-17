@@ -78,7 +78,7 @@
                 //clear form
                 $('#nama').val('');
                 $('#addCategory').modal('hide');
-                
+                $('#empty-tematik').addClass('d-none');
             },
             error:function(error){
 
