@@ -17,8 +17,7 @@ class UrusanController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $klasifikasis = Klasifikasi::where('status', 'active')->get();
-            $urusans = Urusan::with('klasifikasi')->get();
-            return view ('admin.urusan', compact('urusans', 'klasifikasis'));
+            return view ('admin.urusan', compact('klasifikasis'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
@@ -26,19 +25,11 @@ class UrusanController extends Controller
 
     public function klasifikasi()
     {
-        $klasifikasis = Urusan::with('klasifikasi')->get();
+        $urusans = Urusan::with('klasifikasi')->get();
         return response()->json([
             'success' => true,
-            'data'    => $klasifikasis
+            'data'    => $urusans
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -60,12 +51,14 @@ class UrusanController extends Controller
             'klasifikasi_id' => $request->klasifikasi_id,
             'status'   => 'active',
         ]);
+        $klas = $urusan->klasifikasi;
 
         //return response
         return response()->json([
             'success' => true,
             'message' => 'Data',
-            'data'    => $urusan 
+            'data'    => $urusan,
+            'klas' => $klas
         ]);
     }
 
@@ -84,14 +77,6 @@ class UrusanController extends Controller
      * Display the specified resource.
      */
     public function show(Urusan $urusan)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Urusan $urusan)
     {
         //
     }
