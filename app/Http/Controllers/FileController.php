@@ -69,27 +69,29 @@ class FileController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $file->storeAs('public/docs', $file->hashName());
+                $fileData['file'] = $file->hashName();
             }
 
-            $file = File::create([
-                'file' => $file->hashName() ?? null,
+            $fileData = [
                 'informasi' => addslashes($request->informasi),
                 'user_id' => auth()->user()->id,
                 'proposal_id' => $request->proposal_id,
                 'bukti_id' => $request->bukti,
                 'indikator_id' => $request->indikator_id,
-            ]);
+            ];
+
+            $buktiDukung = File::create($fileData);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Data Berhasil Disimpan!',
-                'data' => $file
+                'data' => $buktiDukung
             ]);
         } else {
             return response()->json([
                 'error' => 'Unauthorized action',
                 'success' => false
-            ], 401);
+            ]);
         }
     }
 
@@ -225,7 +227,10 @@ class FileController extends Controller
                 'data' => $file,
             ]);
         } else {
-            return response()->json(['error' => 'Unauthorized to update this data'], 403);
+            return response()->json([
+                'error' => 'Unauthorized to update this data', 
+                'success' => false
+            ]);
         }
     }
 
@@ -263,7 +268,10 @@ class FileController extends Controller
                 'data' => $file,
             ]);
         } else {
-            return response()->json(['error' => 'Gagal update data'], 403);
+            return response()->json([
+                'error' => 'Gagal update data',
+                'success' => false
+        ]);
         }
     }
 

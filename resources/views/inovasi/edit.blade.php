@@ -23,7 +23,7 @@
                   </div>
                 </div>
                 <div class="bs-stepper-content">
-                  <form action="{{ route('inovasi.store') }}" method="POST" enctype="multipart/form-data">
+                  <form action="{{ route('inovasi.update', $inovasi->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div id="test-l-1" role="tabpanel" class="bs-stepper-pane" aria-labelledby="stepper1trigger1">
@@ -281,7 +281,6 @@
                       <button class="btn btn-primary" id="prevB"><i class="fa-solid fa-backward"></i> Previous</button>
                       <button type="submit" class="btn btn-md btn-outline-primary float-right"><i class="fa fa-save"></i> Save</button>
                     </div>
-
                   </form> 
                 </div>
               </div>

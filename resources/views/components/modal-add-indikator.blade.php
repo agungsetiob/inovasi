@@ -1,4 +1,4 @@
-<!-- Add Modal -->
+{{-- Add bukti dukung Modal --}}
 <div class="modal fade" id="uploadFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -21,17 +21,17 @@
                     <label for="informasi">Deskripsi bukti</label>
                     <div class="form-group">
                         <input type="text" name="informasi" id="informasi" class="form-control">
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-informasi"></div>
+                        <p class="text-danger d-none" id="alert-informasi"></p>
                     </div>
                     <label for="bukti">Informasi</label>
                     <div class="form-group">
-                        <select name="bukti" id="bukti" class="select form-control @error('bukti') is-invalid @enderror selectized">
+                        <select name="bukti" id="bukti" class="select selectized">
                             <option value="">Pilih bukti</option>
                             {{--@foreach ($buktis as $bukti)
                             <option value="{{ $bukti->id }}" {{ old('bukti') == $bukti->id ? 'selected' : ''}}>{{ $bukti->nama }} - bobot {{ $bukti->bobot}}</option>
                             @endforeach--}}
                         </select>
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti"></div>
+                        <p class="text-danger d-none" id="alert-bukti"></p>
                     </div>
                     <label for="bFile">File bukti</label>
                     <div class="form-group">
@@ -41,9 +41,9 @@
                                     Browse<input accept=".png, .jpg, .jpeg, .pdf" id="bFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
-                            <input id="uFile" type="text" class="form-control @error('file') is-invalid @enderror" readonly placeholder="Choose a file">
+                            <input id="file" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
+                        <p class="text-danger d-none" id="alert-file"></p>
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button id="upload" type="submit" class="btn btn-primary">Upload</button>
@@ -55,7 +55,7 @@
 </div>
 <script>
     document.getElementById('bFile').onchange = function () {
-        document.getElementById('uFile').value = this.value;
+        document.getElementById('file').value = this.value;
     }
     $('body').on('click', '.btn-add', function () {
 
@@ -112,7 +112,7 @@
                 $('#informasi').val('');
                 $('#bukti').val('');
                 $('#bFile').val('');
-                $('#uFile').val('');
+                $('#file').val('');
 
                 $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
@@ -130,6 +130,8 @@
                     $.each(error.responseJSON.errors, function (field, errors) {
                         let alertId = 'alert-' + field;
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                        $('#' + field).html(errors[0]).addClass('is-invalid');
+                        $('.selectize-control').addClass('is-invalid');
                     });
                 } else {
                     $('#error-message').text(error.status + ' ' + error.responseJSON.message);

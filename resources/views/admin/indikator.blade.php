@@ -46,7 +46,7 @@
 </a>
 
 
-<!-- Add Modal -->
+<!-- Add jenis indikator modal -->
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -203,6 +203,11 @@
                 $('#nama').val('');
                 $('#jenis').val('');
                 $('#addCategory').modal('hide');
+                $.each(error.responseJSON.errors, function (field, errors) {
+                    let alertId = 'alert-' + field;
+                    $('#' + alertId).html(errors[0]).removeClass('d-block').addClass('d-none');
+                    $('#' + field).addClass('is-invalid');
+                });
                 
             },
             error:function(error){

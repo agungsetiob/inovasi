@@ -256,6 +256,8 @@ class ProposalController extends Controller
 
         $inovasi->update($data);
         $inovasi->urusans()->sync($request->urusans);
+        // $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'sid')->get()->pluck('id')->toArray();
+        // $inovasi->indikators()->sync($indikatorIds);
 
         return redirect()->intended('proyek/inovasi')->with(['success' => 'Berhasil update inovasi']);
     }

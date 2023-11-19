@@ -1,7 +1,7 @@
 @extends('layouts.header')
 @section('content')
 <!-- Begin Page Content -->
-        <div class="container-fluid overflow-auto panjang">
+        <div class="container-fluid">
             <!-- Page Heading -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-dark">{{ $proposal->nama }}</h1>
@@ -49,7 +49,9 @@
                                                     data-bukti-id="{{$item->bukti->id}}"
                                                     data-file-informasi="{{$item->informasi}}"
                                                     ><i class="fa fa-pen-to-square"></i></a>
+                                                    @if ($item->file)
                                                     <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank"><i class="fa-solid fa-download"></i></a>
+                                                    @endif
                                                 @empty
                                                     <button class="btn-add btn btn-outline-primary btn-sm" data-id="{{$indikator->id}}" title="upload" href="#" data-toggle="modal" data-target="#uploadFile">
                                                         <i class="fa-regular fa-pen-to-square"></i>

@@ -25,40 +25,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-skpd">
-                                    {{--@forelse ($skpds as $skpd)
-                                    <tr id="index_{{$skpd->id}}">
-                                        <td width="5%">{{ $loop->iteration }}.</td>
-                                        <td> {{$skpd->nama}} </td>
-                                        <td width="20%"> {{$skpd->created_at}} </td>
-                                        <td width="14%">
-                                            <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                                                data-toggle="modal" 
-                                                data-target="#deleteModal" 
-                                                data-skpd-id="{{ $skpd->id }}"
-                                                data-skpd-name="{{ $skpd->nama }}"><i class="fas fa-trash"></i></button>
-                                            <div class="dropdown mb-4 d-inline">
-                                                <button
-                                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                                    type="button"
-                                                    id="dropdownMenuButton"
-                                                    data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    data-skpd-id="{{ $skpd->id }}"
-                                                    data-skpd-status="{{ $skpd->status }}">
-                                                    {{ $skpd->status }}
-                                                </button>
-                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                                    <button class="dropdown-item toggle-status-button" data-action="toggle-status">Change Status</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <div class="alert alert-danger">
-                                        Data  is not available.
-                                    </div>
-                                    @endforelse--}}
+                                    <!-- load server side dataTable here -->
                                 </tbody>
                             </table>
                         </div>
