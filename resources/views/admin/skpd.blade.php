@@ -25,7 +25,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-skpd">
-                                    @forelse ($skpds as $skpd)
+                                    {{--@forelse ($skpds as $skpd)
                                     <tr id="index_{{$skpd->id}}">
                                         <td width="5%">{{ $loop->iteration }}.</td>
                                         <td> {{$skpd->nama}} </td>
@@ -58,7 +58,7 @@
                                     <div class="alert alert-danger">
                                         Data  is not available.
                                     </div>
-                                    @endforelse
+                                    @endforelse--}}
                                 </tbody>
                             </table>
                         </div>
@@ -92,8 +92,57 @@
 @include ('components.modal-delete-skpd')
 <x-logout/>
 <script type="text/javascript">
+    var dataTable = $('#dataTable').DataTable({
+        ajax: {
+            url: '/api/skpd',
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1 + '.';
+                }
+            },
+            { 
+                data: 'nama' 
+            },
+            { 
+                data: 'created_at' 
+            },
+            { 
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            data-skpd-id="${row.id}"
+                            data-skpd-name="${row.nama}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton${row.id}"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-skpd-id="${row.id}"
+                                data-skpd-status="${row.status}">
+                                ${row.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+        ],
+        // other DataTable options...
+    });
+
     $(document).ready(function() {
-        $(document).on("click",".toggle-status-button",function(){
+        $(document).on("click",".dropdown-item[data-action='toggle-status']",function(){
             var button = $(this);
             var skpdId = button.closest('.dropdown').find('.dropdown-toggle').data('skpd-id');
             var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('skpd-status');
@@ -110,14 +159,14 @@
                         button.closest('.dropdown').find('.dropdown-toggle').data('skpd-status', newStatus);
                         button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
                         $('#success-modal').modal('show');
-                        $('#success-message').text(response.message);
+                        $('#success-message').html(response.message + '<p class="text-success">' + response.nama + '</p>');
                         setTimeout(function() {
                             $('#success-modal').modal('hide');
                         }, 3700);
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Error! gagal merubah status');
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
             });

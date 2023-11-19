@@ -14,19 +14,22 @@ class IndikatorController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $indikators = Indikator::all();
-            return view ('admin.indikator', compact('indikators'));
+            return view ('admin.indikator');
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    /*
+    * Load indikator data in json format
+    */
+    public function loadIndikators()
     {
-        //
+        $indikators = Indikator::all();
+        return response()->json([
+            'success' => true,
+            'data' => $indikators
+        ]);
     }
 
     /**
@@ -107,7 +110,8 @@ class IndikatorController extends Controller
         return response()->json([
             'success' => true, 
             'newStatus' => $indikator->status,
-            'message' => 'Berhasil merubah status'
+            'message' => 'Berhasil merubah status',
+            'indikator' => $indikator->nama
         ]);
     }
 }

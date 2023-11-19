@@ -62,7 +62,7 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
             'dump' => [
-            'dump_binary_path' => '/opt/homebrew/opt/mysql/bin',
+            'dump_binary_path' => '/opt/homebrew/opt/mysql/bin', //replace with your path to mysql
             'use_single_transaction',
             'timeout' => 60 * 3,
             ],

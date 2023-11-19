@@ -37,12 +37,15 @@ aria-hidden="true">
                         $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
                         $('#error-alert').addClass('d-none');
-                        $('#index_' + indikatorId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.id === indikatorId;
+                        });
+                        row.remove().draw();
                         $('#deleteModal').modal('hide');
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Gagal menghapus indikator inovasi');
+                error: function(error) {
+                    $('#error-message').text(error.status + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
             });

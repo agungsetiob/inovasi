@@ -25,40 +25,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-urusan">
-                                    {{--@forelse ($urusans as $urusan)
-                                    <tr id="index_{{$urusan->id}}">
-                                        <td>{{ $loop->iteration }}.</td>
-                                        <td> {{$urusan->nama}} </td>
-                                        <td id="urusan">{{$urusan->klasifikasi->nama}} </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                                                data-toggle="modal" 
-                                                data-target="#deleteModal" 
-                                                data-urusan-id="{{ $urusan->id }}"
-                                                data-urusan-name="{{ $urusan->nama }}"><i class="fas fa-trash"></i></button>
-                                            <div class="dropdown mb-4 d-inline">
-                                                <button
-                                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                                    type="button"
-                                                    id="dropdownMenuButton"
-                                                    data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    data-urusan-id="{{$urusan->id}}"
-                                                    data-urusan-status="{{$urusan->status}}">
-                                                    {{$urusan->status}}
-                                                </button>
-                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                                    <button class="dropdown-item" data-action="toggle-status">change status</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <div class="alert alert-danger">
-                                        Data  is not available.
-                                    </div>
-                                    @endforelse--}}
+                                    <!-- load server side dataTable here -->
                                 </tbody>
                             </table>
                         </div>
@@ -85,7 +52,6 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-{{--<script src="{{asset('js/demo/datatables-demo.js')}}"></script>--}}
 @include('components.modal-add-sub-urusan')
 @include('components.modal-delete-urusan')
 <x-alert-modal/>
@@ -106,7 +72,6 @@
                     currentStatus: currentStatus
                 },
                 success: function (response) {
-                    //dataTable.ajax.reload();
                     $('#success-modal').modal('show');
                     $('#success-message').text(response.message);
                     // Update the button text and data attributes

@@ -39,7 +39,7 @@
         <nav class="navbar navbar-expand navbar-light bg-gradient-primary topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link rounded mr-3">
+          <button title="bars" id="sidebarToggleTop" class="btn btn-link rounded mr-3">
             <i class="fa fa-bars text-dark"></i>
           </button>
 
@@ -54,7 +54,7 @@
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down text-white mr-1"></i>
           <span class="mr-2 d-none d-lg-inline text-white small">{{Auth::user()->name}}</span>
           <img class="img-profile rounded-circle"
-          src="{{url('storage/ava/'.Auth::user()->avatar)}}">
+          src="{{url('storage/ava/'.Auth::user()->avatar)}}" alt="ava">
         </a>
         <!-- Dropdown - User Information -->
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

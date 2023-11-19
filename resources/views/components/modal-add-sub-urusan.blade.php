@@ -30,7 +30,6 @@
     </div>
 </div>
 <script>
-
     var dataTable = $('#dataTable').DataTable({
         ajax: {
             url: '/master/klasifikasi/detail',
@@ -79,6 +78,7 @@
         ],
         // other DataTable options...
     });
+    
     //action create post
     $('#store').click(function(e) {
         e.preventDefault();

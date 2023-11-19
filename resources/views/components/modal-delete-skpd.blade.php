@@ -1,9 +1,9 @@
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Apakah anda yakin?</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Apakah anda yakin?</h5>
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>
@@ -21,7 +21,7 @@ aria-hidden="true">
     $(document).ready(function() {
         var skpdId;
 
-        $(".delete-button").click(function() {
+        $(document).on("click",".delete-button",function() {
             skpdId = $(this).data("skpd-id");
             var skpdName = $(this).data("skpd-name");
             $("#skpd-name").text(skpdName);
@@ -36,7 +36,10 @@ aria-hidden="true">
                     if (response.success) {
                         $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#index_' + skpdId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.id === skpdId;
+                        });
+                        row.remove().draw();
                         $('#deleteModal').modal('hide');
                         setTimeout(function() {
                             $('#success-modal').modal('hide');

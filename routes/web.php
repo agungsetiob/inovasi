@@ -70,16 +70,19 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('master/skpd', SkpdController::class);
     Route::put('skpd/change-status/{id}', [SkpdController::class, 'changeStatus']);
+    Route::get('api/skpd', [SkpdController::class, 'loadSkpds']);
 
     Route::resource('master/urusan', UrusanController::class);
     Route::post('/toggle-status/urusan/{urusan}', [UrusanController::Class, 'toggleStatus']);
     Route::get('master/klasifikasi/detail', [UrusanController::Class, 'klasifikasi']);
 
     Route::resource('master/indikator', IndikatorController::class);
+    Route::get('api/indikator', [IndikatorController::class, 'loadIndikators']);
     Route::put('indikator/change-status/{id}', [IndikatorController::class, 'changeStatus']);
 
     Route::resource('master/bukti', BuktiController::class);
     Route::post('bukti/change-status/{id}', [BuktiController::class, 'changeStatus']);
+    Route::get('api/bukti', [BuktiController::class, 'loadBuktis']);
 
     Route::resource('master/klasifikasi', KlasifikasiController::class);
     Route::post('/toggle-status/klasifikasi/{klasifikasi}', [KlasifikasiController::Class, 'toggleStatus']);

@@ -41,7 +41,7 @@
                             <th>Skor</th>
                             <th width="7%">Tahapan</th>
                             <th width="4%">Bukti Dukung</th>
-                            <th width="13%"></th>
+                            <th width="28%"></th>
                         </tr>
                     </thead>
                     <tbody>

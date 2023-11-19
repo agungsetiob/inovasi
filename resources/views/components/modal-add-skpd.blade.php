@@ -41,37 +41,73 @@
                 //data skpd
                 $('#success-modal').modal('show');
                 $('#success-message').html(response.message + '<p class="text-success">' + response.data.nama + '</p>');
-
-                let skpd = `
-                <tr id="index_${response.data.id}">
-                <td>${response.data.id}.</td>
-                <td width="50%">${response.data.nama}</td>
-                <td>${response.data.created_at}</td>
-                <td>
-                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                        data-skpd-id="${response.data.id}"
-                        data-skpd-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
-                    <div class="dropdown mb-4 d-inline">
-                        <button
-                            class="btn btn-outline-primary dropdown-toggle btn-sm"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
+                var newData = {
+                    render: function (data, type, row, meta, klas) {
+                    return meta.row + 1 + '.';
+                    },
+                    id: response.data.id,
+                    nama: response.data.nama,
+                    status: response.data.status,
+                    created_at: response.data.created_at,
+                    buttons: `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" 
                             data-skpd-id="${response.data.id}"
-                            data-skpd-status="${response.data.status}">
-                            ${response.data.status}
+                            data-skpd-name="${response.data.nama}" 
+                            title="hapus">
+                            <i class="fas fa-trash"></i>
                         </button>
-                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" data-action="toggle-status">change status</button>
-                    </div>
-                    </div>
-                </td>
-                </tr>
-                `;                
-                //append to table
-                $('#tabel-skpd').prepend(skpd);
+                        <div class="dropdown mb-4 d-inline">
+                            <button
+                                class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton${response.data.id}"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-skpd-id="${response.data.id}"
+                                data-skpd-status="${response.data.status}">
+                                ${response.data.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `,
+                    
+                };
+
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
+
+                // let skpd = `
+                // <tr id="index_${response.data.id}">
+                // <td>${response.data.id}.</td>
+                // <td width="50%">${response.data.nama}</td>
+                // <td>${response.data.created_at}</td>
+                // <td>
+                //     <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                //         data-skpd-id="${response.data.id}"
+                //         data-skpd-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
+                //     <div class="dropdown mb-4 d-inline">
+                //         <button
+                //             class="btn btn-outline-primary dropdown-toggle btn-sm"
+                //             type="button"
+                //             id="dropdownMenuButton"
+                //             data-toggle="dropdown"
+                //             aria-haspopup="true"
+                //             aria-expanded="false"
+                //             data-skpd-id="${response.data.id}"
+                //             data-skpd-status="${response.data.status}">
+                //             ${response.data.status}
+                //         </button>
+                //     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                //         <button class="dropdown-item" data-action="toggle-status">change status</button>
+                //     </div>
+                //     </div>
+                // </td>
+                // </tr>
+                // `;                
+                // //append to table
+                // $('#tabel-skpd').prepend(skpd);
                 
                 //clear form
                 $('#nama').val('');

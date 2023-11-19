@@ -1,6 +1,6 @@
 <!-- Add Modal -->
 <div class="modal fade" id="addCategory" tabindex="-1" aria-labelledby="buktiLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="buktiLabel">Tambah Jenis Bukti inovasi</h5>
@@ -42,7 +42,7 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('select').selectize({
+        $('#indikator').selectize({
             sortField: 'text'
         });
     });
@@ -60,42 +60,75 @@
             data: formData,
             processData: false,
             success: function (response) {
-                // var reloadUrl = '/master/bukti/create';
-                
-                // // Reload the table
-                // $("#tabel-bukti").load(reloadUrl);
+                var newData = {
+                    render: function (data, type, row, meta, klas) {
+                    return meta.row + 1 + '.';
+                    },
+                    id: response.data.id,
+                    nama: response.data.nama,
+                    bobot: response.data.bobot,
+                    status: response.data.status,
+                    indikator: response.indikator,
+                    buttons: `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" 
+                            data-bukti-id="${response.data.id}"
+                            data-bukti-name="${response.data.nama}" 
+                            title="hapus">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button
+                                class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-bukti-id="${response.data.id}"
+                                data-bukti-status="${response.data.status}">
+                                ${response.data.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `,
+                    
+                };
 
-                let bukti = `
-                <tr id="index_${response.data.id}">
-                <td></td>
-                <td>${response.data.nama}</td>
-                <td>${response.data.bobot}</td>
-                <td>${response.indikator}</td>
-                <td>
-                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                    data-bukti-id="${response.data.id}"
-                    data-bukti-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
-                    <div class="dropdown mb-4 d-inline">
-                    <button
-                        class="btn btn-outline-primary dropdown-toggle btn-sm"
-                        type="button"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        data-bukti-id="${response.data.id}"
-                        data-bukti-status="${response.data.status}">
-                        ${response.data.status}
-                    </button>
-                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" data-action="toggle-status">change status</button>
-                    </div>
-                    </div>
-                </td>
-                </tr>
-                `;                
-                //append to table
-                $('#tabel-bukti').append(bukti);
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
+
+                // let bukti = `
+                // <tr id="index_${response.data.id}">
+                // <td></td>
+                // <td>${response.data.nama}</td>
+                // <td>${response.data.bobot}</td>
+                // <td>${response.indikator}</td>
+                // <td>
+                //     <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
+                //     data-bukti-id="${response.data.id}"
+                //     data-bukti-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
+                //     <div class="dropdown mb-4 d-inline">
+                //     <button
+                //         class="btn btn-outline-primary dropdown-toggle btn-sm"
+                //         type="button"
+                //         id="dropdownMenuButton"
+                //         data-toggle="dropdown"
+                //         aria-haspopup="true"
+                //         aria-expanded="false"
+                //         data-bukti-id="${response.data.id}"
+                //         data-bukti-status="${response.data.status}">
+                //         ${response.data.status}
+                //     </button>
+                //     <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                //         <button class="dropdown-item" data-action="toggle-status">change status</button>
+                //     </div>
+                //     </div>
+                // </td>
+                // </tr>
+                // `;                
+                // //append to table
+                // $('#tabel-bukti').append(bukti);
 
                 // Close modal and clear input fields
                 $('#addCategory').modal('hide');

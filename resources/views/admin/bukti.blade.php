@@ -21,48 +21,12 @@
                                         <th width="38%">Nama</th>
                                         <th width="5%">Bobot</th>
                                         <th width="37%">Indikator</th>
-                                        <th></th>
+                                        <th width="15%"></th>
                                     </tr>
                                 </thead>
-                                @fragment ('daftar-bukti')
                                 <tbody id="tabel-bukti">
-                                    @forelse ($buktis as $bukti)
-                                    <tr id="index_{{$bukti->id}}">
-                                        <td>{{ $loop->iteration }}.</td>
-                                        <td> {{$bukti->nama}} </td>
-                                        <td> {{$bukti->bobot}} </td>
-                                        <td> {{$bukti->indikator->nama}} </td>
-                                        <td>
-                                            <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                                            data-toggle="modal" 
-                                            data-target="#deleteModal" 
-                                            data-bukti-id="{{ $bukti->id }}"
-                                            data-bukti-name="{{ $bukti->nama }}"><i class="fas fa-trash"></i></button>
-                                            <div class="dropdown mb-4 d-inline">
-                                                <button
-                                                    class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                                    type="button"
-                                                    id="dropdownMenuButton"
-                                                    data-toggle="dropdown"
-                                                    aria-haspopup="true"
-                                                    aria-expanded="false"
-                                                    data-bukti-id="{{ $bukti->id }}"
-                                                    data-bukti-status="{{ $bukti->status }}">
-                                                    {{ $bukti->status }}
-                                                </button>
-                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                                    <button class="dropdown-item toggle-status-button" data-action="toggle-status">Change Status</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <div class="alert alert-danger">
-                                        Data  is not available.
-                                    </div>
-                                    @endforelse
+                                    <!-- load server side dataTable here cuy -->
                                 </tbody>
-                                @endfragment
                             </table>
                         </div>
                     </div>
@@ -89,16 +53,68 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @include ('components.modal-add-bukti')
 <x-alert-modal/>
 <x-logout/>
 @include ('components.modal-delete-bukti')
 <script type="text/javascript">
+    var dataTable = $('#dataTable').DataTable({
+        ajax: {
+            url: '/api/bukti',
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1 + '.';
+                }
+            },
+            { 
+                data: 'nama' 
+            },
+            { 
+                data: 'bobot' 
+            },
+            { 
+                data: 'indikator.nama' 
+            },
+            { 
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            data-bukti-id="${row.id}"
+                            data-bukti-name="${row.nama}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-bukti-id="${row.id}"
+                                data-bukti-status="${row.status}">
+                                ${row.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+        ],
+        // other DataTable options...
+    });
+
+
     $(document).ready(function() {
         //$(".toggle-status-button").click(function() 
-        $(".container-fluid").on("click", ".toggle-status-button", function(){
+        $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function(){
             var button = $(this);
             var buktiId = button.closest('.dropdown').find('.dropdown-toggle').data('bukti-id');
             var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('bukti-status');
@@ -121,8 +137,8 @@
                         }, 3900);
                     }
                 },
-                error: function(response) {
-                    $('#error-message').text('Sebuah error terjadi');
+                error: function(error) {
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
             });

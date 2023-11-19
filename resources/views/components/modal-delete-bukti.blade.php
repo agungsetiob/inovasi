@@ -36,7 +36,10 @@ aria-hidden="true">
                     if (response.success) {
                         $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
-                        $('#index_' + buktiId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.id === buktiId;
+                        });
+                        row.remove().draw();
                         $('#deleteModal').modal('hide');
                         setTimeout(function() {
                             $('#success-modal').modal('hide');

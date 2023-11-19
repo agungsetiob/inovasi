@@ -24,40 +24,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabel-indikator">
-                                    @forelse ($indikators as $in)
-                                    <tr id="index_{{$in->id}}">
-                                        <td>{{ $loop->iteration }}.</td>
-                                        <td> {{$in->nama}} </td>
-                                        <td> {{$in->jenis}} </td>
-                                        <td>
-                                            <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                                            data-toggle="modal" 
-                                            data-target="#deleteModal" 
-                                            data-indikator-id="{{ $in->id }}"
-                                            data-indikator-name="{{ $in->nama }}"><i class="fas fa-trash"></i></button>
-                                            <div class="dropdown mb-4 d-inline">
-                                                <button
-                                                class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                                type="button"
-                                                id="dropdownMenuButton"
-                                                data-toggle="dropdown"
-                                                aria-haspopup="true"
-                                                aria-expanded="false"
-                                                data-indikator-id="{{ $in->id }}"
-                                                data-indikator-status="{{ $in->status }}">
-                                                {{ $in->status }}
-                                                </button>
-                                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                                    <button class="dropdown-item toggle-status-button" data-action="toggle-status">Change Status</button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <div class="alert alert-danger">
-                                        Data  is not available.
-                                    </div>
-                                    @endforelse
+                                    <!-- load server side dataTable here -->
                                 </tbody>
                             </table>
                         </div>
@@ -117,41 +84,59 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+{{--<script src="{{asset('js/demo/datatables-demo.js')}}"></script>--}}
 <x-delete-master-indikator/>
 <x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(document).on("click",".toggle-status-button",function(){
-            var button = $(this);
-            var indikatorId = button.closest('.dropdown').find('.dropdown-toggle').data('indikator-id');
-            var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('indikator-status');
-
-            $.ajax({
-                url: '/indikator/change-status/' + indikatorId,
-                type: 'PUT',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                },
-                success: function(response) {
-                    if (response.success) {
-                        var newStatus = response.newStatus;
-                        button.closest('.dropdown').find('.dropdown-toggle').data('indikator-status', newStatus);
-                        button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
-                        $('#success-modal').modal('show');
-                        $('#success-message').text(response.message);
-                        setTimeout(function() {
-                            $('#success-modal').modal('hide');
-                        }, 3700);
-                    }
-                },
-                error: function(response) {
-                    $('#error-message').text('Error gagal merubah status');
-                    $('#error-modal').modal('show');
+    //load dataTable...
+    var dataTable = $('#dataTable').DataTable({
+        ajax: {
+            url: '/api/indikator',
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
                 }
-            });
-        });
+            },
+            { 
+                data: 'nama' 
+            },
+            { 
+                data: 'jenis' 
+            },
+            { 
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            data-indikator-id="${row.id}"
+                            data-indikator-name="${row.nama}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-indikator-id="${row.id}"
+                                data-indikator-status="${row.status}">
+                                ${row.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+        ],
+        // other DataTable options...
     });
 
     $('#store').click(function(e) {
@@ -177,36 +162,42 @@
                 $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
 
-                let indikator = `
-                <tr id="index_${response.data.id}">
-                <td>${response.data.id}</td>
-                <td width="65%">${response.data.nama}</td>
-                <td>${response.data.jenis}</td>
-                <td>
-                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                        data-indikator-id="${response.data.id}"
-                        data-indikator-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
-                    <div class="dropdown mb-4 d-inline">
-                        <button
-                            class="btn btn-outline-primary dropdown-toggle btn-sm"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
+                var newData = {
+                    render: function (data, type, row, meta, klas) {
+                    return meta.row + 1;
+                    },
+                    id: response.data.id,
+                    nama: response.data.nama,
+                    jenis: response.data.jenis,
+                    status: response.data.status,
+                    buttons: `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" 
                             data-indikator-id="${response.data.id}"
-                            data-indikator-status="${response.data.status}">
-                            ${response.data.status}
+                            data-indikator-name="${response.data.nama}" 
+                            title="hapus">
+                            <i class="fas fa-trash"></i>
                         </button>
-                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" data-action="toggle-status">change status</button>
-                    </div>
-                    </div>
-                </td>
-                </tr>
-                `;                
-                //append to table
-                $('#tabel-indikator').append(indikator);
+                        <div class="dropdown mb-4 d-inline">
+                            <button
+                                class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-indikator-id="${response.data.id}"
+                                data-indikator-status="${response.data.status}">
+                                ${response.data.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `,
+                    
+                };
+
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
                 
                 //clear form
                 $('#nama').val('');
@@ -228,6 +219,38 @@
                 }
 
             }
+        });
+    });
+
+    $(document).ready(function() {
+        $(document).on("click", ".dropdown-item[data-action='toggle-status']",function(){
+            var button = $(this);
+            var indikatorId = button.closest('.dropdown').find('.dropdown-toggle').data('indikator-id');
+            var currentStatus = button.closest('.dropdown').find('.dropdown-toggle').data('indikator-status');
+
+            $.ajax({
+                url: '/indikator/change-status/' + indikatorId,
+                type: 'PUT',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    if (response.success) {
+                        var newStatus = response.newStatus;
+                        button.closest('.dropdown').find('.dropdown-toggle').data('indikator-status', newStatus);
+                        button.closest('.dropdown').find('.dropdown-toggle').text(newStatus);
+                        $('#success-modal').modal('show');
+                        $('#success-message').html(response.message + '<p class="text-success">' + response.indikator + '</p>');
+                        setTimeout(function() {
+                            $('#success-modal').modal('hide');
+                        }, 3700);
+                    }
+                },
+                error: function(response) {
+                    $('#error-message').text('Error gagal merubah status');
+                    $('#error-modal').modal('show');
+                }
+            });
         });
     });
 </script>

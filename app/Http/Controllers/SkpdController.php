@@ -21,6 +21,18 @@ class SkpdController extends Controller
         }
     }
 
+    /*
+    * Load skpd data in json format
+    */
+    public function loadSkpds()
+    {
+        $skpds = Skpd::all();
+        return response()->json([
+            'success' => true,
+            'data' => $skpds
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -40,8 +52,6 @@ class SkpdController extends Controller
             'message' => 'Berhasil menyimpan data',
             'data' => $skpd
         ]);
-
-        //return redirect()->back()->with('success','Data added successfully');
     }
 
     /**
@@ -76,7 +86,8 @@ class SkpdController extends Controller
         return response()->json([
             'success' => true, 
             'newStatus' => $skpd->status,
-            'message' => 'Berhasil merubah status'
+            'message' => 'Berhasil merubah status',
+            'nama' => $skpd->nama
         ]);
     }
 }

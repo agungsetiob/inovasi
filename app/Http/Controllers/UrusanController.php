@@ -23,6 +23,9 @@ class UrusanController extends Controller
         }
     }
 
+    /*
+    * load klasifikasi data in json format
+    */
     public function klasifikasi()
     {
         $urusans = Urusan::with('klasifikasi')->get();

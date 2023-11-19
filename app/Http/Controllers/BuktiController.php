@@ -14,27 +14,26 @@ class BuktiController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->role == 'admin') {
-            $buktis = Bukti::all();
+        if (Auth::user()->role === 'admin') {
             $indikators = Indikator::where('status', 'active')->orderBy('jenis')->get();
-            return view ('admin.bukti', compact('buktis', 'indikators'));
+            return view ('admin.bukti', compact('indikators'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    /*
+    * load bukti data in json format
+    */
+    public function loadBuktis()
     {
-        // if (Auth::user()->role == 'admin') {
-        //     $buktis = Bukti::all();
-        //     $indikators = Indikator::where('status', 'active')->orderBy('jenis')->get();
-        //     return view ('admin.bukti', compact('buktis', 'indikators'))->fragment('daftar-bukti');
-        // } else {
-        //     return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
-        // }
+        if (Auth::user()->role === 'admin') {
+            $buktis = Bukti::with('indikator')->get();
+            return response()->json([
+                'success' => true,
+                'data' => $buktis
+            ]);
+        }
     }
 
     /**
@@ -54,7 +53,7 @@ class BuktiController extends Controller
         $bukti->indikator_id = $request->indikator;
         $bukti->status = 'active';
         $bukti->save();
-        $indikator = $bukti->indikator->nama;
+        $indikator = $bukti->indikator;
         return response()->json([
             'success' => true,
             'message' => 'Berhasil simpan jenis bukti',

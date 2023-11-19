@@ -39,7 +39,7 @@ aria-hidden="true">
                         var row = dataTable.row(function (idx, data, node) {
                             return data.id === urusanId;
                         });
-                        row.remove().draw(false);
+                        row.remove().draw();
                         $('#deleteModal').modal('hide');
                     }
                 },
