@@ -26,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($proposals as $proposal)
+                        @foreach ($proposals as $proposal)
                         <tr id="index_{{ $proposal->id }}">
                             <td> {{ $proposal->nama }} </td>
                             <td> {{ $proposal->skpd->nama }}</td>
@@ -35,15 +35,15 @@
                             <td>{{ $proposal->files->sum(function ($file) {return $file->bukti->bobot;}) }}</td>
                             <td>
                                 @switch($proposal->tahapan->nama)
-                                @case('ujicoba')
-                                <span class="badge bg-indigo">{{ $proposal->tahapan->nama }}</span>
-                                @break
-                                @case('penerapan')
-                                <span class="badge bg-green">{{ $proposal->tahapan->nama }}</span>
-                                @break
-                                @case('inisiatif')
-                                <span class="badge bg-orange">{{ $proposal->tahapan->nama }}</span>
-                                @break
+                                    @case('ujicoba')
+                                        <span class="badge bg-indigo">{{ $proposal->tahapan->nama }}</span>
+                                    @break
+                                    @case('penerapan')
+                                        <span class="badge bg-green">{{ $proposal->tahapan->nama }}</span>
+                                    @break
+                                    @case('inisiatif')
+                                        <span class="badge bg-orange">{{ $proposal->tahapan->nama }}</span>
+                                    @break
                                 @endswitch
                             </td>
                             <td> 
@@ -57,11 +57,7 @@
                                     data-proposal-name="{{$proposal->nama}}"
                                     class="btn btn-outline-warning btn-sm" title="kembalikan"><i class="fa-solid fa-ban"></i></button>
                                 </tr>
-                                @empty
-                                <div class="alert alert-danger">
-                                    Data is not available.
-                                </div>
-                                @endforelse
+                                @endforeach
                                 <div id="success-alert" class="alert alert-success alert-dismissible fade show d-none" role="alert">
                                     <span id="success-message"></span>
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

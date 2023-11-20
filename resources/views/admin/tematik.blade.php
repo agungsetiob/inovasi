@@ -24,40 +24,7 @@
                         </tr>
                     </thead>
                     <tbody id="tabel-tematik">
-                        @forelse ($tematiks as $tematik)
-                        <tr id="index_{{ $tematik->id }}">
-                            <td>{{ $loop->iteration }}.</td>
-                            <td> {{$tematik->nama}} </td>
-                            <td> {{$tematik->created_at}} </td>
-                            <td>
-                                <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                                    data-toggle="modal" 
-                                    data-target="#deleteModal" 
-                                    data-tematik-id="{{ $tematik->id }}"
-                                    data-tematik-name="{{ $tematik->nama }}"><i class="fas fa-trash"></i></button>
-                                <div class="dropdown mb-4 d-inline">
-                                        <button
-                                        class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                        type="button"
-                                        id="dropdownMenuButton"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                        data-tematik-id="{{$tematik->id}}"
-                                        data-tematik-status="{{$tematik->status}}">
-                                        {{$tematik->status}}
-                                        </button>
-                                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                        <button class="dropdown-item" data-action="toggle-status">change status</button>
-                                    </div>
-                                </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <div id="empty-tematik" class="alert alert-danger">
-                        Data  is not available.
-                    </div>
-                    @endforelse
+                        <!-- load server side dataTable here cuy -->
                 </tbody>
             </table>
         </div>
@@ -87,12 +54,62 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
+{{--<script src="{{asset('js/demo/datatables-demo.js')}}"></script>--}}
 @include ('components.modal-add-tematik')
 @include('components.modal-delete-tematik')
 <x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
+    var dataTable = $('#dataTable').DataTable({
+        ajax: {
+            url: '/api/tematik',
+            dataSrc: 'data',
+            processing: true,
+            serverSide: true,
+        },
+        columns: [
+            { 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1 + '.';
+                }
+            },
+            { 
+                data: 'nama' 
+            },
+            { 
+                data: 'created_at' 
+            },
+            { 
+                render: function (data, type, row) {
+                    return `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            data-tematik-id="${row.id}"
+                            data-tematik-name="${row.nama}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton${row.id}"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-tematik-id="${row.id}"
+                                data-tematik-status="${row.status}">
+                                ${row.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+        ],
+        // other DataTable options...
+    });
     $(document).ready(function () {
         $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function() {
             var button = $(this).closest('.dropdown').find('button.dropdown-toggle');
@@ -109,7 +126,7 @@
                 },
                 success: function (response) {
                     $('#success-modal').modal('show');
-                    $('#success-message').text(response.message);
+                    $('#success-message').html(response.message + '<p class="text-success">' + response.nama + '</p>');
                     // Update the button text and data attributes
                     var newStatus = response.newStatus;
                     button.text(newStatus);
@@ -119,7 +136,7 @@
                     }, 3900);
                 },
                 error: function (error) {
-                    $('#error-message').text('An error occurred.');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
             });

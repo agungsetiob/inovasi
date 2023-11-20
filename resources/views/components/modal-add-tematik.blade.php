@@ -12,7 +12,7 @@
                 <div class="form-group">
                     <label for="nama">nama tematik</label>
                     <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan tematik inovasi">
-                    <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-nama"></div>
+                    <p class="text-danger d-none" role="alert" id="alert-nama"></p>
                 </div>
                 <button id="store" type="button" class="btn btn-primary">Save</button>
             </div> 
@@ -41,39 +41,47 @@
             success:function(response){
                 //data tematik
                 $('#success-modal').modal('show');
-                $('#success-message').text(response.message);
+                $('#success-message').html('<p class="text-success">' + response.data.nama + '</p>' + response.message);
 
-                let tematik = `
-                <tr id="index_${response.data.id}">
-                <td>${response.data.id}</td>
-                <td>${response.data.nama}</td>
-                <td>${response.data.created_at}</td>
-                <td>
-                    <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" data-toggle="modal" data-target="#deleteModal"
-                        data-tematik-id="${response.data.id}"
-                        data-tematik-name="${response.data.nama}"><i class="fas fa-trash"></i></button>
-                    <div class="dropdown mb-4 d-inline">
-                        <button
-                            class="btn btn-outline-primary dropdown-toggle btn-sm"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
+                var newData = {
+                    render: function (data, type, row, meta, klas) {
+                    return meta.row + 1 + '.';
+                    },
+                    id: response.data.id,
+                    nama: response.data.nama,
+                    status: response.data.status,
+                    created_at: response.data.created_at,
+                    buttons: `
+                        <button type="button" class="btn btn-outline-danger btn-sm delete-button" 
                             data-tematik-id="${response.data.id}"
-                            data-tematik-status="${response.data.status}">
-                            ${response.data.status}
+                            data-tematik-name="${response.data.nama}" 
+                            title="hapus">
+                            <i class="fas fa-trash"></i>
                         </button>
-                    <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                        <button class="dropdown-item" data-action="toggle-status">change status</button>
-                    </div>
-                    </div>
-                </td>
-                </tr>
-                `;                
-                //append to table
-                $('#tabel-tematik').append(tematik);
-                $('#alert-nama').removeClass('show').addClass('d-none');
+                        <div class="dropdown mb-4 d-inline">
+                            <button
+                                class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton${response.data.id}"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-tematik-id="${response.data.id}"
+                                data-tematik-status="${response.data.status}">
+                                ${response.data.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `,
+                    
+                };
+
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
+
+                $('#alert-nama').removeClass('d-block').addClass('d-none');
+                $('#nama').removeClass('is-invalid');
                 
                 //clear form
                 $('#nama').val('');
@@ -87,11 +95,12 @@
                     //show alert
                     $('#alert-nama').removeClass('d-none');
                     $('#alert-nama').addClass('d-block');
+                    $('#nama').addClass('is-invalid');
 
                     //add message to alert
                     $('#alert-nama').html(error.responseJSON.nama[0]);
                 } else {
-                    $('#error-message').text('An error occurred.');
+                    $('#error-message').text(error.status + ' ' + error.responseJSON.message);
                     $('#error-modal').modal('show');
                 }
 

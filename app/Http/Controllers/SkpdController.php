@@ -14,8 +14,7 @@ class SkpdController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
-            $skpds = Skpd::all();
-            return view ('admin.skpd', compact('skpds'));
+            return view ('admin.skpd');
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

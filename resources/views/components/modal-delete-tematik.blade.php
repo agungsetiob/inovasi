@@ -36,7 +36,10 @@ aria-hidden="true">
                         $('#success-modal').modal('show');
                         $('#success-message').text(response.message);
                         $('#error-alert').addClass('d-none');
-                        $('#index_' + tematikId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.id === tematikId;
+                        });
+                        row.remove().draw();
                         $('#deleteModal').modal('hide');
                     }
                 },

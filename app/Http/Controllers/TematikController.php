@@ -15,19 +15,22 @@ class TematikController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            $tematiks = Tematik::all();
-            return view('admin.tematik', compact('tematiks'));
+            return view('admin.tematik');
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * load tematik in json format.
      */
-    public function create()
+    public function loadTematiks()
     {
-        //
+        $tematiks = Tematik::all();
+        return response()->json([
+            'success' => true,
+            'data' => $tematiks
+        ]);
     }
 
     /**
@@ -51,7 +54,7 @@ class TematikController extends Controller
         //return response
         return response()->json([
             'success' => true,
-            'message' => 'Data Berhasil Disimpan!',
+            'message' => 'Berhasil Disimpan!',
             'data'    => $tematik
         ]);
     }
@@ -67,31 +70,7 @@ class TematikController extends Controller
         $newStatus = ($currentStatus === 'active') ? 'inactive' : 'active';
         $tematik->update(['status' => $newStatus]);
 
-        return response()->json(['newStatus' => $newStatus, 'message' => 'Berhasil merubah status']);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tematik $tematik)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Tematik $tematik)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Tematik $tematik)
-    {
-        //
+        return response()->json(['newStatus' => $newStatus, 'message' => 'Berhasil merubah status', 'nama' => $tematik->nama]);
     }
 
     /**
@@ -105,11 +84,6 @@ class TematikController extends Controller
                 'success' => true,
                 'message' => 'Berhasil menghapus data',
             ]); 
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized to delete data'
-            ], 403);
         }
     }
 }

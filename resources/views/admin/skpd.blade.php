@@ -62,7 +62,9 @@
     var dataTable = $('#dataTable').DataTable({
         ajax: {
             url: '/api/skpd',
-            dataSrc: 'data'
+            dataSrc: 'data',
+            processing: true,
+            serverSide: true,
         },
         columns: [
             { 

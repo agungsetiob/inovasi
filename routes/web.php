@@ -48,10 +48,9 @@ Route::get('print/report/{id}', [ProposalController::class, 'proposalReport']);
 Route::middleware(['auth'])->group(function () {
 
     Route::resource('proyek/inovasi', ProposalController::class);
-    
     Route::get('data/inovasi', [ProposalController::class, 'database'])->name('database');
     Route::put('send/inovasi/{inovasi}', [ProposalController::class, 'sendProposal']);
-    Route::delete('/delete/inovasi/{inovasi}', [ProposalController::class, 'destroy']);
+    Route::get('api/inovasi', [ProposalController::class, 'loadProposals']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user.index');
@@ -89,6 +88,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('master/tematik', TematikController::class);
     Route::post('/toggle-status/tematik/{tematik}', [TematikController::Class, 'toggleStatus']);
+    Route::get('api/tematik', [TematikController::Class, 'loadTematiks']);
 
     Route::get('bukti-dukung/{id}', [FileController::class, 'index']);
     Route::post('upload/file', [FileController::class, 'store']);

@@ -16,6 +16,7 @@ use App\Models\Klasifikasi;
 use App\Models\Tahapan;
 use App\Models\Inisiator;
 use Barryvdh\DomPDF\Facade\PDF;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Auth;
@@ -28,8 +29,63 @@ class ProposalController extends Controller
      */
     public function index()
     {
+        // $proposals = Proposal::where('user_id', Auth::user()->id)->get();
+        // $results = [];
+
+        // foreach ($proposals as $proposal) {
+        //     $skor = $proposal->files->sum(function ($file) {
+        //         return $file->bukti->bobot;
+        //     });
+
+        //     $ujicoba = Carbon::parse($proposal->ujicoba)->format('d/m/Y');
+        //     $implementasi = Carbon::parse($proposal->implementasi)->format('d/m/Y');
+        //     $tahapan = $proposal->tahapan->nama;
+
+        //     $results[] = [
+        //         'proposal' => $proposal,
+        //         'skor' => $skor,
+        //         'ujicoba' => $ujicoba,
+        //         'implementasi' => $implementasi,
+        //         'tahapan' => $tahapan,
+        //     ];
+        // }
+
+        return view('inovasi.index');
+    }
+
+
+    /*
+    * load all proposal in json format
+    */
+    public function loadProposals()
+    {
         $proposals = Proposal::where('user_id', Auth::user()->id)->get();
-        return view('inovasi.index', compact( 'proposals'));
+        $results = [];
+
+        foreach ($proposals as $proposal) {
+            $skor = $proposal->files->sum(function ($file) {
+                return $file->bukti->bobot;
+            });
+
+            $ujicoba = Carbon::parse($proposal->ujicoba)->format('d/m/Y');
+            $implementasi = Carbon::parse($proposal->implementasi)->format('d/m/Y');
+            $tahapan = $proposal->tahapan->nama;
+            $skpd = $proposal->skpd->nama;
+
+            $results[] = [
+                'proposal' => $proposal,
+                'skor' => $skor,
+                'ujicoba' => $ujicoba,
+                'implementasi' => $implementasi,
+                'tahapan' => $tahapan,
+                'skpd' => $skpd
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $results
+        ]);
     }
 
     /**

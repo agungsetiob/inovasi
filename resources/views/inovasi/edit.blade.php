@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group">
                             <div class="row g-3">
-                                <div class="col">
+                                <div class="col-md-4">
                                     <label class="font-weight-bold" for="category">Jenis inovasi:</label>
                                     <select name="category" id="category" class="form-control @error('category') is-invalid @enderror" required>
                                         <option value="" disabled selected>Pilih jenis inovasi</option>
