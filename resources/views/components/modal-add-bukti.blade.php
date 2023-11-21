@@ -61,8 +61,8 @@
             processData: false,
             success: function (response) {
                 var newData = {
-                    render: function (data, type, row, meta, klas) {
-                    return meta.row + 1 + '.';
+                    render: function (data, type, row, meta) {
+                        return meta.row + 1 + '.';
                     },
                     id: response.data.id,
                     nama: response.data.nama,
