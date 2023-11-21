@@ -80,10 +80,10 @@
             data: formData,
             processData: false,
             success: function (response) {
+                var rowId = response.data.id;
+                var table = $('#dataTable').DataTable();
+                var rowIndex = table.row(`[id="${rowId}"]`).index();
                 var newData = {
-                    render: function (data, type, row, meta, klas) {
-                        return meta.row + 1 + '.';
-                    },
                     id: response.data.id,
                     nama: response.data.nama,
                     bobot: response.data.bobot,
@@ -122,21 +122,11 @@
                             </div>
                         </div>
                     `,
-                    rowId: function (row) {
-                         return 'index_' + row.id;
-                    },
                 };
 
-               var newRow = $('#dataTable').DataTable().row.add(newData).draw(false).node();
-               $('#index_' + bukti_id).remove();
+                table.row(rowId).data(newData).draw(false);
 
-                // Close modal and clear input fields
                 $('#updateModal').modal('hide');
-                $('#name').val('');
-                $('#skor').val('');
-                var indikatorSelectize = $('#indikator')[0].selectize;
-                indikatorSelectize.clear();
-
                 $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
                 setTimeout(function() {

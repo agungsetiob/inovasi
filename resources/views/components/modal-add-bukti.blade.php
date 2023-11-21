@@ -103,7 +103,7 @@
                         </div>
                     `,
                     rowId: function (row) {
-                         return 'index_' + row.id;
+                         return row.id;
                     },
                 };
 
