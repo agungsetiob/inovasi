@@ -66,12 +66,6 @@ class FileController extends Controller
         $proposal = Proposal::find($request->proposal_id);
 
         if ($proposal && $proposal->status === 'draft' && auth()->user()->id === $proposal->user_id) {
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $file->storeAs('public/docs', $file->hashName());
-                $fileData['file'] = $file->hashName();
-            }
-
             $fileData = [
                 'informasi' => addslashes($request->informasi),
                 'user_id' => auth()->user()->id,
@@ -80,6 +74,12 @@ class FileController extends Controller
                 'indikator_id' => $request->indikator_id,
             ];
 
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $file->storeAs('public/docs', $file->hashName());
+                $fileData['file'] = $file->hashName();
+            }
+
             $buktiDukung = File::create($fileData);
 
             return response()->json([
@@ -87,13 +87,9 @@ class FileController extends Controller
                 'message' => 'Data Berhasil Disimpan!',
                 'data' => $buktiDukung
             ]);
-        } else {
-            return response()->json([
-                'error' => 'Unauthorized action',
-                'success' => false
-            ]);
         }
     }
+
 
     /**
      * Store a newly created resource for spd in storage.
@@ -226,11 +222,6 @@ class FileController extends Controller
                 'message' => 'Data Berhasil Diupdate!',
                 'data' => $file,
             ]);
-        } else {
-            return response()->json([
-                'error' => 'Unauthorized to update this data', 
-                'success' => false
-            ]);
         }
     }
 
@@ -286,4 +277,46 @@ class FileController extends Controller
     {
         //
     }
+
+    // public function update(Request $request, File $file)
+    // {
+    //     if ($file->user_id === Auth::user()->id && $file->proposal->status === 'draft') {
+    //         $this->validate($request, [
+    //             'informasi' => 'required',
+    //             'bukti' => 'required',
+    //             'file' => 'nullable|mimes:pdf,png,jpg,jpeg|max:3072',
+    //         ]);
+
+    //         if ($request->hasFile('file')) {
+    //             // Check if the old file exists before deleting
+    //             if (Storage::exists('public/docs/' . $file->file)) {
+    //                 Storage::delete('public/docs/' . $file->file);
+    //             }
+
+    //             $newFile = $request->file('file');
+    //             $newFileName = $newFile->hashName();
+    //             $newFile->storeAs('public/docs', $newFileName);
+                
+    //             // Use update method for mass assignment
+    //             $file->update([
+    //                 'file' => $newFileName,
+    //                 'informasi' => $request->informasi,
+    //                 'bukti_id' => $request->bukti,
+    //             ]);
+    //         } else {
+    //             // If no new file, only update other attributes
+    //             $file->update([
+    //                 'informasi' => $request->informasi,
+    //                 'bukti_id' => $request->bukti,
+    //             ]);
+    //         }
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'message' => 'Data Berhasil Diupdate!',
+    //             'data' => $file,
+    //         ]);
+    //     }
+    // }
+
 }

@@ -76,7 +76,7 @@
                     
                 };
 
-                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw(false).node();
 
                 // let skpd = `
                 // <tr id="index_${response.data.id}">

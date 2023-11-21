@@ -21,14 +21,14 @@
                     <label for="informasi_edit">Deskripsi bukti</label>
                     <div class="form-group">
                         <input type="text" name="informasi" id="informasi_edit" class="form-control">
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-informasi-edit"></div>
+                        <p class="text-danger d-none" id="alert-informasi-edit"></p>
                     </div>
                     <label for="bukti_edit">Informasi</label>
                     <div class="form-group">
                         <select name="bukti" id="bukti_edit" class="select form-control selectized">
                             <option value="">Pilih bukti</option>
                         </select>
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-bukti-edit"></div>
+                        <p class="text-danger d-none" id="alert-bukti-edit"></p>
                     </div>
                     <label for="editFile">File bukti</label>
                     <div class="form-group">
@@ -38,9 +38,9 @@
                                     Browse<input accept=".png, .jpg, .jpeg, .pdf" id="editFile" type="file" style="display: none;" name="file">
                                 </span>
                             </label>
-                            <input id="newFile" type="text" class="form-control" readonly placeholder="Choose a file">
+                            <input id="file_edit" type="text" class="form-control" readonly placeholder="Choose a file">
                         </div> 
-                        <div class="alert alert-danger mt-2 d-none" role="alert" id="alert-file"></div> 
+                        <p class="text-danger d-none" id="alert-file-edit"></p> 
                     </div>
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <button id="upload" type="submit" class="btn btn-primary">Upload</button>
@@ -52,7 +52,7 @@
 </div>
 <script type="text/javascript">
     document.getElementById('editFile').onchange = function () {
-        document.getElementById('newFile').value = this.value;
+        document.getElementById('file_edit').value = this.value;
     }
 
     $('body').on('click', '.btn-edit', function () {
@@ -125,7 +125,7 @@
                 $('#informasi_edit').val('');
                 $('#bukti_edit').val('');
                 $('#editFile').val('');
-                $('#newFile').val('');
+                $('#file_edit').val('');
 
                 $('#success-modal').modal('show');
                 $('#success-message').text(response.message);
@@ -134,6 +134,9 @@
                 }, 3900);
                 $('#upload').removeClass('d-none');
                 $('#loading').addClass('d-none');
+
+                $('.text-danger').addClass('d-none').empty();
+                $('.is-invalid').removeClass('is-invalid');
             },
             error: function (error) {
                 if (error.status === 422) {
@@ -142,6 +145,11 @@
                     $.each(error.responseJSON.errors, function (field, errors) {
                         let alertId = 'alert-' + field + '-edit';
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
+                        $('#' + field).html(errors[0]).addClass('is-invalid');
+                        $('#' + field + '_edit').html(errors[0]).addClass('is-invalid');
+                        if (field === 'bukti') {
+                            $('.selectize-control').addClass('is-invalid');
+                        }
                     });
 
                 } else {
@@ -150,6 +158,7 @@
                     $('#upload').removeClass('d-none');
                     $('#loading').addClass('d-none');
                 }
+                console.log(error);
             }
         });
     });

@@ -317,10 +317,11 @@
 
   $(document).ready(function () {
     $('select').selectize({
-      sortField: 'text',
+      sortField: 'id',
       plugins: ['remove_button']
     });
   });
+  
   CKEDITOR.replace('rancang', {
     contentsCss: ["{{asset('vendor/ckeditor/plugins/wordcount/css/wordcount.css')}}"],
     extraPlugins: 'wordcount',

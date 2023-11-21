@@ -53,7 +53,6 @@
 <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
 <script src="{{asset('vendor/datatables/jquery.dataTables.js')}}"></script>
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-<script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 @include ('components.modal-add-skpd')
 <x-alert-modal/>
 @include ('components.modal-delete-skpd')

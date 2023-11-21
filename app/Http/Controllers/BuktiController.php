@@ -62,6 +62,43 @@ class BuktiController extends Controller
         ]);
     }
 
+    public function show(Bukti $bukti)
+    {
+        $bukti = Bukti::with('indikator')->get();
+        return response()->json([
+            'success' => true,
+            'data' => $bukti
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Bukti $bukti)
+    {
+        // Validate the request
+        $this->validate($request, [
+            'indikator' => 'required',
+            'nama' => 'required|unique:buktis,nama,' . $bukti->id,
+            'bobot' => 'required',
+        ]);
+
+        // Update the resource with the new data
+        $bukti->nama = $request->nama;
+        $bukti->bobot = $request->bobot;
+        $bukti->indikator_id = $request->indikator;
+        $bukti->save();
+
+        $indikator = $bukti->indikator;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil update jenis bukti',
+            'data' => $bukti,
+            'indikator' => $indikator,
+        ]);
+    }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -122,6 +122,9 @@
 
                 $('#upload').removeClass('d-none');
                 $('#loading').addClass('d-none');
+
+                $('.text-danger').addClass('d-none').empty();
+                $('.is-invalid').removeClass('is-invalid');
             },
             error: function (error) {
                 if (error.status === 422) { 
@@ -131,7 +134,9 @@
                         let alertId = 'alert-' + field;
                         $('#' + alertId).html(errors[0]).removeClass('d-none').addClass('d-block');
                         $('#' + field).html(errors[0]).addClass('is-invalid');
-                        $('.selectize-control').addClass('is-invalid');
+                        if (field === 'bukti') {
+                            $('.selectize-control').addClass('is-invalid');
+                        }
                     });
                 } else {
                     $('#error-message').text(error.status + ' ' + error.responseJSON.message);

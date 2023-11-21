@@ -55,6 +55,7 @@
 <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js" integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @include ('components.modal-add-bukti')
+@include ('components.modal-edit-bukti')
 <x-alert-modal/>
 <x-logout/>
 @include ('components.modal-delete-bukti')
@@ -82,6 +83,15 @@
             { 
                 render: function (data, type, row) {
                     return `
+                        <button type="button" class="btn btn-outline-success btn-sm edit-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#updateModal" 
+                            data-bukti-id="${row.id}"
+                            data-indikator-id="${row.indikator.id}"
+                            data-bukti-name="${row.nama}"
+                            data-bobot="${row.bobot}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
                         <button type="button" class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
                             data-toggle="modal" 
                             data-target="#deleteModal" 
@@ -109,6 +119,9 @@
             },
         ],
         // other DataTable options...
+        rowId: function (row) {
+             return 'index_' + row.id;
+        },
     });
 
 

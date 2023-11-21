@@ -39,7 +39,7 @@ aria-hidden="true">
                         var row = dataTable.row(function (idx, data, node) {
                             return data.id === skpdId;
                         });
-                        row.remove().draw();
+                        row.remove().draw(false);
                         $('#deleteModal').modal('hide');
                         setTimeout(function() {
                             $('#success-modal').modal('hide');

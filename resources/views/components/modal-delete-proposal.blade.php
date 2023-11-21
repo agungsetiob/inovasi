@@ -41,7 +41,10 @@ aria-hidden="true">
                         $('#success-alert').removeClass('d-none').addClass('show');
                         $('#success-message').text('Berhasil menghapus proposal');
                         $('#error-alert').addClass('d-none');
-                        $('#index_' + proposalId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.proposal.id === proposalId;
+                        });
+                        row.remove().draw(false);
                         $('#deleteModal').modal('hide');
                         setTimeout(function() {
                             $('#success-alert').addClass('d-none').removeClass('show');

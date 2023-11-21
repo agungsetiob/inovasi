@@ -160,7 +160,7 @@ class ProposalController extends Controller
             'hasil' => 'required',
             'ujicoba' => 'required',
             'implementasi' => 'required',
-            'anggaran' => 'mimes:pdf|max:1024',
+            'anggaran' => 'mimes:pdf|max:1536',
             'bentuk' => 'required',
             'category' => 'required',
             'urusans' => 'required',
@@ -206,9 +206,10 @@ class ProposalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Proposal $proposal)
+    public function show(Proposal $inovasi)
     {
-        //
+        $files = $inovasi->files()->get();
+        dd($files);
     }
 
     /**
