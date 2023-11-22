@@ -155,7 +155,7 @@ class ProposalController extends Controller
     {
         $this->validate($request, [
             'profil'     => 'mimes:pdf|max:1536',
-            'nama'     => 'required',
+            'nama'     => 'required|unique:proposals',
             'tahapan'   => 'required',
             'inisiator'      => 'required',
             'rancang_bangun' => 'required',
