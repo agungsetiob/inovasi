@@ -20,7 +20,7 @@ use Barryvdh\DomPDF\Facade\PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Auth;
+use illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class ProposalController extends Controller
@@ -60,32 +60,28 @@ class ProposalController extends Controller
     */
     public function loadProposals()
     {
-        $proposals = Proposal::where('user_id', Auth::user()->id)->get();
-        $results = [];
+        $proposals = Proposal::with(['files', 'tahapan', 'category'])
+            ->where('user_id', Auth::user()->id)
+            ->get();
 
-        foreach ($proposals as $proposal) {
+        $results = $proposals->map(function ($proposal) {
             $skor = $proposal->files->sum(function ($file) {
                 return $file->bukti->bobot;
             });
 
-            $ujicoba = Carbon::parse($proposal->ujicoba)->format('d/m/Y');
-            $implementasi = Carbon::parse($proposal->implementasi)->format('d/m/Y');
-            $tahapan = $proposal->tahapan->nama;
-            $skpd = $proposal->skpd->nama;
-
-            $results[] = [
+            return [
                 'proposal' => $proposal,
                 'skor' => $skor,
-                'ujicoba' => $ujicoba,
-                'implementasi' => $implementasi,
-                'tahapan' => $tahapan,
-                'skpd' => $skpd
+                'ujicoba' => optional(Carbon::parse($proposal->ujicoba))->format('d/m/Y'),
+                'implementasi' => optional(Carbon::parse($proposal->implementasi))->format('d/m/Y'),
+                'tahapan' => optional($proposal->tahapan)->nama,
+                'category' => optional($proposal->category)->name,
             ];
-        }
+        });
 
         return response()->json([
             'success' => true,
-            'data' => $results
+            'data' => $results,
         ]);
     }
 
@@ -97,8 +93,7 @@ class ProposalController extends Controller
     {
         if (Auth::user()->role == 'admin') {
             $backgrounds = Background::all();
-            $proposals = Proposal::where('status', 'sent')->get();
-            return view ('inovasi.database', compact( 'proposals', 'backgrounds'));
+            return view ('inovasi.database', compact('backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'wong kongene kok dibandingke']);
         }
@@ -109,34 +104,72 @@ class ProposalController extends Controller
     */
     public function sentProposals()
     {
-        $proposals = Proposal::where('status', 'sent')->get();
-        $results = [];
+        $user = Auth::user();
 
-        foreach ($proposals as $proposal) {
-            $skor = $proposal->files->sum(function ($file) {
-                return $file->bukti->bobot;
+        if ($user->role == 'admin') {
+            $proposals = Proposal::with(['files', 'tahapan', 'skpd'])
+                ->where('status', 'sent')
+                ->get();
+
+            $results = $proposals->map(function ($proposal) {
+                $skor = $proposal->files->sum(function ($file) {
+                    return $file->bukti->bobot;
+                });
+
+                return [
+                    'proposal' => $proposal,
+                    'skor' => $skor,
+                    'ujicoba' => Carbon::parse($proposal->ujicoba)->format('d/m/Y'),
+                    'implementasi' => Carbon::parse($proposal->implementasi)->format('d/m/Y'),
+                    'tahapan' => $proposal->tahapan->nama,
+                    'skpd' => $proposal->skpd->nama,
+                ];
             });
 
-            $ujicoba = Carbon::parse($proposal->ujicoba)->format('d/m/Y');
-            $implementasi = Carbon::parse($proposal->implementasi)->format('d/m/Y');
-            $tahapan = $proposal->tahapan->nama;
-            $skpd = $proposal->skpd->nama;
-
-            $results[] = [
-                'proposal' => $proposal,
-                'skor' => $skor,
-                'ujicoba' => $ujicoba,
-                'implementasi' => $implementasi,
-                'tahapan' => $tahapan,
-                'skpd' => $skpd
-            ];
+            return response()->json(['success' => true, 'data' => $results]);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $results
-        ]);
+        return false;
     }
+
+
+    /*
+    * load all sent proposal in json format
+    */
+    // public function sentProposals()
+    // {
+    //     if (Auth::user()->role == 'admin') {
+    //         $proposals = Proposal::where('status', 'sent')->get();
+    //         $results = [];
+
+    //         foreach ($proposals as $proposal) {
+    //             $skor = $proposal->files->sum(function ($file) {
+    //                 return $file->bukti->bobot;
+    //             });
+
+    //             $ujicoba = Carbon::parse($proposal->ujicoba)->format('d/m/Y');
+    //             $implementasi = Carbon::parse($proposal->implementasi)->format('d/m/Y');
+    //             $tahapan = $proposal->tahapan->nama;
+    //             $skpd = $proposal->skpd->nama;
+
+    //             $results[] = [
+    //                 'proposal' => $proposal,
+    //                 'skor' => $skor,
+    //                 'ujicoba' => $ujicoba,
+    //                 'implementasi' => $implementasi,
+    //                 'tahapan' => $tahapan,
+    //                 'skpd' => $skpd
+    //             ];
+    //         }
+
+    //         return response()->json([
+    //             'success' => true,
+    //             'data' => $results
+    //         ]);
+    //     } else{
+    //         return false;
+    //     }
+    // }
 
 
 

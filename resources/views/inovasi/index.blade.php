@@ -35,7 +35,7 @@
                             <thead>
                                 <tr>
                                     <th width="30%">Nama Inovasi</th>
-                                    <th width="20%">SKPD</th>
+                                    <th width="20%">Jenis</th>
                                     <th>Uji Coba</th>
                                     <th>Implementasi</th>
                                     <th>Skor</th>
@@ -98,7 +98,19 @@
                     data: response.data,
                     columns: [
                         { data: 'proposal.nama' },
-                        { data: 'skpd' },
+                        { 
+                            data: 'category',
+                            render: function (data, type, row) {
+                                var badgeCategory = '';
+                                if (data == 'Digital') {
+                                    badgeCategory = 'bg-gradient-warning';
+                                } else if (data == 'Non Digital') {
+                                    badgeCategory = 'bg-gradient-dark';
+                                }
+
+                                return '<span class="badge ' + badgeCategory + '">' + data + '</span>';
+                            }
+                        },
                         { data: 'ujicoba' },
                         { data: 'implementasi' },
                         { data: 'skor' },
@@ -154,65 +166,6 @@
             }
         });
     });
-
-    // var dataTable = $('#dataTable').DataTable({
-    //     ajax: {
-    //         url: '/api/inovasi',
-    //         dataSrc: 'data',
-    //         processing: true,
-    //         serverSide: true,
-    //     },
-    //     columns: [
-    //         { data: 'proposal.nama' },
-    //         { data: 'skpd' },
-    //         { data: 'ujicoba' },
-    //         { data: 'implementasi' },
-    //         { data: 'skor' },
-    //         { 
-    //             data: 'tahapan',
-    //             render: function (data, type, row) {
-    //                 // Apply badge styling based on the value of tahapan
-    //                 var badgeClass = '';
-    //                 if (data == 'ujicoba') {
-    //                     badgeClass = 'bg-indigo';
-    //                 } else if (data == 'penerapan') {
-    //                     badgeClass = 'bg-green';
-    //                 } else if (data == 'inisiatif') {
-    //                     badgeClass = 'bg-orange';
-    //                 }
-
-    //                 return '<span class="badge ' + badgeClass + '">' + data + '</span>';
-    //             }
-    //         },
-    //         { 
-    //             data: 'proposal.id',
-    //             render: function (data, type, row) {
-    //                 // Create a link for "Bukti Dukung" based on the proposal id
-    //                 return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>';
-    //             }
-    //         },
-    //         { 
-    //             data: 'proposal.id',
-    //             render: function (data, type, row) {
-    //                 // Create links for "Cetak", "Hapus", "Edit", and "Kirim" based on the proposal id and status
-    //                 var buttonsHtml = '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
-
-    //                 // Check if the status is 'draft' to display additional buttons
-    //                 if (row.proposal.status === 'draft') {
-    //                     buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
-    //                     buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
-    //                 }
-
-    //                 if (row.skor > 0) {
-    //                     buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
-    //                 }
-
-    //                 return buttonsHtml;
-    //             }
-    //         },
-    //         ],
-    //     // other DataTable options...
-    // });
 </script>
 @include ('components.modal-send-proposal')
 @include ('components.modal-delete-proposal')

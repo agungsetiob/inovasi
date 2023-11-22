@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('data/inovasi', [ProposalController::class, 'database'])->name('database');
     Route::put('send/inovasi/{inovasi}', [ProposalController::class, 'sendProposal']);
     Route::get('api/inovasi', [ProposalController::class, 'loadProposals']);
+    Route::get('api/database/inovasi', [ProposalController::class, 'sentProposals']);
 
     Route::resource('/admin', \App\Http\Controllers\AdminController::class);
     Route::get('/user', [\App\Http\Controllers\AdminController::class, 'user'])->name('user.index');

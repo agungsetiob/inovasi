@@ -20,9 +20,8 @@ aria-hidden="true">
     $(document).ready(function() {
         var proposalId;
 
-        $("button[id^='send-proposal-']").click(function() {
-            var buttonId = $(this).attr("id");
-            proposalId = buttonId.replace("send-proposal-", "");
+        $(document).on("click",".return-proposal",function() {
+            proposalId = $(this).data("proposal-id");
             var proposalName = $(this).data("proposal-name");
             $("#proposal-name-modal").text(proposalName);
         });
@@ -40,7 +39,10 @@ aria-hidden="true">
                         $('#success-alert').removeClass('d-none').addClass('show');
                         $('#success-message').text('Berhasil mengembalikan proposal');
                         $('#error-alert').addClass('d-none');
-                        $('#index_' + proposalId).remove();
+                        var row = dataTable.row(function (idx, data, node) {
+                            return data.proposal.id === proposalId;
+                        });
+                        row.remove().draw(false);
                         $('#sendModal').modal('hide');
                     }
                 },
