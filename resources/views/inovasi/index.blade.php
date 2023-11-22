@@ -135,7 +135,9 @@
                                 if (row.proposal.status === 'draft') {
                                     buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
                                     buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
-                                    buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
+                                    if (row.skor > 0){
+                                        buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
+                                    }
                                 }
 
                                 return buttonsHtml;
