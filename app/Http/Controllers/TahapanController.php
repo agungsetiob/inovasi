@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Tahapan;
 use Illuminate\Http\Request;
 use Auth;
@@ -14,8 +15,9 @@ class TahapanController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $tahapans = Tahapan::all();
-            return view ('admin.tahapan', compact('tahapans'));
+            return view ('admin.tahapan', compact('tahapans', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

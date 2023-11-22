@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bentuk;
+use App\Models\Background;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Auth;
@@ -15,8 +16,9 @@ class BentukController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $bentuks = Bentuk::all();
-            return view ('admin.bentuk', compact('bentuks'));
+            return view ('admin.bentuk', compact('bentuks', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

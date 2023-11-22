@@ -35,42 +35,49 @@
 	    position: relative;
 	}
 </style>
-		<div class="container-fluid py-5">
-			<header class="text-white text-center">
-		        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Picture_icon_BLACK.svg" alt="" width="150" class="mb-4">
-		    </header>
-		    <div class="row py-4">
-		        <div class="col-lg-6 mx-auto">
-		        	<form action="carousel/upload" method="POST" enctype="multipart/form-data">
-		        		@csrf
-			            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
-			                <input id="upload" accept=".jpg,.png,.jpeg" name="image" type="file" onchange="readURL(this);" class="form-control border-0">
-			                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
-			                <div class="input-group-append">
-			                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
-			                </div>
-			            </div>
-			            <div class="image-area mt-4">
-			            	<img id="imageResult" src="#" alt="" class="img-fluid w-50 rounded shadow-sm mx-auto d-block">
-			            </div>
-			            <button type="submit" class="btn btn-primary mt-3 w-100">Upload carousel image</button>
-			        </form>
-		        </div>
-		    </div>
-		    <div class="row">
-		        @foreach ($carousels as $carousel)
-		        <div id="index_{{$carousel->id}}" class="col-lg-4 mb-3">
-		        	<div class="image-thumbnail overflow-hidden" style="max-height: 300px;">
-		        		<img src="{{url('storage/carousels/' . $carousel->image)}}" class="img-fluid w-100" alt="carousel">
+	<div class="container-fluid py-5">
+		<header class="text-center">
+	        <i class="fa-solid fa-panorama fa-9x"></i>
+	    </header>
+	    <div class="row py-4">
+	        <div class="col-lg-6 mx-auto">
+	        	<form action="background" method="POST" enctype="multipart/form-data">
+	        		@csrf
+		            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+		                <input id="upload" accept=".jpg,.png,.jpeg,.svg" name="background" type="file" onchange="readURL(this);" class="form-control border-0">
+		                <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose image</label>
+		                <div class="input-group-append">
+		                    <label for="upload" class="btn btn-light m-0 rounded-pill px-4"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose image</small></label>
+		                </div>
+		            </div>
+		            <div class="image-area mt-4">
+		            	<img id="imageResult" src="#" alt="" class="img-fluid w-50 rounded shadow-sm mx-auto d-block">
+		            </div>
+		            <div id="upload-button">
+			            @if ($dataExist)
+			            	<p id="text-warning" class="text-warning text-center font-weight-bold">hapus background lama sebelum ganti yang baru</p>
+			            @else
+			            	<button type="submit" class="btn btn-primary mt-3 w-100">Upload background image</button>
+			            @endif
+		            </div>
+		        </form>
+	        </div>
+	    </div>
+	    @foreach ($backgrounds as $background)
+	    <div class="card shadow">
+	    	<div class="card-body">
+		        <div id="index_{{$background->id}}" class="col-lg-12 mb-3">
+		        	<div class="image-thumbnail overflow-hidden" style="max-height: 500px;">
+		        		<img src="{{url('storage/backgrounds/' . $background->background)}}" class="img-fluid w-100" alt="background">
 		        	</div>
-		        	<button class="btn btn-outline-danger w-100 mt-2 delete-button" data-id="{{$carousel->id}}">Hapus</button>
+		        	<button class="btn btn-outline-danger w-100 mt-2 delete-button" data-id="{{$background->id}}">Hapus</button>
 		        </div>
-		        @endforeach
-		    </div>
-		</div>
+	        </div>
+	    </div>
+	    @endforeach
 	</div>
-	<x-footer/>
 </div>
+<x-footer/>
 </div>
 <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -92,7 +99,7 @@ aria-hidden="true">
         <div id="error-alert" class="modal-body d-none"><span id="error-message" class="text-danger"></span></div>
         <div class="modal-footer">
             <button class="btn btn-outline-secondary" type="button" data-dismiss="modal"><i class="fa-solid fa-ban"></i> Cancel</button>
-            <button id="delete-carousel" class="btn btn-outline-danger" title="kirim"><i class="fa-solid fa-trash"></i> Hapus</button>
+            <button id="delete-background" class="btn btn-outline-danger" title="kirim"><i class="fa-solid fa-trash"></i> Hapus</button>
         </div>
     </div>
 </div>
@@ -106,9 +113,9 @@ aria-hidden="true">
             $('#deleteModal').modal('show');
         });
 
-        $("#delete-carousel").click(function() {
+        $("#delete-background").click(function() {
             $.ajax({
-                url: '/carousel/' + id,
+                url: '/background/' + id,
                 type: 'DELETE',
                 headers: { 
                 	'X-CSRF-TOKEN': "{{ csrf_token() }}" 
@@ -122,8 +129,14 @@ aria-hidden="true">
                             $('#deleteModal').modal('hide');
                         }, 3700);
                     }
+                    $('#text-warning').addClass('d-none');
+                    let uploadButton = `
+                    <button type="submit" class="btn btn-primary mt-3 w-100">Upload background image</button>
+
+                    `
+                    $('#upload-button').append(uploadButton);
                 },
-                error: function(response) {
+                error: function(error) {
                     $('#error-message').text('Gagal menghapus gambar');
                     $('#error-alert').removeClass('d-none');
                     console.error(error);

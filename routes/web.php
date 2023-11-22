@@ -14,7 +14,8 @@ use App\Http\Controllers\{
     TematikController,
     TahapanController,
     CarouselController,
-    SettingController
+    SettingController,
+    BackgroundController
 };
 use App\Http\Controllers\BentukController;
 use App\Http\Controllers\InisiatorController;
@@ -121,6 +122,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('setting/create', [SettingController::class, 'store']);
     Route::get('setting/show/{setting}', [SettingController::class, 'show']);
     Route::put('setting/update/{setting}', [SettingController::class, 'update']);
+
+    Route::resource('background', BackgroundController::class);
 
 
 });

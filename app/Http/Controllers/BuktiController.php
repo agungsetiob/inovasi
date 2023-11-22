@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bukti;
+use App\Models\Background;
 use App\Models\Indikator;
 use Illuminate\Http\Request;
 use Auth;
@@ -15,8 +16,9 @@ class BuktiController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
+            $backgrounds = Background::all();
             $indikators = Indikator::where('status', 'active')->orderBy('jenis')->get();
-            return view ('admin.bukti', compact('indikators'));
+            return view ('admin.bukti', compact('indikators', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Background;
 use App\Models\File;
 use App\Models\Proposal;
 use App\Models\Bukti;
@@ -20,6 +21,7 @@ class FileController extends Controller
      */
     public function index($id)
     {
+        $backgrounds = Background::all();
         $proposalId = $id;
         $proposal = Proposal::findOrFail($id);
         $buktis = Bukti::where('status', 'active')->get();
@@ -37,6 +39,7 @@ class FileController extends Controller
             'indikators', 
             'totalBobot', 
             'proposalId',
+            'backgrounds'
         ));
     }
 

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Artisan;
 use Log;
 use Session;
+use App\Models\Background;
 use Illuminate\Support\Facades\Storage;
 
 class BackupController extends Controller{
     public function index(){
+        $backgrounds = Background::all();
         $disk = Storage::disk(config('laravel-backup.backup.destination.disks'));
         $files = $disk->files('/public/serasi/');
         $backups = [];
@@ -25,7 +27,7 @@ class BackupController extends Controller{
            }
         }
         $backups = array_reverse($backups);
-        return view("admin.backups")->with(compact('backups'));
+        return view("admin.backups")->with(compact('backups', 'backgrounds'));
     }
 
     public static function humanFileSize($size,$unit="") {

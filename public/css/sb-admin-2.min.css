@@ -99,6 +99,21 @@
     font-size: 24px;
 }
 
+.background-is {
+  background: url(../img/is.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.background-uchu {
+  background: url(../img/uchu.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .cke_wordcount {display:block;float:right;margin-top:-2px;margin-right:3px;color:black;}
 .cke_wordcount_rtl {float:left;}
 .cke_wordcountLimitReached {color:red! important}

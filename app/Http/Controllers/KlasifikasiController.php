@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Klasifikasi;
 use App\Models\Urusan;
 use Illuminate\Http\Request;
@@ -16,8 +17,9 @@ class KlasifikasiController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $klasifikasis = Klasifikasi::all();
-            return view ('admin.klasifikasi-urusan', compact('klasifikasis'));
+            return view ('admin.klasifikasi-urusan', compact('klasifikasis', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

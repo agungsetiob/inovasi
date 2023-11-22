@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Indikator;
 use Illuminate\Http\Request;
 use Auth;
@@ -14,7 +15,8 @@ class IndikatorController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            return view ('admin.indikator');
+            $backgrounds = Background::all();
+            return view ('admin.indikator', compact('backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

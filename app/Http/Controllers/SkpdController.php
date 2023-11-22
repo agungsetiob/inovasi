@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Skpd;
 use Illuminate\Http\Request;
 use Auth;
@@ -14,7 +15,8 @@ class SkpdController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
-            return view ('admin.skpd');
+            $backgrounds = Background::all();
+            return view ('admin.skpd', compact('backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

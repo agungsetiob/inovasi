@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Models\Background;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,11 +16,13 @@ class SettingController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $settings = Setting::all();
             $dataExist = $settings->count() > 0;
             return view('setting.setting', compact(
                 'settings',
                 'dataExist',
+                'backgrounds'
             ));
         } else {
             return view('cukrukuk');

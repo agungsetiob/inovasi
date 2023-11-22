@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Auth;
@@ -16,8 +17,9 @@ class CategoryController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $categories = Category::all();
-            return view ('admin.category', compact('categories'));
+            return view ('admin.category', compact('categories', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

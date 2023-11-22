@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Models\Background;
+use App\Models\User;
 use App\Models\Carousel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -10,8 +13,13 @@ class CarouselController extends Controller
 {
     public function index()
     {
-        $carousels = Carousel::all();
-        return view ('setting.carousel', compact('carousels'));
+        if (Auth::user()->role === 'admin'){
+            $backgrounds = Background::all();
+            $carousels = Carousel::all();
+            return view ('setting.carousel', compact('carousels', 'backgrounds'));
+        } else{
+            return ('cukrukuk');
+        }
     }
 
     public function store(Request $request)

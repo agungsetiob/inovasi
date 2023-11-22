@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Proposal;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -49,8 +50,8 @@ class ProposalController extends Controller
         //         'tahapan' => $tahapan,
         //     ];
         // }
-
-        return view('inovasi.index');
+        $backgrounds = Background::all();
+        return view('inovasi.index', compact('backgrounds'));
     }
 
 
@@ -95,8 +96,9 @@ class ProposalController extends Controller
     public function database()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $proposals = Proposal::where('status', 'sent')->get();
-            return view ('inovasi.database', compact( 'proposals'));
+            return view ('inovasi.database', compact( 'proposals', 'backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'wong kongene kok dibandingke']);
         }
@@ -109,6 +111,7 @@ class ProposalController extends Controller
      */
     public function create()
     {
+        $backgrounds = Background::all();
         $categories = Category::where('status', 'active')->get();
         $skpds = Skpd::where('status', 'active')->get();
         $bentuks = Bentuk::where('status', 'active')->get();
@@ -140,7 +143,8 @@ class ProposalController extends Controller
             'options',
             'indikators',
             'tahapans',
-            'inisiators'
+            'inisiators',
+            'backgrounds'
         ));
     }
 
@@ -217,6 +221,7 @@ class ProposalController extends Controller
      */
     public function edit(Proposal $inovasi)
     {
+        $backgrounds = Background::all();
         $categories = Category::where('status', 'active')->get();
         $skpds = Skpd::where('status', 'active')->get();
         $bentuks = Bentuk::where('status', 'active')->get();
@@ -249,7 +254,8 @@ class ProposalController extends Controller
                 'options',
                 'selectedUrusans',
                 'tahapans',
-                'inisiators'
+                'inisiators',
+                'backgrounds'
             ));
         } else{
             return redirect()->back()->with('error', 'kebaikan akan menghasilkan kebaikan');

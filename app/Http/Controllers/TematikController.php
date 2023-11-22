@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Tematik;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -15,7 +16,8 @@ class TematikController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
-            return view('admin.tematik');
+            $backgrounds = Background::all();
+            return view('admin.tematik', compact('backgrounds'));
         } else {
             return redirect()->back()->with(['error' => 'Where there is a will there is a way']);
         }

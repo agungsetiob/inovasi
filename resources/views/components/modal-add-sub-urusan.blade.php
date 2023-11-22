@@ -41,7 +41,6 @@
         
         //ajax
         $.ajax({
-
             url: `/master/urusan`,
             type: "POST",
             cache: false,

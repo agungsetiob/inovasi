@@ -33,7 +33,7 @@
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
-      <div id="content">
+      <div id="content" @foreach ($backgrounds as $background) style="background: url('{{url("storage/backgrounds/" . $background->background)}}'); background-position: center; background-repeat: no-repeat; background-size: cover;" @endforeach>
 
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-gradient-primary topbar mb-4 static-top shadow">

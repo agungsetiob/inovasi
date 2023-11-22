@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Contact;
@@ -19,8 +20,9 @@ class ContactController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $messages = Contact::all();
-            return view('admin.message', compact('messages'));
+            return view('admin.message', compact('messages', 'backgrounds'));
         }else{
             return back()->with('error', 'Aku pasrahkan hidupku padamu Tuhan');
         }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proposal;
 use Illuminate\Http\Request;
-
+use App\Models\Background;
 use App\Models\{Category, Contact, Bentuk, Skpd};
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +20,7 @@ class AdminController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $totalProposals = Proposal::all()->count();
             $totalSkpds = Skpd::all()->count();
             $chartBentuk = Proposal::select(DB::raw('bentuk_id, count(id) as total'))
@@ -50,6 +51,7 @@ class AdminController extends Controller
                     'chartJenis',
                     'labelJenis',
                     'totalSkpds',
+                    'backgrounds'
                 ));
         } else {
             return view('cukrukuk');
@@ -59,6 +61,7 @@ class AdminController extends Controller
     public function user()
     {
         if (Auth::user()->role == 'user') {
+            $backgrounds = Background::all();
             $totalProposals = Proposal::all()->count();
             $totalSkpds = Skpd::all()->count();
             $chartBentuk = Proposal::select(DB::raw('bentuk_id, count(id) as total'))
@@ -74,7 +77,7 @@ class AdminController extends Controller
             ->pluck('total2');
             $labelBentuk = Bentuk::whereHas('proposals')->pluck('nama')->unique();
             $labelJenis = Category::whereHas('proposals')->pluck('name')->unique();
-            return view('admin.index', compact('totalProposals', 'chartJenis', 'chartBentuk', 'labelJenis', 'labelBentuk', 'totalSkpds'));
+            return view('admin.index', compact('totalProposals', 'chartJenis', 'chartBentuk', 'labelJenis', 'labelBentuk', 'totalSkpds', 'backgrounds'));
         }else
         {
             return view('cukrukuk');

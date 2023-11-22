@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Background;
 use App\Models\Profile;
 use App\Models\File;
 use App\Models\Proposal;
@@ -16,12 +17,14 @@ class ProfileController extends Controller
     public function index()
     {
         if (Auth::user()->role === 'admin') {
-        $profiles = Profile::all();
-        $dataExist = $profiles->count() > 0;
-        return view('profile.index', compact(
-            'profiles',
-            'dataExist',
-        ));
+            $backgrounds = Background::all();
+            $profiles = Profile::all();
+            $dataExist = $profiles->count() > 0;
+            return view('profile.index', compact(
+                'profiles',
+                'dataExist',
+                'backgrounds'
+            ));
         } else {
             return view('cukrukuk');
         }
@@ -30,6 +33,7 @@ class ProfileController extends Controller
     public function show(Profile $profile)
     {
         if (Auth::user()->role == 'admin') {
+            $backgrounds = Background::all();
             $profileId = $profile;
             $buktis = Bukti::where('status', 'active')->get();
             $indikators = Indikator::where('status', 'active')->get();
@@ -40,6 +44,7 @@ class ProfileController extends Controller
                 'buktis', 
                 'indikators', 
                 'profileId',
+                'backgrounds'
             ));
         } else {
             return redirect()->back()->with(['error' => 'ojo dibandingke!']);

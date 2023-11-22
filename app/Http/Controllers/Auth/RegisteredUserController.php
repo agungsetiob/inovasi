@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Background;
 use App\Models\User;
 use App\Models\Skpd;
 use App\Models\Setting;
@@ -21,13 +22,13 @@ class RegisteredUserController extends Controller
     {
         if (Auth::user()->role === 'admin') {
             $users = User::all();
-            return view('admin.users', compact('users'));
+            $backgrounds = Background::all();
+            return view('admin.users', compact('users', 'backgrounds'));
         } else{
             return back()->with('error', 'Get out!');
         }
         
     }
-
 
     /**
      * Display the registration view.
