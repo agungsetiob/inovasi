@@ -18,7 +18,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th width="65%">nama</th>
+                                        <th width="65%">Nama</th>
                                         <th>Jenis</th>
                                         <th></th>
                                     </tr>
@@ -97,7 +97,7 @@
         columns: [
             { 
                 render: function (data, type, row, meta) {
-                    return meta.row + 1;
+                    return meta.row + 1 + '.';
                 }
             },
             { 

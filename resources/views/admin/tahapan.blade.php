@@ -15,7 +15,7 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th width="50%">nama</th>
+                                        <th width="50%">Nama</th>
                                         <th>Dibuat</th>
                                         <th></th>
                                     </tr>

@@ -19,8 +19,8 @@
                                 <thead>
                                     <tr>
                                         <th></th>
-                                        <th width="40%">nama</th>
-                                        <th width="40%">urusan</th>
+                                        <th width="40%">Nama</th>
+                                        <th width="40%">Klasifikasi Urusan</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -57,6 +57,55 @@
 <x-alert-modal/>
 <x-logout/>
 <script type="text/javascript">
+    var dataTable = $('#dataTable').DataTable({
+        ajax: {
+            url: '/master/klasifikasi/detail',
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                render: function (data, type, row, meta) {
+                    return meta.row + 1 + '.';
+                }
+            },
+            { 
+                data: 'nama' 
+            },
+            { 
+                data: 'klasifikasi.nama' 
+            },
+            { 
+                render: function (data, type, row) {
+                    return `
+                        <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
+                            data-toggle="modal" 
+                            data-target="#deleteModal" 
+                            data-urusan-id="${row.id}"
+                            data-urusan-name="${row.nama}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <div class="dropdown mb-4 d-inline">
+                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                data-urusan-id="${row.id}"
+                                data-urusan-status="${row.status}">
+                                ${row.status}
+                            </button>
+                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
+                                <button class="dropdown-item" data-action="toggle-status">change status</button>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+        ],
+        // other DataTable options...
+    });
+
     $(document).ready(function () {
         $(".container-fluid").on("click", ".dropdown-item[data-action='toggle-status']", function() {
             var button = $(this).closest('.dropdown').find('button.dropdown-toggle');

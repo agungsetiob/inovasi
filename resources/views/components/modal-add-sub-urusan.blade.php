@@ -30,55 +30,6 @@
     </div>
 </div>
 <script>
-    var dataTable = $('#dataTable').DataTable({
-        ajax: {
-            url: '/master/klasifikasi/detail',
-            dataSrc: 'data'
-        },
-        columns: [
-            { 
-                render: function (data, type, row, meta) {
-                    return meta.row + 1;
-                }
-            },
-            { 
-                data: 'nama' 
-            },
-            { 
-                data: 'klasifikasi.nama' 
-            },
-            { 
-                render: function (data, type, row) {
-                    return `
-                        <button class="btn btn-outline-danger btn-sm delete-button" title="hapus" 
-                            data-toggle="modal" 
-                            data-target="#deleteModal" 
-                            data-urusan-id="${row.id}"
-                            data-urusan-name="${row.nama}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <div class="dropdown mb-4 d-inline">
-                            <button class="btn btn-outline-primary dropdown-toggle btn-sm"
-                                type="button"
-                                id="dropdownMenuButton"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                                data-urusan-id="${row.id}"
-                                data-urusan-status="${row.status}">
-                                ${row.status}
-                            </button>
-                            <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton">
-                                <button class="dropdown-item" data-action="toggle-status">change status</button>
-                            </div>
-                        </div>
-                    `;
-                }
-            },
-        ],
-        // other DataTable options...
-    });
-    
     //action create post
     $('#store').click(function(e) {
         e.preventDefault();
@@ -105,7 +56,7 @@
 
                 var newData = {
                     render: function (data, type, row, meta, klas) {
-                    return meta.row + 1;
+                    return meta.row + 1 + '.';
                     },
                     id: response.data.id,
                     nama: response.data.nama,
