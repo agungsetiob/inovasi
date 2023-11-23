@@ -99,15 +99,15 @@
             { 
                 data: 'proposal.id', className: 'text-center',
                 render: function (data, type, row) {
-                    return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>';
+                    return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm mt-1"><i class="fas fa-folder-closed"></i></a>';
                 }
             },
             { 
                 data: 'proposal.id',
                 render: function (data, type, row) {
                     var buttonsHtml = '<div class="text-center">';
-                    buttonsHtml += '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
-                        buttonsHtml += '<button id="send-proposal-' + row.id + '" data-proposal-id="'+ data +'" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" class="return-proposal btn btn-outline-warning btn-sm" title="kembalikan"><i class="fa-solid fa-ban"></i></button>';
+                    buttonsHtml += '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1 mt-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
+                        buttonsHtml += '<button id="send-proposal-' + row.id + '" data-proposal-id="'+ data +'" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" class="return-proposal btn btn-outline-warning btn-sm mt-1" title="kembalikan"><i class="fa-solid fa-ban"></i></button>';
 
                     buttonsHtml += '</div>';
                     return buttonsHtml;
