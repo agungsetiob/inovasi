@@ -22,7 +22,7 @@
                                     <th>Skor</th>
                                     <th width="7%">Tahapan</th>
                                     <th width="4%">Bukti Dukung</th>
-                                    <th width="16%"></th>
+                                    <th width="8%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,38 +78,38 @@
             { data: 'proposal.nama' },
             { data: 'skpd' },
             { data: 'ujicoba' },
-            { data: 'implementasi' },
-            { data: 'skor' },
+            { data: 'implementasi', className: 'text-center', },
+            { data: 'skor', className: 'text-center', },
             { 
-                data: 'tahapan',
+                data: 'tahapan', className: 'text-center',
                 render: function (data, type, row) {
                     // Apply badge styling based on the value of tahapan
                     var badgeClass = '';
                     if (data == 'ujicoba') {
-                        badgeClass = 'bg-indigo';
+                        badgeClass = 'bg-indigo fa-fade';
                     } else if (data == 'penerapan') {
-                        badgeClass = 'bg-green';
+                        badgeClass = 'bg-green fa-beat';
                     } else if (data == 'inisiatif') {
-                        badgeClass = 'bg-orange';
+                        badgeClass = 'bg-orange fa-shake';
                     }
 
                     return '<span class="badge ' + badgeClass + '">' + data + '</span>';
                 }
             },
             { 
-                data: 'proposal.id',
+                data: 'proposal.id', className: 'text-center',
                 render: function (data, type, row) {
-                    // Create a link for "Bukti Dukung" based on the proposal id
                     return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>';
                 }
             },
             { 
                 data: 'proposal.id',
                 render: function (data, type, row) {
-                    // Create links for "Cetak", "Hapus", "Edit", and "Kirim" based on the proposal id and status
-                    var buttonsHtml = '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
+                    var buttonsHtml = '<div class="text-center">';
+                    buttonsHtml += '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
                         buttonsHtml += '<button id="send-proposal-' + row.id + '" data-proposal-id="'+ data +'" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" class="return-proposal btn btn-outline-warning btn-sm" title="kembalikan"><i class="fa-solid fa-ban"></i></button>';
 
+                    buttonsHtml += '</div>';
                     return buttonsHtml;
                 }
             },

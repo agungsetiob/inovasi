@@ -34,14 +34,14 @@
                         <table class="table table-borderless table-striped" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th width="30%">Nama Inovasi</th>
-                                    <th width="20%">Jenis</th>
+                                    <th width="38%">Nama Inovasi</th>
+                                    <th width="10%">Jenis</th>
                                     <th>Uji Coba</th>
                                     <th>Implementasi</th>
                                     <th>Skor</th>
-                                    <th width="7%">Tahapan</th>
+                                    <th width="8%">Tahapan</th>
                                     <th width="4%">Bukti Dukung</th>
-                                    <th width="16%"></th>
+                                    <th width="17%"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -113,44 +113,55 @@
                         },
                         { data: 'ujicoba' },
                         { data: 'implementasi' },
-                        { data: 'skor' },
+                        { data: 'skor', className: 'text-center', },
                         { 
-                            data: 'tahapan',
+                            data: 'tahapan', className: 'text-center',
                             render: function (data, type, row) {
                                 // Apply badge styling based on the value of tahapan
                                 var badgeClass = '';
                                 if (data == 'ujicoba') {
-                                    badgeClass = 'bg-indigo';
+                                    badgeClass = 'bg-indigo fa-fade';
                                 } else if (data == 'penerapan') {
-                                    badgeClass = 'bg-green';
+                                    badgeClass = 'bg-green fa-beat';
                                 } else if (data == 'inisiatif') {
-                                    badgeClass = 'bg-orange';
+                                    badgeClass = 'bg-orange fa-shake';
                                 }
 
                                 return '<span class="badge ' + badgeClass + '">' + data + '</span>';
                             }
                         },
                         { 
-                            data: 'proposal.id',
+                            data: 'proposal.id', className: 'text-center',
                             render: function (data, type, row) {
                                 // Create a link for "Bukti Dukung" based on the proposal id
-                                return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm"><i class="fas fa-folder-closed"></i></a>';
+                                return '<a href="{{url("bukti-dukung")}}/' + data + '" class="btn btn-outline-primary btn-sm mt-1"><i class="fas fa-folder-closed"></i></a>';
                             }
                         },
                         { 
                             data: 'proposal.id',
                             render: function (data, type, row) {
-                                // Create links for "Cetak", "Hapus", "Edit", and "Kirim" based on the proposal id and status
-                                var buttonsHtml = '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
+                                // // Create links for "Cetak", "Hapus", "Edit", and "Kirim" based on the proposal id and status
+                                // var buttonsHtml = '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
 
-                                // Check if the status is 'draft' to display additional buttons
+                                // // Check if the status is 'draft' to display additional buttons
+                                // if (row.proposal.status === 'draft') {
+                                //     buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
+                                //     buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
+                                //     if (row.skor > 0){
+                                //         buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
+                                //     }
+                                // }
+                                var buttonsHtml = '<div class="text-center">';
+                                buttonsHtml += '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1 mt-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
                                 if (row.proposal.status === 'draft') {
-                                    buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
-                                    buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
-                                    if (row.skor > 0){
-                                        buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
+                                    buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1 mt-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
+                                    buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1 mt-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
+                                    if (row.skor > 0) {
+                                        buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1 mt-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
                                     }
                                 }
+
+                                buttonsHtml += '</div>';
 
                                 return buttonsHtml;
                             }
