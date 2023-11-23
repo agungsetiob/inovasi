@@ -33,7 +33,8 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    @foreach ($proposal->indikators()->get() as $indikator)
+                                    {{--@foreach ($proposal->indikators()->get() as $indikator)--}}
+                                    @foreach ($proposal->indikators as $indikator)
                                     <tr>
                                         <td>{{$indikator->nama}}</td>
                                         <td>@foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item) {{$item->bukti->nama}} @endforeach</td>
@@ -58,7 +59,11 @@
                                                     </button>
                                                 @endforelse
                                             @elseif ($proposal->status === 'sent')
-                                                <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank"><i class="fa-solid fa-download"></i></a>
+                                                @foreach ($indikator->files()->where('proposal_id', $proposalId)->get() as $item)
+                                                    @if ($item->file)
+                                                        <a class="btn btn-outline-success btn-sm" title="download" href="{{url('/storage/docs/'. $item->file )}}" target="_blank"><i class="fa-solid fa-download"></i></a>
+                                                    @endif
+                                                @endforeach
                                             @endif
                                         </td>
                                     </tr>
@@ -69,14 +74,14 @@
                     </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
+            {{-- /.container-fluid --}}
         </div>
-<!-- End of Main Content -->
+{{-- End of Main Content --}}
         <x-footer/>
     </div>
-<!-- End of Content Wrapper -->
+{{-- End of Content Wrapper --}}
 </div>
-<!-- End of Page Wrapper -->
+{{-- End of Page Wrapper --}}
 
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>

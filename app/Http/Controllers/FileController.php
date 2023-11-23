@@ -31,9 +31,9 @@ class FileController extends Controller
         ->get()
         ->pluck('bukti.bobot')
         ->sum();
-        $files = Indikator::all();
+        //$files = Indikator::all();
         return view('admin.file', compact(
-            'files', 
+            //'files', 
             'proposal', 
             'buktis', 
             'indikators', 

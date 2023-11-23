@@ -140,17 +140,6 @@
                         { 
                             data: 'proposal.id',
                             render: function (data, type, row) {
-                                // // Create links for "Cetak", "Hapus", "Edit", and "Kirim" based on the proposal id and status
-                                // var buttonsHtml = '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
-
-                                // // Check if the status is 'draft' to display additional buttons
-                                // if (row.proposal.status === 'draft') {
-                                //     buttonsHtml += '<button id="hapus-' + data + '" class="delete-button btn btn-outline-danger btn-sm mr-1" title="Hapus" data-toggle="modal" data-target="#deleteModal" data-proposal-id="' + data + '" data-proposal-name="' + row.proposal.nama + '"><i class="fas fa-trash"></i></button>';
-                                //     buttonsHtml += '<a id="edit-' + data + '" href="{{ url("proyek/inovasi") }}/' + data + '/edit" class="btn btn-outline-success btn-sm mr-1" title="Edit"><i class="fas fa-pencil-alt" alt="edit"></i></a>';
-                                //     if (row.skor > 0){
-                                //         buttonsHtml += '<button id="send-proposal-' + data + '" data-toggle="modal" data-target="#sendModal" data-proposal-name="' + row.proposal.nama + '" data-proposal-id="' + data + '" class="send-proposal btn btn-outline-dark btn-sm mr-1" title="Kirim"><i class="fas fa-paper-plane"></i></button>';
-                                //     }
-                                // }
                                 var buttonsHtml = '<div class="text-center">';
                                 buttonsHtml += '<a href="{{url("print/report")}}/' + data + '" target="_blank" class="btn btn-outline-secondary btn-sm mr-1 mt-1" title="Cetak"><i class="fas fa-file-alt"></i></a>';
                                 if (row.proposal.status === 'draft') {
