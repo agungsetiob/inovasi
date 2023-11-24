@@ -196,7 +196,7 @@
                     
                 };
 
-                var newRow = $('#dataTable').DataTable().row.add(newData).draw().node();
+                var newRow = $('#dataTable').DataTable().row.add(newData).draw(false).node();
                 
                 //clear form
                 $('#nama').val('');

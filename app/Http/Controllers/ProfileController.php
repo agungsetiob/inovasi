@@ -124,6 +124,8 @@ class ProfileController extends Controller
         ]);
         if (Auth::user()->role == 'admin') {
             $profile->update($request->all());
+            $indikatorIds = Indikator::where('status', 'active')->where('jenis', 'spd')->get()->pluck('id')->toArray();
+            $profile->indikators()->sync($indikatorIds);
             return response()->json(['success' => true, 'message' => 'Berhasil update profil']);
         } else {
             return response()->json(['success' => false, 'message' => 'Something went wrong']);

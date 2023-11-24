@@ -103,7 +103,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($profile->indikators()->get() as $indikator)
+                                @foreach ($profile->indikators as $indikator)
                                 <tr id="@foreach ($indikator->files()->get() as $item)index_{{$item->id}}@endforeach">
                                     <td>{{$indikator->nama}}</td>
                                     <td>@foreach ($indikator->files()->get() as $item) {{$item->bukti->nama}} @endforeach</td>
